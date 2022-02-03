@@ -1,20 +1,5 @@
-import { LabColour, RGBColour, XYZColour } from "../colour.interface";
-
-/**
- * Normalise black and white colorimetry as specified in IEC 61966-2-1
- * @param n number to be normalised
- */
-function reverseTransformation(n: number) {
-  let u: number;
-
-  if (n > 0.04045) {
-    u = Math.pow((n + 0.055) / 1.055, 2.4);
-  } else {
-    u = n / 12.92;
-  }
-
-  return u;
-}
+import { LabColour, RGBColour, XYZColour } from "./colour.interface";
+import { constrainLab, reverseTransformation } from "./util";
 
 /**
  * Converts sRGB colour space to XYZ.
@@ -43,24 +28,6 @@ export function convertRGBtoXYZ(colour: RGBColour): XYZColour {
 }
 
 /**
- * The division of the f function domain into two parts was done to prevent an infinite slope at n = 0
- * @param n Number to be constrained
- */
-function constrainLab(n: number): number {
-  const delta = 6 / 29;
-  const deltaCube = Math.pow(delta, 3);
-  let t: number;
-
-  if (n > deltaCube) {
-    t = Math.cbrt(n);
-  } else {
-    t = (n / (3 * Math.pow(delta, 2)) + (4 / 29));
-  }
-
-  return t;
-}
-
-/**
  * Converts XYZ colour space to Lab
  * Math comes from https://en.wikipedia.org/wiki/CIELAB_color_space#From_CIEXYZ_to_CIELAB[11]
  * @param colour XYZ colour
@@ -77,14 +44,13 @@ export function convertXYZtoLab(colour: XYZColour): LabColour {
   const fX = constrainLab(_X);
   const fY = constrainLab(_Y);
   const fZ = constrainLab(_Z);
-  
+
   const L = 116 * fY - 16;
   const a = 500 * (fX - fY);
   const b = 200 * (fY - fZ);
 
   return { L, a, b };
 }
-
 
 /**
  * Indirectly converts RGB to Lab.

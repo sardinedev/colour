@@ -1,6 +1,6 @@
 import { LabColour, RGBColour, XYZColour } from "../colour.interface";
-import { convertRGBtoXYZ, convertXYZtoLab } from "./converters";
-import { ciede2000 } from './CIEDE2000';
+import { convertRGBtoXYZ, convertXYZtoLab } from "../converters";
+import { ciede2000 } from "../CIEDE2000";
 
 test("convert RGB to XYZ", () => {
   const RGB: RGBColour = { R: 34, G: 250, B: 124 };
@@ -55,17 +55,16 @@ test("convert XYZ to Lab with constrains", () => {
 });
 
 test("mesures colour difference", () => {
-
   const colour1: LabColour = {
-    L: 50.0000,
+    L: 50.0,
     a: 2.6772,
     b: -79.7751,
   };
 
   const colour2: LabColour = {
-    L: 50.0000,
-    a: 0.0000,
+    L: 50.0,
+    a: 0.0,
     b: -82.7485,
   };
-expect(ciede2000(colour1, colour2)).toBe(2.0424596801565738);
+  expect(ciede2000(colour1, colour2)).toBe(2.0424596801565738);
 });

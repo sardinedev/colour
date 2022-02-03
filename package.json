@@ -1,0 +1,26 @@
+{
+  "name": "colour",
+  "version": "1.0.0",
+  "description": "It does things to colours",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sardinedev/colour.git"
+  },
+  "keywords": [
+    "color",
+    "colour"
+  ],
+  "author": "Hugo Nogueira",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sardinedev/colour/issues"
+  },
+  "homepage": "https://github.com/sardinedev/colour#readme",
+  "devDependencies": {
+    "typescript": "^4.5.5"
+  }
+}

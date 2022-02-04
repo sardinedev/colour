@@ -1,5 +1,5 @@
 import { LabColour, RGBColour, XYZColour } from "./colour.interface";
-import { constrainLab, reverseTransformation } from "./util";
+import { constrainLab, reverseTransformation } from "./util/index.js";
 
 /**
  * Converts sRGB colour space to XYZ.

@@ -1,7 +1,8 @@
-import { ciede2000 } from "../CIEDE2000";
+import test from "ava";
+import { ciede2000 } from "../CIEDE2000.js";
 import { LabColour } from "../colour.interface";
 
-test("mesures colour difference #1", () => {
+test("mesures colour difference #1", ({ is }) => {
   const colour1: LabColour = {
     L: 50.0,
     a: 2.6772,
@@ -13,10 +14,10 @@ test("mesures colour difference #1", () => {
     a: 0.0,
     b: -82.7485,
   };
-  expect(ciede2000(colour1, colour2)).toBe(2.0424596801565738);
+  is(ciede2000(colour1, colour2), 2.0424596801565738);
 });
 
-test("mesures colour difference #2", () => {
+test("mesures colour difference #2", ({ is }) => {
   const colour1: LabColour = {
     L: 60.2574,
     a: -34.0099,
@@ -28,10 +29,10 @@ test("mesures colour difference #2", () => {
     a: -34.1751,
     b: 39.4387,
   };
-  expect(ciede2000(colour1, colour2)).toBe(1.2644200135991919);
+  is(ciede2000(colour1, colour2), 1.2644200135991919);
 });
 
-test("mesures colour difference #3", () => {
+test("mesures colour difference #3", ({ is }) => {
   const colour1: LabColour = {
     L: 50,
     a: 2.5,
@@ -43,10 +44,10 @@ test("mesures colour difference #3", () => {
     a: 24,
     b: 15,
   };
-  expect(ciede2000(colour1, colour2)).toBe(19.453521433392584);
+  is(ciede2000(colour1, colour2), 19.453521433392584);
 });
 
-test("mesures colour difference #4", () => {
+test("mesures colour difference #4", ({ is }) => {
   const colour1: LabColour = {
     L: 50,
     a: 2.5,
@@ -58,5 +59,5 @@ test("mesures colour difference #4", () => {
     a: 3.25917204763466,
     b: 0.334992094209014,
   };
-  expect(ciede2000(colour1, colour2)).toBe(0.9999999764765461);
+  is(ciede2000(colour1, colour2), 0.9999999764765461);
 });

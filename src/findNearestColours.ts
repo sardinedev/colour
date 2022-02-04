@@ -1,5 +1,5 @@
 import type { RGBColour } from "./colour.interface";
-import { RGBdistance } from "./RGBdistance";
+import { RGBdistance } from "./RGBdistance.js";
 
 export function findNearestColours(
   colours: RGBColour[],

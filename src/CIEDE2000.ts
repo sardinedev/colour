@@ -1,5 +1,5 @@
 import type { LabColour } from "./colour.interface";
-import { bigSquare, deltaHue_d, hue_d, meanHue_d, toRadians } from "./util";
+import { bigSquare, deltaHue_d, hue_d, meanHue_d, toRadians } from "./util/index.js";
 
 /**
  * Mesures the colour difference between two colours in the Lab space

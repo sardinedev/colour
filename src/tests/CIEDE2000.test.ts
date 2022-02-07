@@ -1,6 +1,6 @@
 import test from "ava";
 import { ciede2000 } from "../CIEDE2000.js";
-import { LabColour } from "../colour.interface";
+import type { LabColour } from "../converters";
 
 test("mesures colour difference #1", ({ is }) => {
   const colour1: LabColour = {

@@ -1,5 +1,5 @@
-import type { RGBColour } from "./colour.interface";
 import { RGBdistance } from "./RGBdistance.js";
+import type  { RGBColour } from "./converters";
 
 export function findNearestColours(
   colours: RGBColour[],
@@ -11,13 +11,14 @@ export function findNearestColours(
     if (colourWeakMap.has(colour)) {
       setColour.push(colourWeakMap.get(colour));
     } else {
-      const map = [];
+      const distanceMap: number[]  = [];
       for (let i = 0; i < palette.length; i++) {
         const brickColour = palette[i] as RGBColour;
         const distance = RGBdistance(colour, brickColour);
-        map.push([brickColour, distance]);
+        distanceMap.push(distance);
       }
-      const closest = map.sort((a, b) => a[1] - b[1])[0][0];
+      const closestIndex = distanceMap.findIndex(el => el === Math.min(...distanceMap));
+      const closest = palette[closestIndex] as RGBColour;
       setColour.push(closest);
       colourWeakMap.set(colour, closest);
     }

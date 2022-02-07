@@ -44,6 +44,8 @@ export function deltaHue_d({ C1, C2, h1_d, h2_d }: HueHelper): number {
   if (h2_d - h1_d < -180) {
     return h2_d - h1_d + 360;
   }
+  // it should never reach this point
+  return 0;
 }
 
 /**
@@ -63,6 +65,8 @@ export function meanHue_d({ C1, C2, h1_d, h2_d }: HueHelper): number {
   if (Math.abs(h1_d - h2_d) > 180 && h1_d + h2_d >= 360) {
     return (h2_d + h1_d - 360) / 2;
   }
+  // it should never reach this point
+  return 0;
 }
 
 /**

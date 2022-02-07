@@ -1,12 +1,15 @@
 {
-  "name": "colour",
+  "name": "@sardine/colour",
   "version": "0.0.1",
   "description": "It does things to colours",
   "main": "index.js",
   "type": "module",
+  "types": "./dist/colour.d.ts",
   "scripts": {
     "build": "rm -rf ./dist && npx swc ./src -d ./dist ",
-    "test": "npm run build && c8 ava"
+    "test": "npm run build && c8 ava",
+    "types:emit": "npx tsc --declaration --emitDeclarationOnly --outFile ./dist/colour.d.ts",
+    "types:check": "npx tsc --noEmit"
   },
   "repository": {
     "type": "git",
@@ -22,6 +25,9 @@
     "url": "https://github.com/sardinedev/colour/issues"
   },
   "homepage": "https://github.com/sardinedev/colour#readme",
+  "engines": {
+    "node": ">= 14"
+  },
   "devDependencies": {
     "@swc/cli": "^0.1.55",
     "@swc/core": "^1.2.136",

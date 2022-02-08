@@ -1,13 +1,4 @@
-export interface HueHelper {
-  /** Chroma for colour 1 */
-  C1: number;
-  /** Chroma for colour 2 */
-  C2: number;
-  /** Derivative of colour 1 Hue */
-  h1_d: number;
-  /** Derivative of colour 2 Hue */
-  h2_d: number;
-}
+import type { HueHelper } from "../types";
 
 /**
  * Calculates the Hue derivative

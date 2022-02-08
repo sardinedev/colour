@@ -1,6 +1,6 @@
 import { ciede2000 } from "./CIEDE2000.js";
 import { convertRGBtoLab } from "./converters.js";
-import type { RGBColour } from "./converters.js";
+import type { RGBColour } from "./types";
 
 export const RGBdistance = (colour1: RGBColour, colour2: RGBColour): number => {
   const c1 = convertRGBtoLab(colour1);

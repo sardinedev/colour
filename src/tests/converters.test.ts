@@ -5,7 +5,7 @@ import {
   convertRGBtoLab,
 } from "../converters.js";
 import { ciede2000 } from "../CIEDE2000.js";
-import type { LabColour, RGBColour, XYZColour } from "../converters";
+import type { LabColour, RGBColour, XYZColour } from "../types";
 
 
 test("convert RGB to XYZ", ({ deepEqual }) => {

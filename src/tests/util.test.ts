@@ -1,6 +1,7 @@
 import test from "ava";
+import type { HueHelper } from "../types";
+import { bigSquare, deltaHue_d, hue_d, meanHue_d, toRadians } from "../util/index.js";
 
-import { bigSquare, deltaHue_d, HueHelper, hue_d, meanHue_d, toRadians } from "../util/index.js";
 
 test('converts degrees to radians', ({is}) => {
    is(toRadians(120), 2.0943951023931953);

@@ -9,7 +9,7 @@
   "scripts": {
     "build": "rm -rf ./dist && npx swc ./src -d ./dist",
     "test": "npm run build && c8 ava",
-    "types:emit": "npx tsc --declaration --emitDeclarationOnly --outFile ./dist/colour.d.ts",
+    "types:emit": "npx tsc --declaration --emitDeclarationOnly",
     "types:check": "npx tsc --noEmit",
     "publish:next": "npm run build && npm run types:emit && npm publish --tag next",
     "publish:latest": "npm run build && npm run types:emit && npm publish"

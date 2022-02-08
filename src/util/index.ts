@@ -84,18 +84,20 @@ export const bigSquare = (n: number): number =>
 
 /**
  * Normalise black and white colorimetry as specified in IEC 61966-2-1
+ * It takes a RGB channel in the range [0 - 255] and returns a value between 0 and 1
  * @param n number to be normalised
  */
-export function reverseTransformation(n: number) {
-  let u: number;
+export function linearRGB(rgbValue: number) {
+  const rgbRatio = rgbValue / 255;
+  let linearValue: number;
 
-  if (n > 0.04045) {
-    u = Math.pow((n + 0.055) / 1.055, 2.4);
+  if (rgbRatio > 0.04045) {
+    linearValue = Math.pow((rgbRatio + 0.055) / 1.055, 2.4);
   } else {
-    u = n / 12.92;
+    linearValue = rgbRatio / 12.92;
   }
 
-  return u;
+  return linearValue;
 }
 
 /**

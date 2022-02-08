@@ -1,4 +1,4 @@
-import { constrainLab, reverseTransformation } from "./util/index.js";
+import { constrainLab, linearRGB } from "./util/index.js";
 
 /**
  * The RGB colour model represents a broad array of colours by describing the Red, Green and Blue channels.
@@ -47,14 +47,9 @@ export interface XYZColour {
 export function convertRGBtoXYZ(colour: RGBColour): XYZColour {
   const { R, G, B } = colour;
 
-  //sRGB values in the range 0 to 1
-  const rR: number = R / 255;
-  const rG: number = G / 255;
-  const rB: number = B / 255;
-
-  const _R = reverseTransformation(rR) * 100;
-  const _G = reverseTransformation(rG) * 100;
-  const _B = reverseTransformation(rB) * 100;
+  const _R = linearRGB(R) * 100;
+  const _G = linearRGB(G) * 100;
+  const _B = linearRGB(B) * 100;
 
   // Magic numbers are pre-calculated sRGB D65 constants
   const X = _R * 0.4124 + _G * 0.3576 + _B * 0.1805;

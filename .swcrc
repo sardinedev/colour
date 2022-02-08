@@ -1,6 +1,5 @@
 {
   "sourceMaps": true,
-  "minify": true,
   "module": {
     "type": "es6"
   },
@@ -8,12 +7,6 @@
     "parser": {
       "syntax": "typescript"
     },
-    "target": "es2019",
-    "minify": {
-      "compress": {
-        "unused": true
-      },
-      "mangle": true
-    }
+    "target": "es2019"
   }
 }

@@ -1,19 +1,28 @@
 {
   "name": "@sardine/colour",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "It does things to colours",
-  "main": "index.js",
+  "module": "./dist/index.js",
   "type": "module",
   "types": "./dist/colour.d.ts",
   "scripts": {
-    "build": "rm -rf ./dist && npx swc ./src -d ./dist ",
+    "build": "rm -rf ./dist && npx swc ./src -d ./dist",
     "test": "npm run build && c8 ava",
     "types:emit": "npx tsc --declaration --emitDeclarationOnly --outFile ./dist/colour.d.ts",
-    "types:check": "npx tsc --noEmit"
+    "types:check": "npx tsc --noEmit",
+    "publish:next": "npm run build && npm run types:emit && npm publish --tag next",
+    "publish:latest": "npm run build && npm run types:emit && npm publish"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sardinedev/colour.git"
+  },
+  "files": [
+    "dist",
+    "!dist/tests"
+  ],
+  "publishConfig": {
+    "access": "public"
   },
   "keywords": [
     "color",

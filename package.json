@@ -1,10 +1,10 @@
 {
   "name": "@sardine/colour",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "It does things to colours",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "unpkg": "dist/umd/index.js",
+  "unpkg": "dist/umd/index.umd.js",
   "sideEffects": false,
   "scripts": {
     "build": "rm -rf ./dist && npm run build:spack && npm run build:esm && npm run build:umd",

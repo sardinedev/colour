@@ -137,12 +137,19 @@ test("converts a 4 digit hexadecimal (RGB + Alpha) colour string to RGBA format"
 
 test("throws an error if not passing a string", ({ is, throws }) => {
   const hex = 235434;
+  // @ts-ignore
   const error = throws(() => convertHextoRGB(hex)) as Error;
   is(error.message, "convertHextoRGB expects a string but got a number");
 });
 
-test("throws an error if not passing a valid hexadecimal value", ({ is, throws }) => {
-  const hex = 'HH77ZZs';
+test("throws an error if not passing a valid hexadecimal value", ({
+  is,
+  throws,
+}) => {
+  const hex = "HH77ZZs";
   const error = throws(() => convertHextoRGB(hex)) as Error;
-  is(error.message, "convertHextoRGB expects an valid hexadecimal colour value but got HH77ZZs");
+  is(
+    error.message,
+    "convertHextoRGB expects an valid hexadecimal colour value but got HH77ZZs"
+  );
 });

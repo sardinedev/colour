@@ -2,6 +2,11 @@ import test from "ava";
 import { ciede2000 } from "../CIEDE2000.js";
 import type { LabColour } from "../types";
 
+/*
+ * Test data provided by Gaurav Sharma
+ * http://www2.ece.rochester.edu/~gsharma/ciede2000/dataNprograms/ciede2000testdata.txt
+ */
+
 test("mesures colour difference #1", ({ is }) => {
   const colour1: LabColour = {
     L: 50.0,

@@ -7,8 +7,14 @@
   "types": "./dist/index.d.ts",
   "sideEffects": false,
   "type": "module",
+  "exports": {
+    ".": {
+      "require": "./dist/cjs/index.js",
+      "default": "./dist/index.js"
+    }
+  },
   "scripts": {
-    "build": "rm -rf ./dist && npm run build:esm && npm run build:cjs",
+    "build": "rm -rf ./dist && npm run build:esm && npm run build:cjs && npm run types:emit",
     "build:esm": "npx swc --config-file .esm.swcrc ./src -d ./dist",
     "build:cjs": "npx swc --config-file .cjs.swcrc ./src -d ./dist/cjs",
     "test": "rm -rf ./dist && npm run build:esm && c8 ava",
@@ -42,6 +48,7 @@
     "node": ">= 14"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.24.1",
     "@swc/cli": "^0.1.57",
     "@swc/core": "^1.2.219",
     "ava": "^4.3.1",

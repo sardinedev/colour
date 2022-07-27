@@ -66,3 +66,18 @@ test("mesures colour difference #4", ({ is }) => {
   };
   is(ciede2000(colour1, colour2), 0.9999999764765461);
 });
+
+test("mesures colour difference #5", ({ is }) => {
+  const colour1: LabColour = {
+    L: 90.9257,
+    a: -0.5406,
+    b: -0.9208,
+  };
+
+  const colour2: LabColour = {
+    L: 88.6381,
+    a: -0.8985,
+    b: -0.7239,
+  };
+  is(ciede2000(colour1, colour2).toFixed(4), '1.5381');
+});

@@ -1,14 +1,16 @@
 {
+  "$schema": "https://json.schemastore.org/swcrc",
+  "exclude": ["types.ts"],
   "sourceMaps": true,
   "minify": true,
   "module": {
-    "type": "umd"
+    "type": "es6"
   },
   "jsc": {
     "parser": {
-      "syntax": "ecmascript"
+      "syntax": "typescript"
     },
-    "target": "es2017",
+    "target": "es2019",
     "minify": {
       "compress": true,
       "mangle": true

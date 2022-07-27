@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json.schemastore.org/swcrc",
+  "exclude": [".*\\.spec|test\\.(j|t)s$", "mocks", "types"],
+  "sourceMaps": true,
+  "minify": true,
+  "module": {
+    "type": "commonjs"
+  },
+  "jsc": {
+    "parser": {
+      "syntax": "typescript"
+    },
+    "target": "es2019"
+  }
+}

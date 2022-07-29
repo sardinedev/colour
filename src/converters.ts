@@ -1,5 +1,6 @@
 import type { LabColour, RGBColour, XYZColour } from "./types";
 import { constrainLab, linearRGB } from "./util/index.js";
+import { hexAlphaRegex, hexRegex, shortAlphaHexRegex, shortHexRegex } from "./util/regexers.js";
 
 /**
  * Converts sRGB colour space to XYZ.
@@ -60,15 +61,6 @@ export function convertRGBtoLab(colour: RGBColour): LabColour {
 }
 
 export function convertHextoRGB(hex: string): RGBColour {
-  /** Six digit Hexadecimal colour, ie: #12FF21 */
-  const hexRegex = /^#[a-fA-F0-9]{6}$/;
-  /** Eight digit Hexadecimal colour, ie: #12FF21BE */
-  const hexAlphaRegex = /^#[a-fA-F0-9]{8}$/;
-  /** Three digit Hexadecimal colour, ie: #FFF */
-  const shortHexRegex = /^#[a-fA-F0-9]{3}$/;
-  /** Four digit Hexadecimal colour, ie: #FFF4 */
-  const shortAlphaHexRegex = /^#[a-fA-F0-9]{4}$/;
-
   if (typeof hex !== "string") {
     throw new Error(`convertHextoRGB expects a string but got a ${typeof hex}`);
   }

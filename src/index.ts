@@ -6,3 +6,4 @@ export {
   convertXYZtoLab,
 } from "./converters.js";
 export { RGBdistance } from "./RGBdistance.js";
+export { getSRGBLuminanceFromHex } from "./getSRGBLuminanceFromHex.js";

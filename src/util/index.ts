@@ -76,7 +76,7 @@ export const bigSquare = (n: number): number =>
 /**
  * Normalise black and white colorimetry as specified in IEC 61966-2-1
  * It takes a RGB channel in the range [0 - 255] and returns a value between 0 and 1
- * @param n number to be normalised
+ * @param rgbValue number to be normalised
  */
 export function linearRGB(rgbValue: number) {
   const rgbRatio = rgbValue / 255;

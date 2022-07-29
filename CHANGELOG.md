@@ -1,5 +1,11 @@
 # @sardine/colour
 
+## 1.3.0
+
+### Minor Changes
+
+- bea0ea2: feat: Add getSRGBLuminanceFromHex
+
 ## 1.2.0
 
 ### Minor Changes

@@ -1,0 +1,31 @@
+
+/** GLOBAL CSS **/
+
+@font-face {
+    font-family: Fira;
+    src: url(/assets/fonts/FiraMono-Regular.woff2) format('woff2');
+    font-weight: 400;
+    font-display: swap;
+  }
+
+:root {
+    --accent-color: #e2127d;
+    --base-color: #ffffff;
+    --links-color: #41c7c7;
+    --primary-color: #222429;
+  }
+
+  body {
+    background-color: var(--primary-color);
+    color: var(--base-color);
+    font-size: 1.125rem;
+  }
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: Fira;
+  color: var(--accent-color);
+}

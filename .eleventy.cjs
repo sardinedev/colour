@@ -6,10 +6,15 @@ const imageOptimiser = require("@sardine/eleventy-plugin-image-optimiser");
 
 const postCSS = require("./lib/postcss.11ty.cjs");
 
+const purgeFromTailwind = (content) =>
+  content.match(/[A-Za-z0-9-_:\/]+/g) || [];
+
 module.exports = function(eleventyConfig) {
   eleventyConfig.addAsyncShortcode("css", postCSS);
 
   eleventyConfig.addPlugin(codeHighlighter);
+
+  eleventyConfig.addPassthroughCopy("docs/assets");
 
   if (process.env.ELEVENTY_ENV === "production") {
     eleventyConfig.addPlugin(safeLinks);

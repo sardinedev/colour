@@ -18,13 +18,13 @@ It accepts multiple formats of hexadecimal colours:
 
 It will throw an error if a string is not passed or it is in a different formate that the one described above.
 
-### Signature
+## Signature
 
 ```typescript
 function convertHextoRGB(hex: string): RGBColour;
 ```
 
-### Example
+## Example
 
 ```javascript
 import { convertHextoRGB } from "@sardine/colour";

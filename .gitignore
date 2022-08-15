@@ -105,3 +105,5 @@ dist
 
 __tests__/
 .swc/
+
+_build/

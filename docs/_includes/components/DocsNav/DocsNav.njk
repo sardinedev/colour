@@ -1,0 +1,10 @@
+<nav class="px-8">
+  <h2>Functions</h2>
+  <ul>
+    {%- for doc in collections.docs -%}
+    <li {% if page.url == doc.url %} aria-current="page"{% endif %} >
+      <a href="{{ doc.url }}">{{ doc.data.title }}</a>
+    </li>
+    {%- endfor -%}
+  </ul>
+</nav>

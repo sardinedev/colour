@@ -17,6 +17,8 @@
     "build": "rm -rf ./dist && npm run build:esm && npm run build:cjs && npm run types:emit",
     "build:esm": "npx swc --config-file .esm.swcrc ./src -d ./dist",
     "build:cjs": "npx swc --config-file .cjs.swcrc ./src -d ./dist/cjs",
+    "build:docs": "ELEVENTY_ENV=production npx @11ty/eleventy --config=.eleventy.cjs",
+    "start:docs": "ELEVENTY_ENV=development npx @11ty/eleventy --config=.eleventy.cjs --serve",
     "test": "rm -rf ./dist && npm run build:esm && c8 ava",
     "types:emit": "npx tsc --declaration --emitDeclarationOnly",
     "types:check": "npx tsc --noEmit",
@@ -48,11 +50,20 @@
     "node": ">= 14"
   },
   "devDependencies": {
+    "@11ty/eleventy": "^1.0.1",
     "@changesets/cli": "^2.24.1",
+    "@sardine/eleventy-plugin-code-highlighter": "^1.2.0",
+    "@sardine/eleventy-plugin-external-links": "^1.4.0",
+    "@sardine/eleventy-plugin-image-optimiser": "^1.2.0",
+    "@sardine/eleventy-plugin-tinycss": "^2.0.0",
+    "@sardine/eleventy-plugin-tinyhtml": "^0.2.0",
     "@swc/cli": "^0.1.57",
     "@swc/core": "^1.2.219",
+    "autoprefixer": "^10.4.8",
     "ava": "^4.3.1",
     "c8": "^7.12.0",
+    "postcss": "^8.4.16",
+    "tailwindcss": "^3.1.8",
     "typescript": "^4.7.4"
   }
 }

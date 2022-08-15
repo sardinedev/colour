@@ -1,0 +1,9 @@
+{
+    "layout": "layouts/doc/doc.njk",
+    "permalink": "docs/{{ title | slug }}/index.html",
+    "tags": "docs",
+    "lastMod": "Last Modified",
+    "reverse": true,
+    "changeFreq": "monthly",
+    "priority": "0.5"
+}

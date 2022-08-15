@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html {% if section %} data-current="{{ section }}" {% endif %} lang="en">
+  {% include "./head.njk" %}
+
+  <body class="min-h-screen max-w-7xl flex flex-col mx-auto">
+    {% include "../components/Header/Header.njk" %}
+    <main class="mb-20 {% if templateClass === 'tmpl-doc' %}flex{% endif %}">
+      {{ layoutContent | safe }}
+    </main>
+  </body>
+</html>

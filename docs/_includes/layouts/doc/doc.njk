@@ -1,0 +1,49 @@
+---
+layout: layouts/base.njk
+templateClass: tmpl-doc
+---
+
+<nav class="px-8">
+  <ul>
+    {%- for doc in collections.docs -%}
+    <li {% if page.url == doc.url %} aria-current="page"{% endif %} >
+      <a href="{{ doc.url }}">{{ doc.data.title }}</a>
+    </li>
+    {%- endfor -%}
+  </ul>
+</nav>
+<article class="article px-4 md:px-0 w-full max-w-3xl ">
+  <header class="mb-4">
+    {% if featured_image %}
+    <figure>
+      <img
+        class="object-cover h-64 w-full"
+        {%
+        if
+        featured_image.alt
+        %}
+        alt="{{ featured_image.alt }}"
+        {%
+        endif
+        %}
+        class="article__hero"
+        src="{{ featured_image.src | url }}"
+      />
+      {% if featured_image.caption %}
+      <figcaption class="mx-auto max-w-3xl text-xs pt-2">
+        {{ featured_image.caption | safe }}
+      </figcaption>
+      {% endif %}
+    </figure>
+    {% endif %}
+    <time class="block mx-auto mt-8 max-w-3xl text-sm" datetime="{{ date }}">{{
+      date
+    }}</time>
+    <h1 class="font-bold text-4xl mb-2 antialiased mx-auto max-w-3xl">
+      {{ title }}
+    </h1>
+  </header>
+  <section class="leading-relaxed mx-auto max-w-3xl">
+    {{ content | safe }}
+  </section>
+</article>

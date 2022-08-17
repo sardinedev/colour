@@ -48,3 +48,5 @@ export interface HueHelper {
 }
 
 export type ColourSpace = "sRGB";
+
+export type WCAG = "WCAG2.1" | "WCAG3.0";

@@ -12,13 +12,13 @@ This function converts RGB colours into a Lab object.
 
 It accepts an RGB object and converts it to XYZ first and then from XYZ to Lab
 
-### Signature
+## Signature
 
 ```typescript
 function convertRGBtoXYZ(colour: RGBColour): XYZColour;
 ```
 
-### Example
+## Example
 
 ```javascript
 import { convertRGBtoXYZ } from "@sardine/colour";

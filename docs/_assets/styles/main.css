@@ -9,7 +9,7 @@
   }
 
 :root {
-    --accent-color: #e2127d;
+    --accent-color: #ffd400;
     --base-color: #ffffff;
     --links-color: #41c7c7;
     --primary-color: #222429;
@@ -28,4 +28,12 @@ h4,
 h5 {
   font-family: Fira;
   color: var(--accent-color);
+}
+
+.article {
+  & h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    margin-top: 2rem;
+  }
 }

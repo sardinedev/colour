@@ -1,0 +1,49 @@
+name: Colour
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+    paths:
+      - src/**
+
+jobs:
+  publish-rc:
+    name: Publish RC
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          # This makes Actions fetch all Git history so that Changesets can generate changelogs with the correct commits
+          fetch-depth: "0"
+
+      - name: Configure Git User
+        run: |
+          git config --global user.email "petinga@sardine.dev"
+          git config --global user.name "@$GITHUB_ACTOR"
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          registry-url: "https://registry.npmjs.org"
+          scope: "@sardine"
+
+      - name: "Setup npm"
+        run: |
+          npm set "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build package
+        run: npm run build
+
+      - name: Publish Skroll Release Candidate
+        run: |
+          npm version prerelease --preid rc.${{ github.event.number }}.${{ github.run_id }} --tag rc --no-git-tag-version
+          npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

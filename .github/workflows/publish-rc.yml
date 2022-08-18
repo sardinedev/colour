@@ -7,6 +7,7 @@ on:
       - synchronize
     paths:
       - src/**
+      - .github/workflows/**
 
 jobs:
   publish-rc:

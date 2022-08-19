@@ -1,5 +1,11 @@
 # @sardine/colour
 
+## 1.4.0
+
+### Minor Changes
+
+- 748504c: feat: Add `pickHexColorContrast` function
+
 ## 1.3.0
 
 ### Minor Changes

@@ -10,7 +10,8 @@ import { linearRGB } from "./util/index.js";
  * https://www.w3.org/TR/2008/REC-WCAG20-20081211/#relativeluminancedef
  *
  * https://www.w3.org/WAI/GL/wiki/Relative_luminance
- * @param colour an hexadecimal colour
+ * @param colour - an hexadecimal colour
+ * @param standard - Choose either `WCAG` 2.1 or `WCAG 3.0`
  */
 export const getSRGBLuminanceFromHex = (colour: string) => {
   const rgbColor = convertHextoRGB(colour);

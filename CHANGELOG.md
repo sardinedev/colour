@@ -1,5 +1,11 @@
 # @sardine/colour
 
+## 1.5.0
+
+### Minor Changes
+
+- d513567: Add isHexDarkColour
+
 ## 1.4.0
 
 ### Minor Changes

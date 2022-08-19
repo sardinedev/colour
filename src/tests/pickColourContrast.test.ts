@@ -1,5 +1,5 @@
 import test from "ava";
-import { pickHexColorContrast } from "../pickHexColorContrast.js";
+import { pickHexColourContrast } from "../pickHexColourContrast.js";
 
 test("should return #FFFFFF as the best colour for a #333333 background", ({
   is,
@@ -9,7 +9,7 @@ test("should return #FFFFFF as the best colour for a #333333 background", ({
     optionOneColour: "#FFFFFF",
     optionTwoColour: "#000000",
   };
-  is(pickHexColorContrast(colours, "WCAG2.1"), "#FFFFFF");
+  is(pickHexColourContrast(colours, "WCAG2.1"), "#FFFFFF");
 });
 
 test("should return #000000 as the best colour for a #BED background", ({
@@ -20,7 +20,7 @@ test("should return #000000 as the best colour for a #BED background", ({
     optionOneColour: "#FFFFFF",
     optionTwoColour: "#000000",
   };
-  is(pickHexColorContrast(colours, "WCAG2.1"), "#000000");
+  is(pickHexColourContrast(colours, "WCAG2.1"), "#000000");
 });
 
 test("should return #000000 as the best colour for a #DD337F background", ({
@@ -31,5 +31,5 @@ test("should return #000000 as the best colour for a #DD337F background", ({
     optionOneColour: "#FFFFFF",
     optionTwoColour: "#000000",
   };
-  is(pickHexColorContrast(colours, "WCAG2.1"), "#000000");
+  is(pickHexColourContrast(colours, "WCAG2.1"), "#000000");
 });

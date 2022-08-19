@@ -14,7 +14,7 @@ const relativeContrast = (firstColour: number, secondColour: number) => {
     return secondColour / firstColour;
 }
 
-export const pickHexColorContrast = (
+export const pickHexColourContrast = (
     {backgroundColour, optionOneColour, optionTwoColour}: ColorArgs,
     standard: WCAG
 ): string => {

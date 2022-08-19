@@ -44,7 +44,7 @@ jobs:
 
       - name: Publish Skroll Release Candidate
         run: |
-          npm version prerelease --preid rc.${{ github.event.number }}.${{ github.run_id }} --tag rc --no-git-tag-version
-          npm publish
+          npm version prerelease --preid rc.${{ github.event.number }}.${{ github.run_id }}  --git-tag-version=false
+          npm publish --tag rc
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

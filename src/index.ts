@@ -1,6 +1,8 @@
 export { ciede2000 } from "./CIEDE2000.js";
 export {
+  convertCSSRGBtoHex,
   convertHextoRGB,
+  convertNamedCSSColourtoHex,
   convertRGBtoHex,
   convertRGBtoLab,
   convertRGBtoXYZ,

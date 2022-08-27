@@ -1,6 +1,6 @@
 import type { LabColour, RGBColour, XYZColour } from "./types";
 import { constrainLab, linearRGB } from "./util/index.js";
-import { hexAlphaRegex, hexRegex, shortAlphaHexRegex, shortHexRegex } from "./util/regexers.js";
+import { cssRGBA, hexAlphaRegex, hexRegex, shortAlphaHexRegex, shortHexRegex } from "./util/regexers.js";
 
 /**
  * Converts sRGB colour space to XYZ.
@@ -62,7 +62,7 @@ export function convertRGBtoLab(colour: RGBColour): LabColour {
 /**
  * Converts a colour in the RGB format to Hexadecimal.
  * It accepts an option Alpha channel `A`
- * @param {Object} colour - An object representing RGB Colour.
+ * @param {RGBColour} colour - An object representing RGB Colour.
  * @param {number} colour.R - A number between 0 and 255 to describe the Red colour channel
  * @param {number} colour.G - A number between 0 and 255 to describe the Green colour channel
  * @param {number} colour.B - A number between 0 and 255 to describe the Blue colour channel
@@ -72,6 +72,29 @@ export function convertRGBtoLab(colour: RGBColour): LabColour {
 export function convertRGBtoHex({R, G, B, A}: RGBColour): string {
   const hex = (n: number) => n.toString(16).padStart(2, '0');
   return '#'+hex(R)+hex(G)+hex(B)+(A ? hex(Math.round(A * 255)) : '');
+}
+
+/**
+ * Converts CSS RGB colour format into Hexadecimal.
+ * @param {string} colour - A CSS RGB colour in the format:
+ * 
+ * - `rgb(0,0,0)`
+ * - `rgba(0,0,0,0.4)`
+ * 
+ * @returns {string} - An hexadecimal string 
+ */
+export function convertCSSRGBtoHex(colour:string): string {
+  const match = colour.match(cssRGBA);
+  if (!match) { throw new Error(`convertCSSRGBtoHex expects a valid CSS RGB string but got ${colour}`)}
+  const rgbNumber = (n: string) : number => parseInt(n, 10);
+  const alphaNumber = (n: string) : number => parseFloat(n) ?? undefined;
+  const rgb: RGBColour = {
+    R:rgbNumber(match[1] as string),
+    G:rgbNumber(match[2] as string), 
+    B:rgbNumber(match[3] as string), 
+    A:alphaNumber(match[4] as string)
+  };
+  return convertRGBtoHex(rgb);
 }
 
 export function convertHextoRGB(hex: string): RGBColour {

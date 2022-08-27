@@ -1,9 +1,10 @@
 import test from "ava";
 import {
+  convertHextoRGB,
+  convertRGBtoHex,
+  convertRGBtoLab,
   convertRGBtoXYZ,
   convertXYZtoLab,
-  convertRGBtoLab,
-  convertHextoRGB,
 } from "../converters.js";
 import { ciede2000 } from "../CIEDE2000.js";
 import type { LabColour, RGBColour, XYZColour } from "../types";
@@ -152,4 +153,29 @@ test("throws an error if not passing a valid hexadecimal value", ({
     error.message,
     "convertHextoRGB expects an valid hexadecimal colour value but got HH77ZZs"
   );
+});
+
+test("converts RGB format to hexadecimal colour", ({
+  is
+}) => {
+  const expectedHex = "#ffffff";
+  const RGB: RGBColour = {
+    R: 255,
+    G: 255,
+    B: 255,
+  };
+  is(convertRGBtoHex(RGB), expectedHex);
+});
+
+test("converts RGBA format to hexadecimal colour with alpha channel", ({
+  is
+}) => {
+  const expectedHex = "#ffffff80";
+  const RGB: RGBColour = {
+    R: 255,
+    G: 255,
+    B: 255,
+    A: 0.5
+  };
+  is(convertRGBtoHex(RGB), expectedHex);
 });

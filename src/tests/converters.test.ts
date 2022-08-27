@@ -1,5 +1,6 @@
 import test from "ava";
 import {
+  convertCSSRGBtoHex,
   convertHextoRGB,
   convertRGBtoHex,
   convertRGBtoLab,
@@ -178,4 +179,32 @@ test("converts RGBA format to hexadecimal colour with alpha channel", ({
     A: 0.5
   };
   is(convertRGBtoHex(RGB), expectedHex);
+});
+
+test("converts CSS RGB format to hexadecimal colour", ({
+  is
+}) => {
+  const expectedHex = "#ffffff";
+  const RGB = 'rgb(255,255,255)';
+  is(convertCSSRGBtoHex(RGB), expectedHex);
+});
+
+test("converts CSS RGBA format to hexadecimal colour with alpha channel", ({
+  is
+}) => {
+  const expectedHex = "#ffffff80";
+  const RGBA = 'rgba(255,255,255,0.5)';
+  is(convertCSSRGBtoHex(RGBA), expectedHex);
+});
+
+test("throws an error if not passing a valid CSS RGB format", ({
+  is,
+  throws,
+}) => {
+  const rgb = "rfv(12,23,42)";
+  const error = throws(() => convertCSSRGBtoHex(rgb)) as Error;
+  is(
+    error.message,
+    "convertCSSRGBtoHex expects a valid CSS RGB string but got rfv(12,23,42)"
+  );
 });

@@ -2,6 +2,7 @@ import test from "ava";
 import {
   convertCSSRGBtoHex,
   convertHextoRGB,
+  convertNamedCSSColourtoHex,
   convertRGBtoHex,
   convertRGBtoLab,
   convertRGBtoXYZ,
@@ -207,4 +208,19 @@ test("throws an error if not passing a valid CSS RGB format", ({
     error.message,
     "convertCSSRGBtoHex expects a valid CSS RGB string but got rfv(12,23,42)"
   );
+});
+
+test("converts named CSS colour to hexadecimal colour", ({
+  is
+}) => {
+  const expectedHex = "#fffafa";
+  is(convertNamedCSSColourtoHex('snow'), expectedHex);
+});
+
+test("returns undefined if named CSS colour doesn't exist", ({
+  is
+}) => {
+  const expectedHex = undefined;
+  /*@ts-ignore-line */
+  is(convertNamedCSSColourtoHex('neve'), expectedHex);
 });

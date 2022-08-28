@@ -1,7 +1,7 @@
 import type { LabColour, NamedCSSColour, RGBColour, XYZColour } from "./types";
-import { constrainLab, linearRGB } from "./util/index.js";
+import { clamp, constrainLab, linearRGB } from "./util/index.js";
 import { namedCSSColours } from "./util/namedCSSColours.js";
-import { cssRGBA, hexAlphaRegex, hexRegex, shortAlphaHexRegex, shortHexRegex } from "./util/regexers.js";
+import { cssRGBARegex, hexAlphaRegex, hexRegex, shortAlphaHexRegex, shortHexRegex } from "./util/regexers.js";
 
 /**
  * Converts sRGB colour space to XYZ.
@@ -71,7 +71,10 @@ export function convertRGBtoLab(colour: RGBColour): LabColour {
  * @returns - An hexadecimal string 
  */
 export function convertRGBtoHex({R, G, B, A}: RGBColour): string {
-  const hex = (n: number) => n.toString(16).padStart(2, '0');
+  const hex = (n: number) =>{
+    const value = clamp(n, 0, 255);
+    return value.toString(16).padStart(2, '0')
+  };
   return '#'+hex(R)+hex(G)+hex(B)+(A ? hex(Math.round(A * 255)) : '');
 }
 
@@ -85,7 +88,7 @@ export function convertRGBtoHex({R, G, B, A}: RGBColour): string {
  * @returns {string} - An hexadecimal string 
  */
 export function convertCSSRGBtoHex(colour:string): string {
-  const match = colour.match(cssRGBA);
+  const match = colour.match(cssRGBARegex);
   if (!match) { throw new Error(`convertCSSRGBtoHex expects a valid CSS RGB string but got ${colour}`)}
   const rgbNumber = (n: string) : number => parseInt(n, 10);
   const alphaNumber = (n: string) : number => parseFloat(n) ?? undefined;

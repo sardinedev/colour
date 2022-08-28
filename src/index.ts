@@ -10,7 +10,9 @@ export {
 } from "./converters.js";
 export { RGBdistance } from "./RGBdistance.js";
 export { getSRGBLuminanceFromHex } from "./getSRGBLuminanceFromHex.js";
+export { getSRGBLuminanceFromRGB } from "./getSRGBLuminanceFromRGB.js";
 export { pickHexColourContrast } from "./pickHexColourContrast.js";
-export { isHexDarkColour } from "./isHexDarkColour.js";
 export { isCSSRGBColour } from "./assertions.js";
 export { isCSSNamedDarkColour } from "./isCSSNameDarkColour.js";
+export { isCSSRGBDarkColour } from "./isCSSRGBDarkColour.js";
+export { isHexDarkColour } from "./isHexDarkColour.js";

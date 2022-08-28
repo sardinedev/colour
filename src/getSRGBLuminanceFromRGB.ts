@@ -1,6 +1,5 @@
-import { convertHextoRGB } from "./converters.js";
-import { getSRGBLuminanceFromRGB } from "./getSRGBLuminanceFromRGB.js";
-import type { WCAG } from "./types";
+import { linearRGB } from "./util/index.js";
+import type { RGBColour, WCAG } from "./types";
 
 /**
  * Returns the relative luminance of a colour in the sRGB space.
@@ -13,8 +12,14 @@ import type { WCAG } from "./types";
  * https://www.w3.org/WAI/GL/wiki/Relative_luminance
  * @param colour an hexadecimal colour
  */
-export function getSRGBLuminanceFromHex(colour: string,
-  standard?: WCAG) {
-  const rgbColor = convertHextoRGB(colour);
-  return getSRGBLuminanceFromRGB(rgbColor, standard);
+export function getSRGBLuminanceFromRGB(
+	{ R, G, B }: RGBColour,
+	standard?: WCAG,
+) {
+	const isWCAG21 = standard === "WCAG2.1";
+	const r = linearRGB(R, isWCAG21);
+	const g = linearRGB(G, isWCAG21);
+	const b = linearRGB(B, isWCAG21);
+
+	return (0.2126 * r) + (0.7152 * g) + (0.0722 * b);
 }

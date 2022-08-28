@@ -75,7 +75,7 @@ export function convertRGBtoHex({R, G, B, A}: RGBColour): string {
     const value = clamp(n, 0, 255);
     return value.toString(16).padStart(2, '0')
   };
-  return '#'+hex(R)+hex(G)+hex(B)+(A ? hex(Math.round(A * 255)) : '');
+  return `#${hex(R)}${hex(G)}${hex(B)}${(A ? hex(Math.round(A * 255)) : '')}`;
 }
 
 /**
@@ -84,23 +84,51 @@ export function convertRGBtoHex({R, G, B, A}: RGBColour): string {
  * 
  * - `rgb(0,0,0)`
  * - `rgba(0,0,0,0.4)`
+ * - `rgb(0 0 0)`
+ * - `rgba(0 0 0 / 0.4)`
  * 
  * @returns {string} - An hexadecimal string 
  */
 export function convertCSSRGBtoHex(colour:string): string {
+  const rgb: RGBColour = convertCSSRGBtoRGB(colour);
+  return convertRGBtoHex(rgb);
+}
+
+/**
+ * Converts CSS RGB colour format into RGB colour object.
+ * @param {string} colour - A CSS RGB colour in the format:
+ * 
+ * - `rgb(0,0,0)`
+ * - `rgba(0,0,0,0.4)`
+ * - `rgb(0 0 0)`
+ * - `rgba(0 0 0 / 0.4)`
+ * 
+ * @returns {RGBColour} - RGB colour object. 
+ */
+export function convertCSSRGBtoRGB(colour: string): RGBColour {
   const match = colour.match(cssRGBARegex);
   if (!match) { throw new Error(`convertCSSRGBtoHex expects a valid CSS RGB string but got ${colour}`)}
   const rgbNumber = (n: string) : number => parseInt(n, 10);
   const alphaNumber = (n: string) : number => parseFloat(n) ?? undefined;
-  const rgb: RGBColour = {
+  return {
     R:rgbNumber(match[1] as string),
     G:rgbNumber(match[2] as string), 
     B:rgbNumber(match[3] as string), 
     A:alphaNumber(match[4] as string)
   };
-  return convertRGBtoHex(rgb);
 }
 
+/**
+ * Converts an hexadecimal colour into RGB colour object.
+ * @param {string} hex - An hexadecimal colour in the format:
+ * 
+ * - `#000`
+ * - `#102030`
+ * - `#ffff`
+ * - `#102030ff`
+ * 
+ * @returns {RGBColour} - RGB colour object. 
+ */
 export function convertHextoRGB(hex: string): RGBColour {
   if (typeof hex !== "string") {
     throw new Error(`convertHextoRGB expects a string but got a ${typeof hex}`);

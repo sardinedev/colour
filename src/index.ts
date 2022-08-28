@@ -13,3 +13,4 @@ export { getSRGBLuminanceFromHex } from "./getSRGBLuminanceFromHex.js";
 export { pickHexColourContrast } from "./pickHexColourContrast.js";
 export { isHexDarkColour } from "./isHexDarkColour.js";
 export { isCSSRGBColour } from "./assertions.js";
+export { isCSSNamedDarkColour } from "./isCSSNameDarkColour.js";

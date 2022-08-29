@@ -2,4 +2,4 @@
 "@sardine/colour": minor
 ---
 
-Add convertNamedCSSColourtoHex
+feat: Add convertNamedCSSColourtoHex

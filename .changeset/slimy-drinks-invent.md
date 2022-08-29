@@ -2,4 +2,4 @@
 "@sardine/colour": minor
 ---
 
-Add isCSSRGBColour
+feat: Add isCSSRGBColour

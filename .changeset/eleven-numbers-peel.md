@@ -2,4 +2,4 @@
 "@sardine/colour": minor
 ---
 
-Add convertRGBtoHex
+feat: Add convertRGBtoHex

@@ -15,4 +15,5 @@ export { pickHexColourContrast } from "./pickHexColourContrast.js";
 export { isCSSRGBColour } from "./assertions.js";
 export { isCSSNamedDarkColour } from "./isCSSNameDarkColour.js";
 export { isCSSRGBDarkColour } from "./isCSSRGBDarkColour.js";
+export { isDarkColour } from "./isDarkColour.js";
 export { isHexDarkColour } from "./isHexDarkColour.js";

@@ -22,8 +22,7 @@
     "test": "rm -rf ./dist && npm run build:esm && c8 ava",
     "types:emit": "npx tsc --declaration --emitDeclarationOnly",
     "types:check": "npx tsc --noEmit",
-    "publish:next": "npm run build && npm run types:emit && npm publish --tag next",
-    "publish:latest": "npm run build && npm run types:emit && npm publish"
+    "format": "rome format ./src --write"
   },
   "repository": {
     "type": "git",
@@ -63,6 +62,7 @@
     "ava": "^4.3.1",
     "c8": "^7.12.0",
     "postcss": "^8.4.16",
+    "rome": "^0.8.0-next.ff4153b",
     "tailwindcss": "^3.1.8",
     "typescript": "^4.7.4"
   }

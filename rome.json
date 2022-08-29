@@ -1,0 +1,17 @@
+{
+  "formatter": {
+    "enabled": true
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true
+    }
+  },
+  "javascript": {
+    "globals": [],
+    "formatter": {
+      "quoteStyle": "single"
+    }
+  }
+}

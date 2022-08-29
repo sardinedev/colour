@@ -7,7 +7,7 @@ import { WCAG } from "./types";
  * @param {"WCAG2.1" | "WCAG3.0"} standard - Evaluate agains "WCAG2.1" or "WCAG3.0"
  * @returns {boolean} Returns either `true` or `false`
  */
-export const isHexDarkColour = (colour: string, standard: WCAG): boolean => {
+export function isHexDarkColour(colour: string, standard: WCAG): boolean {
   const colourLuminance = getSRGBLuminanceFromHex(colour, standard) + 0.05;
 
   // We know white luminance is 1 so we can pre-calculate the whiteLuminance to 1.05 (1 + 0.05)
@@ -16,4 +16,4 @@ export const isHexDarkColour = (colour: string, standard: WCAG): boolean => {
   const blackContrast = colourLuminance / 0.05;
 
   return whiteContrast > blackContrast;
-};
+}

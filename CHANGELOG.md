@@ -4,15 +4,15 @@
 
 ### Minor Changes
 
+- 732f0ee: feat: Add convertNamedCSSColourtoHex
+- 97eb272: feat: Add convertRGBtoHex
 - 9dfb34f: feat: Add isDarkColour
-- 97eb272: Add convertRGBtoHex
-- b35132a: feat: Add isHexColour
-- b35132a: feat: Increase coverage of different CSS RGB formats
-- b35132a: feat: Add isCSSRGBDarkColour
-- b35132a: Add isCSSRGBColour
-- f16c7cf: Add convertCSSRGBtoHex
 - b35132a: feat: Add isCSSNamedDarkColour
-- 732f0ee: Add convertNamedCSSColourtoHex
+- b35132a: feat: Add isCSSRGBColour
+- b35132a: feat: Add isCSSRGBDarkColour
+- b35132a: feat: Add isHexColour
+- f16c7cf: feat: Add convertCSSRGBtoHex
+- b35132a: feat: Increase coverage of different CSS RGB formats
 
 ## 1.5.0
 

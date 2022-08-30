@@ -1,5 +1,19 @@
 # @sardine/colour
 
+## 1.6.0
+
+### Minor Changes
+
+- 732f0ee: feat: Add convertNamedCSSColourtoHex
+- 97eb272: feat: Add convertRGBtoHex
+- 9dfb34f: feat: Add isDarkColour
+- b35132a: feat: Add isCSSNamedDarkColour
+- b35132a: feat: Add isCSSRGBColour
+- b35132a: feat: Add isCSSRGBDarkColour
+- b35132a: feat: Add isHexColour
+- f16c7cf: feat: Add convertCSSRGBtoHex
+- b35132a: feat: Increase coverage of different CSS RGB formats
+
 ## 1.5.0
 
 ### Minor Changes

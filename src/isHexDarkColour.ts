@@ -1,5 +1,5 @@
 import { getSRGBLuminanceFromHex } from "./getSRGBLuminanceFromHex.js";
-import { WCAG } from "./types";
+import type { WCAG } from "./types";
 
 /**
  * Evaluates if a colour is dark by measuring the contrast ratio against black and white

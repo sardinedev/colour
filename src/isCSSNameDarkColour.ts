@@ -1,4 +1,4 @@
-import { convertNamedCSSColourtoHex } from "./converters.js";
+import { convertNamedCSSColourtoHex } from "./convertNamedCSSColourtoHex.js";
 import { isHexDarkColour } from "./isHexDarkColour.js";
 import type { NamedCSSColour, WCAG } from "./types";
 

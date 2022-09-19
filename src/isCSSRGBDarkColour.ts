@@ -1,4 +1,4 @@
-import { convertCSSRGBtoRGB } from "./converters.js";
+import { convertCSSRGBtoRGB } from "./convertCSSRGBtoRGB.js";
 import { getSRGBLuminanceFromRGB } from "./getSRGBLuminanceFromRGB.js";
 import type { WCAG } from "./types";
 

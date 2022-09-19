@@ -1,4 +1,4 @@
-import { convertHextoRGB } from "./converters.js";
+import { convertHextoRGB } from "./convertHextoRGB.js";
 import { getSRGBLuminanceFromRGB } from "./getSRGBLuminanceFromRGB.js";
 import type { WCAG } from "./types";
 

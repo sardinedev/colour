@@ -1,5 +1,11 @@
 # @sardine/colour
 
+## 1.6.1
+
+### Patch Changes
+
+- b45cbfc: fix: `convertCSSRGBtoRGB` now returns the alpha channel as `undefined` instead of `NaN` if no alpha is present in CSS RGB function
+
 ## 1.6.0
 
 ### Minor Changes

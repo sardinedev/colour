@@ -51,6 +51,9 @@ export type ColourSpace = "sRGB";
 
 export type WCAG = "WCAG2.1" | "WCAG3.0";
 
+/**
+ * Named list from https://developer.mozilla.org/en-US/docs/Web/CSS/named-color
+ */
 export type NamedCSSColour =
   | "aliceblue"
   | "antiquewhite"

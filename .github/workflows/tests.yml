@@ -57,7 +57,7 @@ jobs:
       - name: Run tests
         run: npm run test
 
-      - uses: paambaati/codeclimate-action@v2.2.4
+      - uses: paambaati/codeclimate-action@v3.1.1
         env:
           CC_TEST_REPORTER_ID: ${ secrets.CODE_CLIMATE_ID }
         with:

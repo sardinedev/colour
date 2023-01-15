@@ -42,7 +42,7 @@ jobs:
       - name: Build package
         run: npm run build
 
-      - name: Publish Skroll Release Candidate
+      - name: Publish Colour Release Candidate
         run: |
           npm version prerelease --preid rc.${{ github.event.number }}.${{ github.run_id }}  --git-tag-version=false
           npm publish --tag rc

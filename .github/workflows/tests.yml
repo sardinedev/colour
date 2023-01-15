@@ -22,7 +22,7 @@ jobs:
       - name: Check types
         run: npm run types:check
 
-  testing-on-node:
+  test:
     runs-on: ubuntu-latest
     strategy:
       matrix:

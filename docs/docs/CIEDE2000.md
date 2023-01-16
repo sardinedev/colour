@@ -1,8 +1,8 @@
 ---
-title: Convert XYZ to Lab
+title: Color difference - CIEDE2000
 code: true
 tags:
-  - converters
+  - util
 ---
 
 ## Description

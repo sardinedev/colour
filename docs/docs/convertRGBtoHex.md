@@ -2,7 +2,6 @@
 title: Convert RGB to Hexadecimal
 code: true
 tags:
-  - docs
   - converters
 ---
 

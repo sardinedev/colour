@@ -2,7 +2,6 @@
 title: Convert CSS RGB to RGB
 code: true
 tags:
-  - docs
   - converters
 ---
 

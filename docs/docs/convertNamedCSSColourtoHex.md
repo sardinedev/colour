@@ -2,7 +2,6 @@
 title: Convert a named CSS colours to Hexadecimal
 code: true
 tags:
-  - docs
   - converters
 ---
 

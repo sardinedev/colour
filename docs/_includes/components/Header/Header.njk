@@ -1,11 +1,36 @@
-<header class="flex items-center border-b-2 border-gray-400">
-  <div class="ml-4">
-    <a href="/">@sardine/colour</a>
-  </div>
-  <nav class="ml-auto md:mr-auto">
-    <ul class="flex">
-      <li class="contents"><a class="p-4" href="/docs">Docs</a></li>
-      <li class="contents"><a class="p-4" href="/about">About</a></li>
-    </ul>
-  </nav>
-</header>
+<aside>
+  <header class="contents">
+    <div class="ml-4 flex items-center">
+      <button class="w-8 p-1" type="button" aria-label="Toggle navigation bar">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M24 6H0V2h24v4zm0 4H0v4h24v-4zm0 8H0v4h24v-4z"/></svg>
+      </button>
+      <a href="/">@sardine/colour</a>
+    </div>
+    <nav class="p-4">
+      <h2 class="">Documentation</h2>
+      <h3 class="mt-4" {% if page.url == '/docs/' %} aria-current="page"{% endif %}>Getting started</h3>
+      <ul class="flex flex-col ml-3">
+        <li class="flex" {% if page.url == '/docs/#introduction' %} aria-current="page"{% endif %}>
+          <a class="py-2 w-full" href="/docs/#introduction">Introduction</a>
+        </li>
+        <li class="flex" {% if page.url == '/docs/#installation' %} aria-current="page"{% endif %}>
+          <a class="py-2 w-full" href="/docs/#installation">Installation</a>
+        </li>
+        <li class="flex" {% if page.url == '/docs/#usage' %} aria-current="page"{% endif %}>
+          <a class="py-2 w-full" href="/docs/#usage">Usage</a>
+        </li>
+      </ul>
+      {% set taglist = ['converters', 'util'] %}
+       {%- for tag in taglist -%}
+        <h3 class="mt-4">{{ tag }}</h3>
+        <ul class="flex flex-col">
+          {%- for doc in collections[tag] -%}
+          <li class="flex" {% if page.url == doc.url %} aria-current="page"{% endif %} >
+            <a class="py-2 w-full" href="{{ doc.url }}">{{ doc.data.title }}</a>
+          </li>
+          {%- endfor -%}
+        </ul>
+      {%- endfor -%}
+    </nav>
+  </header>
+</aside>

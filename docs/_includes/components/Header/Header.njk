@@ -1,12 +1,12 @@
 <aside>
   <header class="contents">
-    <div class="ml-4 flex items-center">
+    <div class="bg-primary ml-4 flex items-center fixed z-20 w-full">
       <button class="w-8 p-1" type="button" aria-label="Toggle navigation bar">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M24 6H0V2h24v4zm0 4H0v4h24v-4zm0 8H0v4h24v-4z"/></svg>
       </button>
       <a href="/">@sardine/colour</a>
     </div>
-    <nav class="p-4">
+    <nav class="bg-primary p-4 absolute z-10 mt-8 -translate-x-96 transform-gpu transition-all">
       <h2 class="">Documentation</h2>
       <h3 class="mt-4" {% if page.url == '/docs/' %} aria-current="page"{% endif %}>Getting started</h3>
       <ul class="flex flex-col ml-3">
@@ -22,8 +22,8 @@
       </ul>
       {% set taglist = ['converters', 'util'] %}
        {%- for tag in taglist -%}
-        <h3 class="mt-4">{{ tag }}</h3>
-        <ul class="flex flex-col">
+        <h3 class="mt-4 capitalize">{{ tag }}</h3>
+        <ul class="flex flex-col ml-3">
           {%- for doc in collections[tag] -%}
           <li class="flex" {% if page.url == doc.url %} aria-current="page"{% endif %} >
             <a class="py-2 w-full" href="{{ doc.url }}">{{ doc.data.title }}</a>
@@ -34,3 +34,10 @@
     </nav>
   </header>
 </aside>
+<script>
+  const nav = document.querySelector('nav');
+  const button = document.querySelector('button');
+  button.addEventListener('click', () => {
+    nav.classList.toggle('-translate-x-96');
+  });
+</script>

@@ -1,8 +1,14 @@
+<style>
+.menu__button .menu, .menu__button .burger {
+  grid-area: 1/1;
+}
+</style>
 <aside>
   <header class="contents">
     <div class="bg-primary ml-4 flex items-center fixed z-20 w-full">
-      <button class="w-8 p-1" type="button" aria-label="Toggle navigation bar">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M24 6H0V2h24v4zm0 4H0v4h24v-4zm0 8H0v4h24v-4z"/></svg>
+      <button class="w-8 p-1 grid menu__button" type="button" aria-label="Toggle navigation bar">
+        <svg xmlns="http://www.w3.org/2000/svg" class="menu" fill="currentColor" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" clip-rule="evenodd" viewBox="0 0 24 24"><path fill-rule="nonzero" d="M22 16.75a.75.75 0 0 0-.75-.75H2.75a.75.75 0 0 0 0 1.5h18.5c.41 0 .75-.34.75-.75zm0-5a.75.75 0 0 0-.75-.75H2.75a.75.75 0 0 0 0 1.5h18.5c.41 0 .75-.34.75-.75zm0-5a.75.75 0 0 0-.75-.75H2.75a.75.75 0 0 0 0 1.5h18.5c.41 0 .75-.34.75-.75z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" class="burger" fill="currentColor" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" clip-rule="evenodd" viewBox="0 0 24 24"><path d="m12 10.93 5.72-5.72a.75.75 0 0 1 1.06 1.06L13.06 12l5.72 5.72a.75.75 0 0 1-.53 1.28.75.75 0 0 1-.53-.22L12 13.05l-5.72 5.72a.75.75 0 0 1-1.06-1.06l5.72-5.72-5.72-5.72a.75.75 0 0 1 1.06-1.06z"/></svg>
       </button>
       <a href="/">@sardine/colour</a>
     </div>

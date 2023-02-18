@@ -1,18 +1,47 @@
 <style>
-.menu__button .menu, .menu__button .burger {
+.button__icon {
   grid-area: 1/1;
+  opacity: 0;
 }
+.menu__nav {
+  visibility: hidden;
+}
+.menu__blur {
+  display: none;
+}
+@media (min-width: 400px) {
+  .menu--open .menu__blur {
+    display: block;
+  }
+}
+.menu--open .menu__icon__close{
+  opacity: 1;
+}
+.menu--open .menu__nav {
+  visibility: visible;
+}
+body:not(.menu--open) .menu__icon__burger {
+  opacity: 1;
+}
+body:not(.menu--open) .menu__nav {
+  transform: translate3d(-100%, 0, 0);
+}
+body:not(.menu--open) .menu__nav {
+  transform: translate3d(-100%, 0, 0);
+}
+
 </style>
-<aside>
-  <header class="contents">
-    <div class="bg-primary ml-4 flex items-center fixed z-20 w-full">
+<aside class="menu">
+  <div class="menu__blur fixed inset-0 top-14 bg-zinc-400/20 backdrop-blur-sm dark:bg-black/40 opacity-100"></div>
+  <header class="fixed top-0 bottom-0 w-full">
+    <div class="bg-primary pl-4 py-4 flex items-center fixed z-20 w-full">
       <button class="w-8 p-1 grid menu__button" type="button" aria-label="Toggle navigation bar">
-        <svg xmlns="http://www.w3.org/2000/svg" class="menu" fill="currentColor" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" clip-rule="evenodd" viewBox="0 0 24 24"><path fill-rule="nonzero" d="M22 16.75a.75.75 0 0 0-.75-.75H2.75a.75.75 0 0 0 0 1.5h18.5c.41 0 .75-.34.75-.75zm0-5a.75.75 0 0 0-.75-.75H2.75a.75.75 0 0 0 0 1.5h18.5c.41 0 .75-.34.75-.75zm0-5a.75.75 0 0 0-.75-.75H2.75a.75.75 0 0 0 0 1.5h18.5c.41 0 .75-.34.75-.75z"/></svg>
-        <svg xmlns="http://www.w3.org/2000/svg" class="burger" fill="currentColor" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" clip-rule="evenodd" viewBox="0 0 24 24"><path d="m12 10.93 5.72-5.72a.75.75 0 0 1 1.06 1.06L13.06 12l5.72 5.72a.75.75 0 0 1-.53 1.28.75.75 0 0 1-.53-.22L12 13.05l-5.72 5.72a.75.75 0 0 1-1.06-1.06l5.72-5.72-5.72-5.72a.75.75 0 0 1 1.06-1.06z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" class="button__icon menu__icon__burger" fill="currentColor" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" clip-rule="evenodd" viewBox="0 0 24 24"><path fill-rule="nonzero" d="M22 16.75a.75.75 0 0 0-.75-.75H2.75a.75.75 0 0 0 0 1.5h18.5c.41 0 .75-.34.75-.75zm0-5a.75.75 0 0 0-.75-.75H2.75a.75.75 0 0 0 0 1.5h18.5c.41 0 .75-.34.75-.75zm0-5a.75.75 0 0 0-.75-.75H2.75a.75.75 0 0 0 0 1.5h18.5c.41 0 .75-.34.75-.75z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" class="button__icon menu__icon__close" fill="currentColor" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" clip-rule="evenodd" viewBox="0 0 24 24"><path d="m12 10.93 5.72-5.72a.75.75 0 0 1 1.06 1.06L13.06 12l5.72 5.72a.75.75 0 0 1-.53 1.28.75.75 0 0 1-.53-.22L12 13.05l-5.72 5.72a.75.75 0 0 1-1.06-1.06l5.72-5.72-5.72-5.72a.75.75 0 0 1 1.06-1.06z"/></svg>
       </button>
       <a href="/">@sardine/colour</a>
     </div>
-    <nav class="bg-primary p-4 absolute z-10 mt-8 -translate-x-96 transform-gpu transition-all">
+    <nav class="menu__nav bg-primary absolute z-10 top-0 bottom-0 p-4 mt-16 transition-all overflow-y-auto">
       <h2 class="">Documentation</h2>
       <h3 class="mt-4" {% if page.url == '/docs/' %} aria-current="page"{% endif %}>Getting started</h3>
       <ul class="flex flex-col ml-3">
@@ -41,9 +70,9 @@
   </header>
 </aside>
 <script>
-  const nav = document.querySelector('nav');
+  const body = document.querySelector('body');
   const button = document.querySelector('button');
   button.addEventListener('click', () => {
-    nav.classList.toggle('-translate-x-96');
+    body.classList.toggle('menu--open');
   });
 </script>

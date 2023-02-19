@@ -14,9 +14,6 @@
     display: block;
   }
 }
-.menu--open .menu {
-    z-index: 30;
-}
 .menu--open .menu__icon__close{
   opacity: 1;
 }
@@ -37,16 +34,16 @@ body:not(.menu--open) .menu__nav {
 }
 </style>
 <aside class="menu lg:w-full">
-  <div class="menu__blur fixed inset-0 top-14 bg-zinc-400/20 backdrop-blur-sm dark:bg-black/40 opacity-100"></div>
-  <header class="fixed top-0 bottom-0 left-0 w-full">
-    <div class="bg-primary pl-4 py-4 flex items-center fixed z-20 w-full">
+  <div class="menu__blur fixed inset-0 z-10 bg-zinc-400/20 backdrop-blur-sm dark:bg-black/40 opacity-100"></div>
+  <header class="relative w-full">
+    <div class="bg-primary p-4 flex items-center fixed top-0 left-0 z-20 w-full">
       <button class="w-8 p-1 grid menu__button lg:hidden" type="button" aria-label="Toggle navigation bar">
         <svg xmlns="http://www.w3.org/2000/svg" class="button__icon menu__icon__burger" fill="currentColor" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" clip-rule="evenodd" viewBox="0 0 24 24"><path fill-rule="nonzero" d="M22 16.75a.75.75 0 0 0-.75-.75H2.75a.75.75 0 0 0 0 1.5h18.5c.41 0 .75-.34.75-.75zm0-5a.75.75 0 0 0-.75-.75H2.75a.75.75 0 0 0 0 1.5h18.5c.41 0 .75-.34.75-.75zm0-5a.75.75 0 0 0-.75-.75H2.75a.75.75 0 0 0 0 1.5h18.5c.41 0 .75-.34.75-.75z"/></svg>
         <svg xmlns="http://www.w3.org/2000/svg" class="button__icon menu__icon__close" fill="currentColor" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" clip-rule="evenodd" viewBox="0 0 24 24"><path d="m12 10.93 5.72-5.72a.75.75 0 0 1 1.06 1.06L13.06 12l5.72 5.72a.75.75 0 0 1-.53 1.28.75.75 0 0 1-.53-.22L12 13.05l-5.72 5.72a.75.75 0 0 1-1.06-1.06l5.72-5.72-5.72-5.72a.75.75 0 0 1 1.06-1.06z"/></svg>
       </button>
-      <a href="/">@sardine/colour</a>
+      <a class="ml-4 lg:ml-0" href="/">@sardine/colour</a>
     </div>
-    <nav class="menu__nav bg-primary absolute z-10 top-0 bottom-0 p-4 mt-16 transition-all overflow-y-auto lg:w-72 lg:transition-none">
+    <nav class="menu__nav bg-primary fixed z-10 top-0 bottom-0 left-0 p-4 mt-16 transition-all overflow-y-auto lg:w-72 lg:transition-none">
       <h2 class="">Documentation</h2>
       <h3 class="mt-4" {% if page.url == '/docs/' %} aria-current="page"{% endif %}>Getting started</h3>
       <ul class="flex flex-col ml-3">

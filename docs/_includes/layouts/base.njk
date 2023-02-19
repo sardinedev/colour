@@ -2,16 +2,17 @@
 <html {% if section %} data-current="{{ section }}" {% endif %} lang="en">
   {% include "./head.njk" %}
 
-  <body class="min-h-screen max-w-7xl flex flex-col mx-auto relative">
+  <body class="min-h-screen max-w-7xl block mx-auto relative">
     <style>
       .menu--open {
         overflow: hidden;
       }
     </style>
+
+    {% include "../components/Header/Header.njk" %}
     <main
-      class="mb-20 pt-16 md:pt-20 {% if templateClass === 'tmpl-doc' %}flex flex-col lg:flex-row{% endif %}"
+      class="mt-16 px-5"
     >
-      {% include "../components/Header/Header.njk" %}
       {{ layoutContent | safe }}
     </main>
   </body>

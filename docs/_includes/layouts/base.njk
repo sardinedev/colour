@@ -8,10 +8,10 @@
         overflow: hidden;
       }
     </style>
-    {% include "../components/Header/Header.njk" %}
     <main
-      class="mb-20 pt-16 md:pt-20 {% if templateClass === 'tmpl-doc' %}flex flex-col{% endif %}"
+      class="mb-20 pt-16 md:pt-20 {% if templateClass === 'tmpl-doc' %}flex flex-col lg:flex-row{% endif %}"
     >
+      {% include "../components/Header/Header.njk" %}
       {{ layoutContent | safe }}
     </main>
   </body>

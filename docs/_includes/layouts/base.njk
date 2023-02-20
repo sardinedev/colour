@@ -2,7 +2,7 @@
 <html {% if section %} data-current="{{ section }}" {% endif %} lang="en">
   {% include "./head.njk" %}
 
-  <body class="min-h-screen max-w-7xl block mx-auto relative">
+  <body class="min-h-screen flex relative">
     <style>
       .menu--open {
         overflow: hidden;
@@ -11,7 +11,7 @@
 
     {% include "../components/Header/Header.njk" %}
     <main
-      class="mt-16 px-5"
+      class="mt-16 px-5 max-w-7xl mx-auto flex-grow"
     >
       {{ layoutContent | safe }}
     </main>

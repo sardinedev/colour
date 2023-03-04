@@ -2,7 +2,6 @@
 title: Convert RGB to Lab
 code: true
 tags:
-  - docs
   - converters
 ---
 

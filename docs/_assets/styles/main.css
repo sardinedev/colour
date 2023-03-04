@@ -37,3 +37,7 @@ h5 {
     margin-top: 2rem;
   }
 }
+
+.bg-primary {
+  background-color: var(--primary-color);
+}

@@ -2,7 +2,6 @@
 title: Convert Hexadecimal to RGB
 code: true
 tags:
-  - docs
   - converters
 ---
 
@@ -16,7 +15,7 @@ It accepts multiple formats of hexadecimal colours:
 - 8 digit hexadecimal, ie `#FF11AAFF`
 - 4 digit hexadecimal, ie `#FFFF`
 
-It will throw an error if a string is not passed or it is in a different formate that the one described above.
+It will throw an error if a string is not passed or it is in a different format that the one described above.
 
 ## Signature
 

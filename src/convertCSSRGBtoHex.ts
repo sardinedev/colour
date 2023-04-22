@@ -14,6 +14,6 @@ import type { RGBColour } from "./types";
  * @returns {string} - An hexadecimal string
  */
 export function convertCSSRGBtoHex(colour: string): string {
-  const rgb: RGBColour = convertCSSRGBtoRGB(colour);
-  return convertRGBtoHex(rgb);
+	const rgb: RGBColour = convertCSSRGBtoRGB(colour);
+	return convertRGBtoHex(rgb);
 }

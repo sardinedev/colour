@@ -21,5 +21,5 @@ export function getSRGBLuminanceFromRGB(
 	const g = linearRGB(G, isWCAG21);
 	const b = linearRGB(B, isWCAG21);
 
-	return (0.2126 * r) + (0.7152 * g) + (0.0722 * b);
+	return 0.2126 * r + 0.7152 * g + 0.0722 * b;
 }

@@ -9,6 +9,8 @@ import type { NamedCSSColour } from "./types";
  * @param {NamedCSSColour} name - A named CSS colour
  * @returns {string} - An hexadecimal string
  */
-export function convertNamedCSSColourtoHex(name: NamedCSSColour): string | undefined {
-  return namedCSSColours.get(name);
+export function convertNamedCSSColourtoHex(
+	name: NamedCSSColour,
+): string | undefined {
+	return namedCSSColours.get(name);
 }

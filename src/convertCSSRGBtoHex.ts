@@ -1,4 +1,4 @@
-import { convertRGBtoHex } from './convertRGBtoHex.js';
+import { convertRGBtoHex } from "./convertRGBtoHex.js";
 import { convertCSSRGBtoRGB } from "./convertCSSRGBtoRGB.js";
 import type { RGBColour } from "./types";
 

@@ -64,9 +64,22 @@
     "autoprefixer": "^10.4.8",
     "ava": "^4.3.1",
     "c8": "^7.12.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.1",
     "postcss": "^8.4.16",
     "rome": "12.0.0",
     "tailwindcss": "^3.1.8",
     "typescript": "^5.0.4"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,ts}": [
+      "npx rome format ./src --write",
+      "npx rome check ./src --apply"
+    ]
   }
 }

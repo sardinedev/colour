@@ -9,6 +9,6 @@ import type { LabColour, RGBColour } from "./types";
  * @return {LabColour} Lab colour
  */
 export function convertRGBtoLab(colour: RGBColour): LabColour {
-  const XYZColour = convertRGBtoXYZ(colour);
-  return convertXYZtoLab(XYZColour);
+	const XYZColour = convertRGBtoXYZ(colour);
+	return convertXYZtoLab(XYZColour);
 }

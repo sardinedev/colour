@@ -24,8 +24,9 @@
     "test:coverage": "c8 -r lcovonly report",
     "types:emit": "npx tsc --declaration --emitDeclarationOnly",
     "types:check": "npx tsc --noEmit",
-    "publish:next": "npm run build && npm run types:emit && npm publish --tag next",
-    "publish:latest": "npm run build && npm run types:emit && npm publish"
+    "rome:format": "rome format ./src --write",
+    "rome:ci": "rome ci ./src",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -49,7 +50,7 @@
   },
   "homepage": "https://github.com/sardinedev/colour#readme",
   "engines": {
-    "node": ">= 14"
+    "node": ">= 16"
   },
   "devDependencies": {
     "@11ty/eleventy": "^2.0.0",
@@ -64,8 +65,17 @@
     "autoprefixer": "^10.4.8",
     "ava": "^4.3.1",
     "c8": "^7.12.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^13.2.1",
     "postcss": "^8.4.16",
+    "rome": "12.0.0",
     "tailwindcss": "^3.1.8",
     "typescript": "^5.0.4"
+  },
+  "lint-staged": {
+    "*.{js,ts}": [
+      "npx rome format ./src --write",
+      "npx rome check ./src --apply"
+    ]
   }
 }

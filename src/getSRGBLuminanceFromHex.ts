@@ -13,8 +13,7 @@ import type { WCAG } from "./types";
  * https://www.w3.org/WAI/GL/wiki/Relative_luminance
  * @param colour an hexadecimal colour
  */
-export function getSRGBLuminanceFromHex(colour: string,
-  standard?: WCAG) {
-  const rgbColor = convertHextoRGB(colour);
-  return getSRGBLuminanceFromRGB(rgbColor, standard);
+export function getSRGBLuminanceFromHex(colour: string, standard?: WCAG) {
+	const rgbColor = convertHextoRGB(colour);
+	return getSRGBLuminanceFromRGB(rgbColor, standard);
 }

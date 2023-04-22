@@ -25,7 +25,8 @@
     "types:emit": "npx tsc --declaration --emitDeclarationOnly",
     "types:check": "npx tsc --noEmit",
     "rome:format": "rome format ./src --write",
-    "rome:ci": "rome ci ./src"
+    "rome:ci": "rome ci ./src",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -64,7 +65,7 @@
     "autoprefixer": "^10.4.8",
     "ava": "^4.3.1",
     "c8": "^7.12.0",
-    "husky": "^8.0.3",
+    "husky": "^8.0.0",
     "lint-staged": "^13.2.1",
     "postcss": "^8.4.16",
     "rome": "12.0.0",

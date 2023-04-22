@@ -24,7 +24,8 @@
     "test:coverage": "c8 -r lcovonly report",
     "types:emit": "npx tsc --declaration --emitDeclarationOnly",
     "types:check": "npx tsc --noEmit",
-    "format": "rome format ./src --write"
+    "rome:format": "rome format ./src --write",
+    "rome:ci": "rome ci ./src"
   },
   "repository": {
     "type": "git",

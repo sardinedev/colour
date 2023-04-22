@@ -1,9 +1,12 @@
 {
-  "editor.tabSize": 2,
-  "editor.formatOnPaste": true,
-  "editor.formatOnSave": true,
-  "[typescript]": {
-    "editor.defaultFormatter": "rome.rome"
+  "editor.codeActionsOnSave": {
+    "source.organizeImports.rome": true
   },
-  "typescript.preferences.quoteStyle": "single"
+  "editor.tabSize": 2,
+  "[javascript][typescript]": {
+    "editor.defaultFormatter": "rome.rome",
+    "editor.formatOnSave": true
+  },
+  "prettier.requireConfig": true,
+  "eslint.enable": false
 }

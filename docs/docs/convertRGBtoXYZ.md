@@ -2,7 +2,6 @@
 title: Convert RGB to XYZ
 code: true
 tags:
-  - docs
   - converters
 ---
 

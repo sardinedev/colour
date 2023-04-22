@@ -38,6 +38,13 @@ jobs:
       - name: Run tests
         run: npm run test
 
+      - name: Publish code coverage
+        uses: paambaati/codeclimate-action@v3.1.1
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.CODE_CLIMATE_ID }}
+        with:
+          coverageCommand: npm run test:coverage
+
       - name: Check types
         run: npm run types:check
 

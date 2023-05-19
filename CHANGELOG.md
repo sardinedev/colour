@@ -1,5 +1,16 @@
 # @sardine/colour
 
+## 2.0.0
+
+### Major Changes
+
+- f0ff977: chore: Sets Node 16 as minimum version
+- 2db684b: chore: Adds @tsconfig/node16
+
+### Minor Changes
+
+- b7147f9: chore: Adds compatibility with TypeScript's `"moduleResolution": "bundler"` compiler option
+
 ## 1.6.1
 
 ### Patch Changes

@@ -62,6 +62,7 @@
     "@sardine/eleventy-plugin-tinyhtml": "^0.2.0",
     "@swc/cli": "^0.1.57",
     "@swc/core": "^1.2.219",
+    "@tsconfig/node16": "^1.0.4",
     "autoprefixer": "^10.4.8",
     "ava": "^4.3.1",
     "c8": "^7.12.0",

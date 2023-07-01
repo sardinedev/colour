@@ -1,4 +1,4 @@
-import type { HueHelper } from "../types";
+import type { HueHelper } from "../types.js";
 
 /**
  * Calculates the Hue derivative

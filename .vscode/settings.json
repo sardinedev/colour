@@ -3,7 +3,11 @@
     "source.organizeImports.rome": true
   },
   "editor.tabSize": 2,
-  "[javascript][typescript]": {
+  "[typescript]": {
+    "editor.defaultFormatter": "rome.rome",
+    "editor.formatOnSave": true
+  },
+  "[javascript]": {
     "editor.defaultFormatter": "rome.rome",
     "editor.formatOnSave": true
   },

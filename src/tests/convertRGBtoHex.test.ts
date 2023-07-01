@@ -1,6 +1,6 @@
 import test from "ava";
 import { convertRGBtoHex } from "../convertRGBtoHex.js";
-import type { RGBColour } from "../types";
+import type { RGBColour } from "../types.js";
 
 test("converts RGB format to hexadecimal colour", ({ is }) => {
 	const expectedHex = "#ffffff";

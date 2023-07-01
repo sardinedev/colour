@@ -1,5 +1,5 @@
 import { linearRGB } from "./util/index.js";
-import type { RGBColour, XYZColour } from "./types";
+import type { RGBColour, XYZColour } from "./types.js";
 
 /**
  * Converts sRGB colour space to XYZ.

@@ -1,6 +1,6 @@
 import test from "ava";
 import { convertXYZtoLab } from "../convertXYZtoLab.js";
-import type { LabColour, XYZColour } from "../types";
+import type { LabColour, XYZColour } from "../types.js";
 
 test("convert XYZ to Lab", ({ deepEqual }) => {
 	const XYZ: XYZColour = {

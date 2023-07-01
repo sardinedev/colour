@@ -1,6 +1,6 @@
 import test from "ava";
 import { convertRGBtoXYZ } from "../convertRGBtoXYZ.js";
-import type { RGBColour, XYZColour } from "../types";
+import type { RGBColour, XYZColour } from "../types.js";
 
 test("convert RGB to XYZ", ({ deepEqual }) => {
 	const RGB: RGBColour = { R: 34, G: 250, B: 124 };

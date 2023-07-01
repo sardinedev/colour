@@ -5,7 +5,7 @@ import {
 	meanHue_d,
 	toRadians,
 } from "./util/index.js";
-import type { LabColour } from "./types";
+import type { LabColour } from "./types.js";
 
 /**
  * Mesures the colour difference between two colours in the Lab space

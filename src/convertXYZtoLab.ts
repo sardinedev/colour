@@ -1,5 +1,5 @@
 import { constrainLab } from "./util/index.js";
-import type { LabColour, XYZColour } from "./types";
+import type { LabColour, XYZColour } from "./types.js";
 
 /**
  * Converts XYZ colour space to Lab

@@ -1,6 +1,6 @@
 import { convertRGBtoXYZ } from "./convertRGBtoXYZ.js";
 import { convertXYZtoLab } from "./convertXYZtoLab.js";
-import type { LabColour, RGBColour } from "./types";
+import type { LabColour, RGBColour } from "./types.js";
 
 /**
  * Indirectly converts RGB to Lab.

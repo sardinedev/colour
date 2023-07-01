@@ -1,6 +1,6 @@
 import { convertNamedCSSColourtoHex } from "./convertNamedCSSColourtoHex.js";
 import { isHexDarkColour } from "./isHexDarkColour.js";
-import type { NamedCSSColour, WCAG } from "./types";
+import type { NamedCSSColour, WCAG } from "./types.js";
 
 /**
  * Evaluates if a named CSS colour is dark by measuring the contrast ratio against black and white

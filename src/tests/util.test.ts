@@ -1,5 +1,5 @@
 import test from "ava";
-import type { HueHelper } from "../types";
+import type { HueHelper } from "../types.js";
 import {
 	bigSquare,
 	deltaHue_d,

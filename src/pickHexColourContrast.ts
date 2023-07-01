@@ -1,5 +1,5 @@
 import { getSRGBLuminanceFromHex } from "./getSRGBLuminanceFromHex.js";
-import type { WCAG } from "./types";
+import type { WCAG } from "./types.js";
 
 type ColorArgs = {
 	backgroundColour: string;

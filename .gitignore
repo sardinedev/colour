@@ -108,5 +108,4 @@ __tests__/
 
 _build/
 
-cc-reporter
-cc-reporter.*
+public-key.asc

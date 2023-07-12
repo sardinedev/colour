@@ -1,9 +1,9 @@
-import type { NamedCSSColour, NamedCSSColours } from "../types.js";
+import type { NamedCSSColour } from "../types.js";
 
 /**
  * Named list from https://developer.mozilla.org/en-US/docs/Web/CSS/named-color
  */
-const cssMapping: NamedCSSColours = [
+export const namedCSSColours: Map<NamedCSSColour, string> = new Map([
 	["aliceblue", "#f0f8ff"],
 	["antiquewhite", "#faebd7"],
 	["aquamarine", "#7fffd4"],
@@ -135,5 +135,4 @@ const cssMapping: NamedCSSColours = [
 	["wheat", "#f5deb3"],
 	["whitesmoke", "#f5f5f5"],
 	["yellowgreen", "#9acd32"],
-];
-export const namedCSSColours: Map<NamedCSSColour, string> = new Map(cssMapping);
+]);

@@ -1,5 +1,12 @@
 # @sardine/colour
 
+## 2.0.1
+
+### Patch Changes
+
+- e4aa71e: fix: Correctly sets package.json exports for ESM projects
+- c1c02f0: bug: improves treeshaking for named CSS colours
+
 ## 2.0.0
 
 ### Major Changes

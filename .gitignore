@@ -107,3 +107,6 @@ __tests__/
 .swc/
 
 _build/
+
+cc-reporter
+cc-reporter.*

@@ -1,6 +1,6 @@
 import { convertHextoRGB } from "./convertHextoRGB.js";
 import { getSRGBLuminanceFromRGB } from "./getSRGBLuminanceFromRGB.js";
-import type { WCAG } from "./types";
+import type { WCAG } from "./types.js";
 
 /**
  * Returns the relative luminance of a colour in the sRGB space.

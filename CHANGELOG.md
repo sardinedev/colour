@@ -1,5 +1,32 @@
 # @sardine/colour
 
+## 2.0.2
+
+### Patch Changes
+
+- adfe49a: fix: Reverts default export to CJS
+
+  Some widely used tools like [Jest still don't support ESM](https://jestjs.io/docs/ecmascript-modules) yet.
+  This reverts the package to CJS, so node based tools can use it without any issues and we rely on modern bundlers to pick the ESM version when possible.
+
+## 2.0.1
+
+### Patch Changes
+
+- e4aa71e: fix: Correctly sets package.json exports for ESM projects
+- c1c02f0: bug: improves treeshaking for named CSS colours
+
+## 2.0.0
+
+### Major Changes
+
+- f0ff977: chore: Sets Node 16 as minimum version
+- 2db684b: chore: Adds @tsconfig/node16
+
+### Minor Changes
+
+- b7147f9: chore: Adds compatibility with TypeScript's `"moduleResolution": "bundler"` compiler option
+
 ## 1.6.1
 
 ### Patch Changes

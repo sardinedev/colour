@@ -4,7 +4,7 @@ import {
 	shortAlphaHexRegex,
 	shortHexRegex,
 } from "./util/regexers.js";
-import type { RGBColour } from "./types";
+import type { RGBColour } from "./types.js";
 
 /**
  * Converts an hexadecimal colour into RGB colour object.

@@ -9,7 +9,7 @@ export interface RGBColour {
 	/** A number between 0 and 255 to describe the Blue colour channel */
 	B: number;
 	/** A optional number between 0 and 1 to describe the Alpha colour channel */
-	A?: number;
+	A?: number | undefined;
 }
 
 /**

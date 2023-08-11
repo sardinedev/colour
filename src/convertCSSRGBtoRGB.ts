@@ -1,5 +1,5 @@
 import { cssRGBARegex } from "./util/regexers.js";
-import type { RGBColour } from "./types";
+import type { RGBColour } from "./types.js";
 
 /**
  * Converts CSS RGB colour format into RGB colour object.
@@ -19,13 +19,12 @@ export function convertCSSRGBtoRGB(colour: string): RGBColour {
 			`convertCSSRGBtoHex expects a valid CSS RGB string but got ${colour}`,
 		);
 	}
-	const rgbNumber = (n: string): number => parseInt(n, 10);
-	const alphaNumber = (n: string): number | undefined =>
-		parseFloat(n) || undefined;
+	const rgbNumber = (n?: string): number | undefined =>
+		n ? parseFloat(n) : undefined;
 	return {
-		R: rgbNumber(match[1] as string),
-		G: rgbNumber(match[2] as string),
-		B: rgbNumber(match[3] as string),
-		A: alphaNumber(match[4] as string),
+		R: rgbNumber(match[1]) as number,
+		G: rgbNumber(match[2]) as number,
+		B: rgbNumber(match[3]) as number,
+		A: rgbNumber(match[4]),
 	};
 }

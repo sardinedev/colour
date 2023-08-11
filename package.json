@@ -3,22 +3,22 @@
   "version": "2.0.1",
   "description": "It does things to colours",
   "module": "./dist/index.js",
-  "main": "./dist/index.js",
+  "main": "./dist/cjs/index.js",
   "types": "./dist/index.d.ts",
   "sideEffects": false,
-  "type": "module",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "require": "./dist/cjs/index.js",
-      "default": "./dist/index.js"
+      "import": "./dist/index.js",
+      "default": "./dist/cjs/index.js"
     }
   },
   "scripts": {
     "build": "rm -rf ./dist && npm run build:esm && npm run build:cjs && npm run types:emit",
     "build:esm": "npx swc --config-file .esm.swcrc ./src -d ./dist",
     "build:cjs": "npx swc --config-file .cjs.swcrc ./src -d ./dist/cjs",
-    "test": "rm -rf ./dist && npm run build:esm && c8 ava",
+    "test": "rm -rf ./dist && npm run build:cjs && c8 ava",
     "test:coverage": "c8 -r lcovonly report",
     "types:emit": "npx tsc --declaration --emitDeclarationOnly",
     "types:check": "npx tsc --noEmit",

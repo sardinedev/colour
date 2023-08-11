@@ -1,6 +1,5 @@
 {
   "$schema": "https://json.schemastore.org/swcrc",
-  "exclude": [".*\\.spec|test\\.(j|t)s$", "mocks", "types"],
   "sourceMaps": true,
   "minify": true,
   "module": {

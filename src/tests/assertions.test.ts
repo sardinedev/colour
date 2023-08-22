@@ -1,8 +1,36 @@
 import test from "ava";
 import { isCSSRGBColour, isHexColour } from "../assertions.js";
 
-test("assert true if string is in the CSS RGB format", ({ is }) => {
+test("assert true if string is in the CSS RGB format with commas", ({ is }) => {
 	is(isCSSRGBColour("rgb(12, 23, 111)"), true);
+});
+
+test("assert true if string is in the CSS RGB format with commas and a alpha channel", ({
+	is,
+}) => {
+	is(isCSSRGBColour("rgba(12, 23, 111, 0.4)"), true);
+});
+
+test("assert true if string is in the CSS RGB format with commas and a percentage alpha channel", ({
+	is,
+}) => {
+	is(isCSSRGBColour("rgba(12, 23, 111, 40%)"), true);
+});
+
+test("assert true if string is in the CSS RGB format with spaces", ({ is }) => {
+	is(isCSSRGBColour("rgb(12 23 111)"), true);
+});
+
+test("assert true if string is in the CSS RGB format with spaces and alpha", ({
+	is,
+}) => {
+	is(isCSSRGBColour("rgb(12 23 111 / 0.4)"), true);
+});
+
+test("assert true if string is in the CSS RGBA format with spaces and a percentage alpha channel", ({
+	is,
+}) => {
+	is(isCSSRGBColour("rgba(12 23 111 / 40%)"), true);
 });
 
 test("assert false if string is not in the CSS RGB format", ({ is }) => {

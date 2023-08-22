@@ -6,6 +6,15 @@ export const hexAlphaRegex = /^#[a-fA-F0-9]{8}$/;
 export const shortHexRegex = /^#[a-fA-F0-9]{3}$/;
 /** Four digit Hexadecimal colour, ie: #FFF4 */
 export const shortAlphaHexRegex = /^#[a-fA-F0-9]{4}$/;
-/** CSS RGB with optional alpha channel, ie: rgb(23, 213, 11) or rgba(12,34,12,0.2) */
+/**
+ * Captures the folowing CSS RGB formats:
+ * - `rgb(0,0,0)`
+ * - `rgba(0, 0, 0, 0.4)`
+ * - `rgba(0,0,0,50%)`
+ * - `rgb(0 0 0)`
+ * - `rgba(0 0 0 / 0.4)`
+ * - `rgb(0 0 0 / 0.5)`
+ * - `rgb(0 0 0 / 50%)`
+ */
 export const cssRGBARegex =
 	/^rgba*\(\s*([-+]?\d+)\s*(?:,)?\s*([-+]?\d+)\s*(?:,)?\s*([-+]?\d+)\s*(?:,*|\/*)\s*([-+]?\d*[.]?\d+[%]?)*\)$/i;

@@ -10,7 +10,7 @@ import type { NamedCSSColour } from "./types.js";
 export function convertHextoNamedCSSColour(
 	colour: string,
 ): NamedCSSColour | undefined {
-	for (const [name, hex] of Object.entries(namedCSSColours)) {
+	for (const [name, hex] of namedCSSColours.entries()) {
 		if (hex === colour) {
 			return name as NamedCSSColour;
 		}

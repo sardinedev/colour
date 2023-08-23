@@ -7,5 +7,5 @@ import type { RGBColour } from "./types.js";
  * @returns {string} The CSS RGB colour string in the format `rgb(R G B)` or `rgb(R G B / A)` if the alpha channel is present.
  */
 export function convertRGBtoCSSRGB({ R, G, B, A }: RGBColour): string {
-	return `rgb(${R} ${G} ${B}${A ? `/ ${A}` : ""})`;
+	return `rgb(${R} ${G} ${B}${A ? ` / ${A}` : ""})`;
 }

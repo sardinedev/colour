@@ -17,7 +17,7 @@ test("should return the nearest CSS RGB colour seperated by commas from a palett
 	deepEqual(findNearestCSSRGBColour(colour, palette), "rgb(5 5 5)");
 });
 
-test("should return the nearest CSS RGB colour formats from a palette", ({
+test("should return the nearest CSS RGB colour formats from a palette with mixed formats", ({
 	deepEqual,
 }) => {
 	const palette = ["rgb(255,255,255)", "rgb(5 5 5)"];

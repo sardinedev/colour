@@ -1,5 +1,9 @@
 import test from "ava";
-import { isCSSRGBColour, isHexColour } from "../assertions.js";
+import {
+	isCSSRGBColour,
+	isHexColour,
+	isNamedCSSColour,
+} from "../assertions.js";
 
 test("assert true if string is in the CSS RGB format with commas", ({ is }) => {
 	is(isCSSRGBColour("rgb(12, 23, 111)"), true);
@@ -61,4 +65,13 @@ test("assert true if string is an hexadecimal colour with alpha", ({ is }) => {
 
 test("assert false if string is not a valid hexadecimal colour", ({ is }) => {
 	is(isHexColour("#333HH0ff"), false);
+});
+
+test("assert true if string is a valid named CSS colour", ({ is }) => {
+	is(isNamedCSSColour("snow"), true);
+});
+
+test("assert false if string is not a valid named CSS colour", ({ is }) => {
+	// @ts-expect-error - TS would complain about this, but it's a valid test for users consuming JS
+	is(isNamedCSSColour("neve"), false);
 });

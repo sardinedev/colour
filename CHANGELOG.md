@@ -1,5 +1,20 @@
 # @sardine/colour
 
+## 2.1.0
+
+### Minor Changes
+
+- 2726662: feat: Adds convertHextoNamedCSSColour
+  feat: Adds convertNamedCSSColourtoRGB
+  feat: Adds convertCSSRGBtoRGB
+  feat: Adds convertRGBtoCSSRGB
+  feat: Adds convertRGBtoNamedCSSColour
+  feat: Adds findNearestColour
+  feat: Adds findNearestCSSRGBColour
+  feat: Adds findNearestHexColour
+  feat: Adds findNearestNamedCSSColour
+  feat: Adds findNearestRGBColour
+
 ## 2.0.2
 
 ### Patch Changes

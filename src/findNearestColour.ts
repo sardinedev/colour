@@ -80,4 +80,5 @@ export function findNearestColour(
 	if (colourType === "namedCSS") {
 		return convertRGBtoNamedCSSColour(nearest) as NamedCSSColour;
 	}
+	return;
 }

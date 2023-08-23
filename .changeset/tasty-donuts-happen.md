@@ -4,6 +4,7 @@
 
 feat: Adds convertHextoNamedCSSColour
 feat: Adds convertNamedCSSColourtoRGB
+feat: Adds convertCSSRGBtoRGB
 feat: Adds convertRGBtoCSSRGB
 feat: Adds convertRGBtoNamedCSSColour
 feat: Adds findNearestColour

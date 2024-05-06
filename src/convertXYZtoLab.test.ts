@@ -1,8 +1,8 @@
-import test from "ava";
-import { convertXYZtoLab } from "../convertXYZtoLab.js";
-import type { LabColour, XYZColour } from "../types.js";
+import { expect, test } from "vitest";
+import { convertXYZtoLab } from "./convertXYZtoLab";
+import type { LabColour, XYZColour } from "./types";
 
-test("convert XYZ to Lab", ({ deepEqual }) => {
+test("convert XYZ to Lab", () => {
 	const XYZ: XYZColour = {
 		X: 20.517540535826125,
 		Y: 21.586050011389926,
@@ -15,10 +15,10 @@ test("convert XYZ to Lab", ({ deepEqual }) => {
 		b: -0.006243566036268078,
 	};
 
-	deepEqual(convertXYZtoLab(XYZ), expectedLab);
+	expect(convertXYZtoLab(XYZ)).toStrictEqual(expectedLab);
 });
 
-test("convert XYZ to Lab with constrains", ({ deepEqual }) => {
+test("convert XYZ to Lab with constrains", () => {
 	const XYZ: XYZColour = {
 		X: 0,
 		Y: 18.30616888722103,
@@ -31,5 +31,5 @@ test("convert XYZ to Lab with constrains", ({ deepEqual }) => {
 		b: 0.9489453364894151,
 	};
 
-	deepEqual(convertXYZtoLab(XYZ), expectedLab);
+	expect(convertXYZtoLab(XYZ)).toStrictEqual(expectedLab);
 });

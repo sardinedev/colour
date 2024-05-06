@@ -1,6 +1,6 @@
-import { ciede2000 } from "./CIEDE2000.js";
-import { convertRGBtoLab } from "./convertRGBtoLab.js";
-import type { RGBColour } from "./types.js";
+import { ciede2000 } from "./CIEDE2000";
+import { convertRGBtoLab } from "./convertRGBtoLab";
+import type { RGBColour } from "./types";
 
 /**
  * Calculate the distance between two RGB colours using the CIEDE2000 colour-difference formula.

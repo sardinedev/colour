@@ -1,4 +1,4 @@
-import type { NamedCSSColour } from "../types.js";
+import type { NamedCSSColour } from "../types";
 
 /**
  * Named list from https://developer.mozilla.org/en-US/docs/Web/CSS/named-color

@@ -1,7 +1,7 @@
-import { isHexDarkColour } from "./isHexDarkColour.js";
-import { isCSSRGBDarkColour } from "./isCSSRGBDarkColour.js";
-import { isCSSNamedDarkColour } from "./isCSSNameDarkColour.js";
-import type { NamedCSSColour, WCAG } from "./types.js";
+import { isCSSNamedDarkColour } from "./isCSSNameDarkColour";
+import { isCSSRGBDarkColour } from "./isCSSRGBDarkColour";
+import { isHexDarkColour } from "./isHexDarkColour";
+import type { NamedCSSColour, WCAG } from "./types";
 
 /**
  * Evaluates if a colour is dark by measuring the contrast ratio against black and white.

@@ -1,5 +1,5 @@
-import { clamp } from "./util/index.js";
-import type { RGBColour } from "./types.js";
+import type { RGBColour } from "./types";
+import { clamp } from "./util/index";
 
 /**
  * Converts a colour in the RGB format to Hexadecimal.

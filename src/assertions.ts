@@ -1,12 +1,12 @@
-import { NamedCSSColour } from "./types.js";
-import { namedCSSColours } from "./util/namedCSSColours.js";
+import type { NamedCSSColour } from "./types";
+import { namedCSSColours } from "./util/namedCSSColours";
 import {
 	cssRGBARegex,
-	hexRegex,
 	hexAlphaRegex,
+	hexRegex,
 	shortAlphaHexRegex,
 	shortHexRegex,
-} from "./util/regexers.js";
+} from "./util/regexers";
 
 /**
  * Determines whether a string represents a valid CSS RGB or RGBA colour value.

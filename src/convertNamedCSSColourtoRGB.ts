@@ -1,6 +1,6 @@
-import { convertHextoRGB } from "./convertHextoRGB.js";
-import { convertNamedCSSColourtoHex } from "./convertNamedCSSColourtoHex.js";
-import type { NamedCSSColour, RGBColour } from "./types.js";
+import { convertHextoRGB } from "./convertHextoRGB";
+import { convertNamedCSSColourtoHex } from "./convertNamedCSSColourtoHex";
+import type { NamedCSSColour, RGBColour } from "./types";
 
 /**
  * Converts a named CSS colour to an RGB colour object.

@@ -3,19 +3,23 @@ name: Colour
 on:
   pull_request:
     types:
-      - opened
-      - synchronize
+      - labeled
     paths:
-      - src/**
-      - .github/workflows/**
+      - '**'
 
 jobs:
   publish-rc:
     name: Publish RC
     runs-on: ubuntu-latest
+    if: github.event.label.name == 'Release Candidate'
+    permissions:
+      contents: write
+      id-token: write
+      pull-requests: write
+      repository-projects: read
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           # This makes Actions fetch all Git history so that Changesets can generate changelogs with the correct commits
           fetch-depth: "0"
@@ -26,9 +30,9 @@ jobs:
           git config --global user.name "@$GITHUB_ACTOR"
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version: 20
           registry-url: "https://registry.npmjs.org"
           scope: "@sardine"
 
@@ -44,7 +48,8 @@ jobs:
 
       - name: Publish Colour Release Candidate
         run: |
-          npm version prerelease --preid rc.${{ github.event.number }}.${{ github.run_id }}  --git-tag-version=false
-          npm publish --tag rc
+          npx changeset pre enter rc
+          npx changeset version
+          npx changeset publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

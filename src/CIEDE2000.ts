@@ -22,7 +22,7 @@ export function ciede2000(colour1: LabColour, colour2: LabColour): number {
 	 * Glossary
 	 * L - Lightness as defined by L*a*b*
 	 * a - Describes the green–red opponent colors as defined by L*a*b*
-	 * b - Describes the blue–yellow opponent colors as defined by L*a*b*
+	 * b - Describes the blue–yellow opponent colours as defined by L*a*b*
 	 * C - Chroma as defined by CIE94
 	 *
 	 * Math notation
@@ -107,7 +107,7 @@ export function ciede2000(colour1: LabColour, colour2: LabColour): number {
 	/** Lightness Mean value*/
 	const L̅ = (L1 + L2) / 2;
 
-	/** Compensation for neutral colors (the primed values in the L*C*h differences) */
+	/** Compensation for neutral colours (the primed values in the L*C*h differences) */
 	const T =
 		1 -
 		0.17 * Math.cos(toRadians(H̅_d - 30)) +

@@ -9,11 +9,11 @@ import { findNearestRGBColour } from "./findNearestRGBColour.js";
 import type { NamedCSSColour, RGBColour } from "./types.js";
 
 /**
- * Finds the nearest color in a palette to a given color.
+ * Finds the nearest colour in a palette to a given colour.
  *
- * @param {string | NamedCSSColour} colour - The color to match. It can be a hexadecimal color, a CSS RGB color, or a named CSS color.
- * @param {string[] | NamedCSSColour[]} palette - The palette of colors to search.
- * @returns {string} The nearest color in the palette to the given color.
+ * @param {string | NamedCSSColour} colour - The colour to match. It can be a hexadecimal colour, a CSS RGB colour, or a named CSS colour.
+ * @param {string[] | NamedCSSColour[]} palette - The palette of colours to search.
+ * @returns {string} The nearest colour in the palette to the given colour.
  */
 export function findNearestColour(
 	colour: string | NamedCSSColour,

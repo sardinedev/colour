@@ -9,7 +9,7 @@ import {
 } from "./util/regexers.js";
 
 /**
- * Determines whether a string represents a valid CSS RGB or RGBA color value.
+ * Determines whether a string represents a valid CSS RGB or RGBA colour value.
  *
  * Captures the folowing CSS RGB formats:
  * - `rgb(0,0,0)`
@@ -21,7 +21,7 @@ import {
  * - `rgb(0 0 0 / 50%)`
  *
  * @param {string} colour - The string to test.
- * @returns {boolean} `true` if the string represents a valid CSS RGB or RGBA color value, `false` otherwise.
+ * @returns {boolean} `true` if the string represents a valid CSS RGB or RGBA colour value, `false` otherwise.
  */
 export function isCSSRGBColour(colour: string): boolean {
 	return !!colour.match(cssRGBARegex);
@@ -43,10 +43,10 @@ export function isHexColour(colour: string): boolean {
 }
 
 /**
- * Determines whether a string represents a valid named CSS color.
+ * Determines whether a string represents a valid named CSS colour.
  *
  * @param {NamedCSSColour} colour - The string to test.
- * @returns {boolean} `true` if the string represents a valid named CSS color, `false` otherwise.
+ * @returns {boolean} `true` if the string represents a valid named CSS colour, `false` otherwise.
  */
 export function isNamedCSSColour(
 	colour: NamedCSSColour,

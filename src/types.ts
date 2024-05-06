@@ -18,7 +18,7 @@ export interface RGBColour {
 export interface LabColour {
 	/** A number between 0 and 100 to describe the colour's lightness. (0 - black, 100 - white)  */
 	L: number;
-	/** A number between -128 and 127 to describe the green–red opponent colors, with negative values toward green and positive values toward red */
+	/** A number between -128 and 127 to describe the green–red opponent colours, with negative values toward green and positive values toward red */
 	a: number;
 	/** A number between -128 and 127 to describe  blue–yellow opponents, with negative numbers toward blue and positive toward yellow */
 	b: number;

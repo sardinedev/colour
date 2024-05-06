@@ -11,13 +11,12 @@
     ".": {
       "types": "./dist/index.d.ts",
       "require": "./dist/index.cjs",
-      "import": "./dist/index.js"
+      "import": "./dist/index.mjs"
     }
   },
   "scripts": {
     "build": "npx vite build",
     "test": "npx vitest run --coverage",
-    "test:coverage": "c8 -r lcovonly report",
     "types:emit": "npx tsc -p tsconfig.emit.json",
     "types:check": "npx tsc --noEmit",
     "static": "npx biome ci src",

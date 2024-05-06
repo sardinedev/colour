@@ -23,7 +23,7 @@ jobs:
         run: npm run types:check
 
       - name: Check lint and format
-        run: npm run rome:ci
+        run: npm run static
 
   test:
     runs-on: ubuntu-latest

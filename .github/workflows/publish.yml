@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           # This makes Actions fetch all Git history so that Changesets can generate changelogs with the correct commits
           fetch-depth: "0"
@@ -22,9 +22,9 @@ jobs:
           git config --global user.name "@$GITHUB_ACTOR"
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version: 20
           registry-url: "https://registry.npmjs.org"
           scope: "@sardine"
 
@@ -42,8 +42,6 @@ jobs:
         uses: paambaati/codeclimate-action@v5.0.0
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CODE_CLIMATE_ID }}
-        with:
-          coverageCommand: npm run test:coverage
 
       - name: Check types
         run: npm run types:check

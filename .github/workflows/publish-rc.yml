@@ -48,7 +48,8 @@ jobs:
 
       - name: Publish Colour Release Candidate
         run: |
-          npm version prerelease --preid rc.${{ github.event.number }}.${{ github.run_id }}  --git-tag-version=false
-          npm publish --tag rc
+          npx changeset pre enter rc
+          npx changeset version
+          npx changeset publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

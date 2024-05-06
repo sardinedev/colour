@@ -1,5 +1,5 @@
 import test from "ava";
-import { findNearestCSSRGBColour } from "../findNearestCSSRGBColour.js";
+import { findNearestCSSRGBColour } from "../findNearestCSSRGBColour";
 
 test("should return the nearest CSS RGB colour seperated by spaces from a palette", ({
 	deepEqual,

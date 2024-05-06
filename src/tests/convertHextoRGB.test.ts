@@ -1,6 +1,6 @@
 import test from "ava";
-import { convertHextoRGB } from "../convertHextoRGB.js";
-import type { RGBColour } from "../types.js";
+import { convertHextoRGB } from "../convertHextoRGB";
+import type { RGBColour } from "../types";
 
 test("converts a 6 digit hexadecimal colour string to RGB format", ({
 	deepEqual,

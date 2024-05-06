@@ -1,5 +1,5 @@
 import test from "ava";
-import { convertCSSRGBtoRGB } from "../convertCSSRGBtoRGB.js";
+import { convertCSSRGBtoRGB } from "../convertCSSRGBtoRGB";
 
 test("convert CSS RGB separated by spaces", ({ deepEqual }) => {
 	deepEqual(convertCSSRGBtoRGB("rgb( 23 111 99)"), {

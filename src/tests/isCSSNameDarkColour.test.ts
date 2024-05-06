@@ -1,5 +1,5 @@
 import test from "ava";
-import { isCSSNamedDarkColour } from "../isCSSNameDarkColour.js";
+import { isCSSNamedDarkColour } from "../isCSSNameDarkColour";
 
 test("verify if `darkblue` is a dark colour", ({ is }) => {
 	is(isCSSNamedDarkColour("darkblue", "WCAG2.1"), true);

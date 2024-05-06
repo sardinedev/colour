@@ -1,6 +1,6 @@
-import { convertCSSRGBtoRGB } from "./convertCSSRGBtoRGB.js";
-import { convertRGBtoCSSRGB } from "./convertRGBtoCSSRGB.js";
-import { findNearestRGBColour } from "./findNearestRGBColour.js";
+import { convertCSSRGBtoRGB } from "./convertCSSRGBtoRGB";
+import { convertRGBtoCSSRGB } from "./convertRGBtoCSSRGB";
+import { findNearestRGBColour } from "./findNearestRGBColour";
 
 /**
  * Finds the nearest CSS RGB colour in a palette to a given CSS RGB colour.

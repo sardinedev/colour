@@ -1,5 +1,5 @@
 import test from "ava";
-import { convertRGBtoCSSRGB } from "../convertRGBtoCSSRGB.js";
+import { convertRGBtoCSSRGB } from "../convertRGBtoCSSRGB";
 
 test("should return the CSS RGB colour seperated by spaces", ({ is }) => {
 	const colour = { R: 255, G: 255, B: 255 };

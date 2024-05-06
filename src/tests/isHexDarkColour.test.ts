@@ -1,5 +1,5 @@
 import test from "ava";
-import { isHexDarkColour } from "../isHexDarkColour.js";
+import { isHexDarkColour } from "../isHexDarkColour";
 
 test("should return false for #BED colour", ({ is }) => {
 	is(isHexDarkColour("#BED", "WCAG2.1"), false);

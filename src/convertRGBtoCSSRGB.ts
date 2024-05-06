@@ -1,4 +1,4 @@
-import type { RGBColour } from "./types.js";
+import type { RGBColour } from "./types";
 
 /**
  * Converts an RGB colour object to a CSS RGB colour string.

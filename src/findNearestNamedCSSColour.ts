@@ -1,7 +1,7 @@
-import { convertNamedCSSColourtoRGB } from "./convertNamedCSSColourtoRGB.js";
-import { convertRGBtoNamedCSSColour } from "./convertRGBtoNamedCSSColour.js";
-import { findNearestRGBColour } from "./findNearestRGBColour.js";
-import type { NamedCSSColour, RGBColour } from "./types.js";
+import { convertNamedCSSColourtoRGB } from "./convertNamedCSSColourtoRGB";
+import { convertRGBtoNamedCSSColour } from "./convertRGBtoNamedCSSColour";
+import { findNearestRGBColour } from "./findNearestRGBColour";
+import type { NamedCSSColour, RGBColour } from "./types";
 
 export function findNearestNamedCSSColour(
 	colour: NamedCSSColour,

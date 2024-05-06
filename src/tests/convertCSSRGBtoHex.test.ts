@@ -1,5 +1,5 @@
 import test from "ava";
-import { convertCSSRGBtoHex } from "../convertCSSRGBtoHex.js";
+import { convertCSSRGBtoHex } from "../convertCSSRGBtoHex";
 
 test("converts CSS RGB format to hexadecimal colour", ({ is }) => {
 	const expectedHex = "#ffffff";

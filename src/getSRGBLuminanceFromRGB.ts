@@ -1,5 +1,5 @@
-import { linearRGB } from "./util/index.js";
-import type { RGBColour, WCAG } from "./types.js";
+import type { RGBColour, WCAG } from "./types";
+import { linearRGB } from "./util/index";
 
 /**
  * Returns the relative luminance of a colour in the sRGB space.

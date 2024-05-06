@@ -1,5 +1,5 @@
 import test from "ava";
-import { convertHextoNamedCSSColour } from "../convertHextoNamedCSSColour.js";
+import { convertHextoNamedCSSColour } from "../convertHextoNamedCSSColour";
 
 test("should return the named CSS colour from a hex colour", ({ is }) => {
 	const colour = "#ff0000";

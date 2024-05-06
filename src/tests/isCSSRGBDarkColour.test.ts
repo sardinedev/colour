@@ -1,5 +1,5 @@
 import test from "ava";
-import { isCSSRGBDarkColour } from "../isCSSRGBDarkColour.js";
+import { isCSSRGBDarkColour } from "../isCSSRGBDarkColour";
 
 test("verify if `rgb(20, 20, 20)` is a dark colour", ({ is }) => {
 	is(isCSSRGBDarkColour("rgb(20, 20, 20)", "WCAG2.1"), true);

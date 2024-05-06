@@ -1,6 +1,6 @@
-import { convertHextoRGB } from "./convertHextoRGB.js";
-import { convertRGBtoHex } from "./convertRGBtoHex.js";
-import { findNearestRGBColour } from "./findNearestRGBColour.js";
+import { convertHextoRGB } from "./convertHextoRGB";
+import { convertRGBtoHex } from "./convertRGBtoHex";
+import { findNearestRGBColour } from "./findNearestRGBColour";
 
 /**
  * Finds the nearest hexadecimal colour in a palette to the given hex colour.

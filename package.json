@@ -16,15 +16,12 @@
     }
   },
   "scripts": {
-    "build": "rm -rf ./dist && npm run build:esm && npm run build:cjs && npm run types:emit",
-    "build:esm": "npx swc --config-file .esm.swcrc ./src -d ./dist",
-    "build:cjs": "npx swc --config-file .cjs.swcrc ./src -d ./dist/cjs",
+    "build": "npx vite build && npm run types:emit",
     "test": "rm -rf ./dist && npm run build:cjs && c8 ava",
     "test:coverage": "c8 -r lcovonly report",
     "types:emit": "npx tsc --declaration --emitDeclarationOnly",
     "types:check": "npx tsc --noEmit",
-    "rome:format": "rome format ./src --write",
-    "rome:ci": "rome ci ./src",
+    "static": "npx biome ci src",
     "prepare": "husky install"
   },
   "repository": {
@@ -63,8 +60,8 @@
   },
   "lint-staged": {
     "*.{js,ts}": [
-      "npx rome format ./src --write",
-      "npx rome check ./src --apply"
+      "npx @biomejs/biome format --write ./src",
+      "npx @biomejs/biome lint --apply ./src"
     ]
   }
 }

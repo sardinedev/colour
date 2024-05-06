@@ -1,5 +1,5 @@
 import test from "ava";
-import { getSRGBLuminanceFromHex } from "../getSRGBLuminanceFromHex.js";
+import { getSRGBLuminanceFromHex } from "../getSRGBLuminanceFromHex";
 
 test("should return the luminance of a hex colour", ({ is }) => {
 	is(getSRGBLuminanceFromHex("#444"), 0.05780543019106723);

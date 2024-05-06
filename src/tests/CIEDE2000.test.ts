@@ -1,6 +1,6 @@
 import test from "ava";
-import { ciede2000 } from "../CIEDE2000.js";
-import type { LabColour } from "../types.js";
+import { ciede2000 } from "../CIEDE2000";
+import type { LabColour } from "../types";
 
 /*
  * Test data provided by Gaurav Sharma

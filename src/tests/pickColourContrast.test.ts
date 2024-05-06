@@ -1,5 +1,5 @@
 import test from "ava";
-import { pickHexColourContrast } from "../pickHexColourContrast.js";
+import { pickHexColourContrast } from "../pickHexColourContrast";
 
 test("should return #FFFFFF as the best colour for a #333333 background", ({
 	is,

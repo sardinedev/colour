@@ -1,5 +1,5 @@
 import test from "ava";
-import { convertNamedCSSColourtoRGB } from "../convertNamedCSSColourtoRGB.js";
+import { convertNamedCSSColourtoRGB } from "../convertNamedCSSColourtoRGB";
 
 test("converts named CSS colour to RGB colour", ({ deepEqual }) => {
 	const expectedRGB = { R: 255, G: 250, B: 250 };

@@ -1,12 +1,12 @@
-import { isCSSRGBColour, isHexColour, isNamedCSSColour } from "./assertions.js";
-import { convertCSSRGBtoRGB } from "./convertCSSRGBtoRGB.js";
-import { convertHextoRGB } from "./convertHextoRGB.js";
-import { convertNamedCSSColourtoRGB } from "./convertNamedCSSColourtoRGB.js";
-import { convertRGBtoCSSRGB } from "./convertRGBtoCSSRGB.js";
-import { convertRGBtoHex } from "./convertRGBtoHex.js";
-import { convertRGBtoNamedCSSColour } from "./convertRGBtoNamedCSSColour.js";
-import { findNearestRGBColour } from "./findNearestRGBColour.js";
-import type { NamedCSSColour, RGBColour } from "./types.js";
+import { isCSSRGBColour, isHexColour, isNamedCSSColour } from "./assertions";
+import { convertCSSRGBtoRGB } from "./convertCSSRGBtoRGB";
+import { convertHextoRGB } from "./convertHextoRGB";
+import { convertNamedCSSColourtoRGB } from "./convertNamedCSSColourtoRGB";
+import { convertRGBtoCSSRGB } from "./convertRGBtoCSSRGB";
+import { convertRGBtoHex } from "./convertRGBtoHex";
+import { convertRGBtoNamedCSSColour } from "./convertRGBtoNamedCSSColour";
+import { findNearestRGBColour } from "./findNearestRGBColour";
+import type { NamedCSSColour, RGBColour } from "./types";
 
 /**
  * Finds the nearest colour in a palette to a given colour.

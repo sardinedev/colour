@@ -1,9 +1,5 @@
 import test from "ava";
-import {
-	isCSSRGBColour,
-	isHexColour,
-	isNamedCSSColour,
-} from "../assertions.js";
+import { isCSSRGBColour, isHexColour, isNamedCSSColour } from "../assertions";
 
 test("assert true if string is in the CSS RGB format with commas", ({ is }) => {
 	is(isCSSRGBColour("rgb(12, 23, 111)"), true);

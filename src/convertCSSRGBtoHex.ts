@@ -1,6 +1,6 @@
-import { convertRGBtoHex } from "./convertRGBtoHex.js";
-import { convertCSSRGBtoRGB } from "./convertCSSRGBtoRGB.js";
-import type { RGBColour } from "./types.js";
+import { convertCSSRGBtoRGB } from "./convertCSSRGBtoRGB";
+import { convertRGBtoHex } from "./convertRGBtoHex";
+import type { RGBColour } from "./types";
 
 /**
  * Converts CSS RGB colour format into Hexadecimal.

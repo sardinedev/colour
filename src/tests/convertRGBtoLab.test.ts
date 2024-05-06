@@ -1,6 +1,6 @@
 import test from "ava";
-import { convertRGBtoLab } from "../convertRGBtoLab.js";
-import type { LabColour, RGBColour } from "../types.js";
+import { convertRGBtoLab } from "../convertRGBtoLab";
+import type { LabColour, RGBColour } from "../types";
 
 test("converts RGB to Lab", ({ deepEqual }) => {
 	const RGB: RGBColour = { R: 34, G: 250, B: 124 };

@@ -1,5 +1,5 @@
 import test from "ava";
-import { findNearestHexColour } from "../findNearestHexColour.js";
+import { findNearestHexColour } from "../findNearestHexColour";
 
 test("should return the nearest colour from a palette", ({ deepEqual }) => {
 	const palette = ["#ffffff", "#050505"];

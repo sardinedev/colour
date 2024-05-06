@@ -1,6 +1,6 @@
 import test from "ava";
-import { findNearestNamedCSSColour } from "../findNearestNamedCSSColour.js";
-import { NamedCSSColour } from "../types.js";
+import { findNearestNamedCSSColour } from "../findNearestNamedCSSColour";
+import type { NamedCSSColour } from "../types";
 
 test("should return the nearest named CSS colour from a palette", ({
 	deepEqual,

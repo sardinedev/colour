@@ -1,6 +1,6 @@
-import { convertCSSRGBtoRGB } from "./convertCSSRGBtoRGB.js";
-import { getSRGBLuminanceFromRGB } from "./getSRGBLuminanceFromRGB.js";
-import type { WCAG } from "./types.js";
+import { convertCSSRGBtoRGB } from "./convertCSSRGBtoRGB";
+import { getSRGBLuminanceFromRGB } from "./getSRGBLuminanceFromRGB";
+import type { WCAG } from "./types";
 
 export function isCSSRGBDarkColour(colour: string, standard: WCAG): boolean {
 	const rgb = convertCSSRGBtoRGB(colour);

@@ -1,5 +1,5 @@
 import test from "ava";
-import { isDarkColour } from "../isDarkColour.js";
+import { isDarkColour } from "../isDarkColour";
 
 test("should return true for `darkblue`", ({ is }) => {
 	is(isDarkColour("darkblue", "WCAG2.1"), true);

@@ -1,5 +1,5 @@
 import test from "ava";
-import { findNearestColour } from "../findNearestColour.js";
+import { findNearestColour } from "../findNearestColour";
 
 test("should return the nearest colour from a palette", ({ is }) => {
 	const palette = ["#ffffff", "#050505"];

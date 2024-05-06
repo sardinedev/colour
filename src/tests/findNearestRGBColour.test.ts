@@ -1,5 +1,5 @@
 import test from "ava";
-import { findNearestRGBColour } from "../findNearestRGBColour.js";
+import { findNearestRGBColour } from "../findNearestRGBColour";
 
 test("should return the nearest colour from a palette", ({ deepEqual }) => {
 	const palette = [

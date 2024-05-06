@@ -1,4 +1,4 @@
-import type { HueHelper } from "../types.js";
+import type { HueHelper } from "../types";
 
 /**
  * Calculates the Hue derivative
@@ -71,7 +71,7 @@ export const toRadians = (n: number): number => n * (Math.PI / 180);
  * @param n Input number
  */
 export const bigSquare = (n: number): number =>
-	Math.sqrt(Math.pow(n, 7) / (Math.pow(n, 7) + Math.pow(25, 7)));
+	Math.sqrt(n ** 7 / (n ** 7 + 25 ** 7));
 
 /**
  * Normalise black and white colorimetry as specified in IEC 61966-2-1
@@ -84,7 +84,7 @@ export function linearRGB(rgbValue: number, WCAG21?: boolean) {
 	let linearValue: number;
 
 	if (rgbRatio > threshold) {
-		linearValue = Math.pow((rgbRatio + 0.055) / 1.055, 2.4);
+		linearValue = ((rgbRatio + 0.055) / 1.055) ** 2.4;
 	} else {
 		linearValue = rgbRatio / 12.92;
 	}
@@ -98,13 +98,13 @@ export function linearRGB(rgbValue: number, WCAG21?: boolean) {
  */
 export function constrainLab(n: number): number {
 	const delta = 6 / 29;
-	const deltaCube = Math.pow(delta, 3);
+	const deltaCube = delta ** 3;
 	let t: number;
 
 	if (n > deltaCube) {
 		t = Math.cbrt(n);
 	} else {
-		t = n / (3 * Math.pow(delta, 2)) + 4 / 29;
+		t = n / (3 * delta ** 2) + 4 / 29;
 	}
 
 	return t;

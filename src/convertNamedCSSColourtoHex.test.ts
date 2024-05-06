@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { convertNamedCSSColourtoHex } from "../convertNamedCSSColourtoHex";
+import { convertNamedCSSColourtoHex } from "./convertNamedCSSColourtoHex";
 
 test("converts named CSS colour to hexadecimal colour", () => {
 	const expectedHex = "#fffafa";

@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { isCSSRGBDarkColour } from "../isCSSRGBDarkColour";
+import { isCSSRGBDarkColour } from "./isCSSRGBDarkColour";
 
 test("verify if `rgb(20, 20, 20)` is a dark colour", () => {
 	expect(isCSSRGBDarkColour("rgb(20, 20, 20)", "WCAG2.1")).toBe(true);

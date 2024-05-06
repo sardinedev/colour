@@ -1,22 +1,37 @@
 import { expect, test } from "vitest";
-import { findNearestHexColour } from "../findNearestHexColour";
+import { findNearestRGBColour } from "./findNearestRGBColour";
 
 test("should return the nearest colour from a palette", () => {
-	const palette = ["#ffffff", "#050505"];
-	const colour = "#000";
-	expect(findNearestHexColour(colour, palette), "#050505");
+	const palette = [
+		{ R: 255, G: 255, B: 255 },
+		{ R: 5, G: 5, B: 5 },
+	];
+	const colour = { R: 0, G: 0, B: 0 };
+	expect(findNearestRGBColour(colour, palette)).toStrictEqual({
+		R: 5,
+		G: 5,
+		B: 5,
+	});
 });
 
 test("should return the base colour if palette is an empty array", () => {
 	// @ts-expect-error - TS would complain about this, but it's a valid test for users consuming JS
 	const palette = [];
-	const colour = "#000";
+	const colour = { R: 0, G: 0, B: 0 };
 	// @ts-expect-error - TS would complain about this, but it's a valid test for users consuming JS
-	expect(findNearestHexColour(colour, palette), "#000");
+	expect(findNearestRGBColour(colour, palette)).toStrictEqual({
+		R: 0,
+		G: 0,
+		B: 0,
+	});
 });
 
 test("should return the base colour if palette is not provided", () => {
-	const colour = "#000";
+	const colour = { R: 0, G: 0, B: 0 };
 	// @ts-expect-error - TS would complain about this, but it's a valid test for users consuming JS
-	expect(findNearestHexColour(colour, undefined), "#000");
+	expect(findNearestRGBColour(colour, undefined)).toStrictEqual({
+		R: 0,
+		G: 0,
+		B: 0,
+	});
 });

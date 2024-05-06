@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { findNearestColour } from "../findNearestColour";
+import { findNearestColour } from "./findNearestColour";
 
 test("should return the nearest colour from a palette", () => {
 	const palette = ["#ffffff", "#050505"];

@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { findNearestCSSRGBColour } from "../findNearestCSSRGBColour";
+import { findNearestCSSRGBColour } from "./findNearestCSSRGBColour";
 
 test("should return the nearest CSS RGB colour seperated by spaces from a palette", () => {
 	const palette = ["rgb(255 255 255)", "rgb(5 5 5)"];

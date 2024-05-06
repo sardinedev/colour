@@ -1,5 +1,5 @@
 import { assert, expect, test } from "vitest";
-import { convertCSSRGBtoHex } from "../convertCSSRGBtoHex";
+import { convertCSSRGBtoHex } from "./convertCSSRGBtoHex";
 
 test("converts CSS RGB format to hexadecimal colour", () => {
 	const expectedHex = "#ffffff";

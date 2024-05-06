@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { convertRGBtoCSSRGB } from "../convertRGBtoCSSRGB";
+import { convertRGBtoCSSRGB } from "./convertRGBtoCSSRGB";
 
 test("should return the CSS RGB colour seperated by spaces", () => {
 	const colour = { R: 255, G: 255, B: 255 };

@@ -1,5 +1,5 @@
 import { assert, expect, test } from "vitest";
-import { isCSSNamedDarkColour } from "../isCSSNameDarkColour";
+import { isCSSNamedDarkColour } from "./isCSSNameDarkColour";
 
 test("verify if `darkblue` is a dark colour", () => {
 	expect(isCSSNamedDarkColour("darkblue", "WCAG2.1")).toBe(true);

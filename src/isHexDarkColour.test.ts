@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { isHexDarkColour } from "../isHexDarkColour";
+import { isHexDarkColour } from "./isHexDarkColour";
 
 test("should return false for #BED colour", () => {
 	expect(isHexDarkColour("#BED", "WCAG2.1")).toBe(false);

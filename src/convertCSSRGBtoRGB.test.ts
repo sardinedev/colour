@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { convertCSSRGBtoRGB } from "../convertCSSRGBtoRGB";
+import { convertCSSRGBtoRGB } from "./convertCSSRGBtoRGB";
 
 test("convert CSS RGB separated by spaces", () => {
 	expect(convertCSSRGBtoRGB("rgb( 23 111 99)")).toStrictEqual({

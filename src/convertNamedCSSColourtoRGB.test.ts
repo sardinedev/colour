@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { convertNamedCSSColourtoRGB } from "../convertNamedCSSColourtoRGB";
+import { convertNamedCSSColourtoRGB } from "./convertNamedCSSColourtoRGB";
 
 test("converts named CSS colour to RGB colour", () => {
 	const expectedRGB = { R: 255, G: 250, B: 250 };

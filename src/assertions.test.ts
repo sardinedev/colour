@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { isCSSRGBColour, isHexColour, isNamedCSSColour } from "../assertions";
+import { isCSSRGBColour, isHexColour, isNamedCSSColour } from "./assertions";
 
 test("assert true if string is in the CSS RGB format with commas", () => {
 	expect(isCSSRGBColour("rgb(12, 23, 111)")).toBe(true);

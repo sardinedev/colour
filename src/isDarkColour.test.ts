@@ -1,5 +1,5 @@
 import { assert, expect, test } from "vitest";
-import { isDarkColour } from "../isDarkColour";
+import { isDarkColour } from "./isDarkColour";
 
 test("should return true for `darkblue`", () => {
 	expect(isDarkColour("darkblue", "WCAG2.1")).toBe(true);

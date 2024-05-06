@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { pickHexColourContrast } from "../pickHexColourContrast";
+import { pickHexColourContrast } from "./pickHexColourContrast";
 
 test("should return #FFFFFF as the best colour for a #333333 background", () => {
 	const colours = {

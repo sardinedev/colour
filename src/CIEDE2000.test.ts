@@ -1,6 +1,6 @@
 import { expect, test } from "vitest";
-import { ciede2000 } from "../CIEDE2000";
-import type { LabColour } from "../types";
+import { ciede2000 } from "./CIEDE2000";
+import type { LabColour } from "./types";
 
 /*
  * Test data provided by Gaurav Sharma

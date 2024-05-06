@@ -1,6 +1,6 @@
 import { expect, test } from "vitest";
-import { convertRGBtoLab } from "../convertRGBtoLab";
-import type { LabColour, RGBColour } from "../types";
+import { convertRGBtoLab } from "./convertRGBtoLab";
+import type { LabColour, RGBColour } from "./types";
 
 test("converts RGB to Lab", () => {
 	const RGB: RGBColour = { R: 34, G: 250, B: 124 };

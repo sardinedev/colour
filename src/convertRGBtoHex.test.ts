@@ -1,6 +1,6 @@
 import { expect, test } from "vitest";
-import { convertRGBtoHex } from "../convertRGBtoHex";
-import type { RGBColour } from "../types";
+import { convertRGBtoHex } from "./convertRGBtoHex";
+import type { RGBColour } from "./types";
 
 test("converts RGB format to hexadecimal colour", () => {
 	const expectedHex = "#ffffff";

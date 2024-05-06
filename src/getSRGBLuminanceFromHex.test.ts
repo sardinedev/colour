@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { getSRGBLuminanceFromHex } from "../getSRGBLuminanceFromHex";
+import { getSRGBLuminanceFromHex } from "./getSRGBLuminanceFromHex";
 
 test("should return the luminance of a hex colour", () => {
 	expect(getSRGBLuminanceFromHex("#444")).toBe(0.05780543019106723);

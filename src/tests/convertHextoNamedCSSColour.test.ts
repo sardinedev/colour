@@ -1,14 +1,12 @@
-import test from "ava";
+import { expect, test } from "vitest";
 import { convertHextoNamedCSSColour } from "../convertHextoNamedCSSColour";
 
-test("should return the named CSS colour from a hex colour", ({ is }) => {
+test("should return the named CSS colour from a hex colour", () => {
 	const colour = "#ff0000";
-	is(convertHextoNamedCSSColour(colour), "red");
+	expect(convertHextoNamedCSSColour(colour)).toBe("red");
 });
 
-test("should return undefined if no named CSS colour matches the given hex colour", ({
-	is,
-}) => {
+test("should return undefined if no named CSS colour matches the given hex colour", () => {
 	const colour = "#313233";
-	is(convertHextoNamedCSSColour(colour), undefined);
+	expect(convertHextoNamedCSSColour(colour)).toBe(undefined);
 });

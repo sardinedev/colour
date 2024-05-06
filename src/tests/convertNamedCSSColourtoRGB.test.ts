@@ -1,13 +1,13 @@
-import test from "ava";
+import { expect, test } from "vitest";
 import { convertNamedCSSColourtoRGB } from "../convertNamedCSSColourtoRGB";
 
-test("converts named CSS colour to RGB colour", ({ deepEqual }) => {
+test("converts named CSS colour to RGB colour", () => {
 	const expectedRGB = { R: 255, G: 250, B: 250 };
-	deepEqual(convertNamedCSSColourtoRGB("snow"), expectedRGB);
+	expect(convertNamedCSSColourtoRGB("snow")).toStrictEqual(expectedRGB);
 });
 
-test("returns undefined if named CSS colour doesn't exist", ({ is }) => {
+test("returns undefined if named CSS colour doesn't exist", () => {
 	const expectedRGB = undefined;
 	/*@ts-expect-error*/
-	is(convertNamedCSSColourtoRGB("neve"), expectedRGB);
+	expect(convertNamedCSSColourtoRGB("neve")).toBe(expectedRGB);
 });

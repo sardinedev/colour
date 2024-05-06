@@ -1,13 +1,13 @@
-import test from "ava";
+import { expect, test } from "vitest";
 import { convertNamedCSSColourtoHex } from "../convertNamedCSSColourtoHex";
 
-test("converts named CSS colour to hexadecimal colour", ({ is }) => {
+test("converts named CSS colour to hexadecimal colour", () => {
 	const expectedHex = "#fffafa";
-	is(convertNamedCSSColourtoHex("snow"), expectedHex);
+	expect(convertNamedCSSColourtoHex("snow")).toBe(expectedHex);
 });
 
-test("returns undefined if named CSS colour doesn't exist", ({ is }) => {
+test("returns undefined if named CSS colour doesn't exist", () => {
 	const expectedHex = undefined;
 	/*@ts-expect-error*/
-	is(convertNamedCSSColourtoHex("neve"), expectedHex);
+	expect(convertNamedCSSColourtoHex("neve")).toBe(expectedHex);
 });

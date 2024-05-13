@@ -1,4 +1,4 @@
-name: Colour
+name: Release Candidate
 
 on:
   push:

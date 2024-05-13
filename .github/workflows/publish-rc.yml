@@ -1,17 +1,19 @@
-name: Colour
+name: Release Candidate
 
 on:
-  pull_request:
-    types:
-      - labeled
-    paths:
-      - '**'
+  push:
+    branches:
+      - changeset-release/main
+    paths-ignore:
+      - "package.json"
+      - "package-lock.json"
+      - ".changeset/**"
+      - "CHANGELOG.md"
 
 jobs:
   publish-rc:
     name: Publish RC
     runs-on: ubuntu-latest
-    if: github.event.label.name == 'Release Candidate'
     permissions:
       contents: write
       id-token: write
@@ -53,6 +55,8 @@ jobs:
         run: |
           npx changeset pre enter rc
           npx changeset version
+          git add .
+          git commit -m "chore: release candidate"
           npx changeset publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

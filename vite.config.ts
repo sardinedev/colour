@@ -6,17 +6,13 @@ export default defineConfig({
 	build: {
 		outDir: "dist",
 		target: "es2020",
-		minify: true,
+		minify: false,
 		lib: {
 			entry: resolve(__dirname, "src/index.ts"),
-			formats: ["es", "cjs", "umd"],
-			name: "Colour",
+			formats: ["es", "cjs"],
 			// ESM will be .mjs and CJS will be .cjs
 			fileName: (format, entryName) => {
 				const extension = format === "es" ? "mjs" : format;
-				if (format === "umd") {
-					return `${entryName}.min.js`;
-				}
 				return `${entryName}.${extension}`;
 			},
 		},

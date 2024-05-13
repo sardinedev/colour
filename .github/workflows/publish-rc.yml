@@ -4,11 +4,6 @@ on:
   push:
     branches:
       - changeset-release/main
-    paths-ignore:
-      - "package.json"
-      - "package-lock.json"
-      - ".changeset/**"
-      - "CHANGELOG.md"
 
 jobs:
   publish-rc:
@@ -53,10 +48,7 @@ jobs:
 
       - name: Publish Colour Release Candidate
         run: |
-          npx changeset pre enter rc
-          npx changeset version
-          git add .
-          git commit -m "chore: release candidate"
-          npx changeset publish
+          npm version prerelease --preid rc.${{ github.run_attempt }} --tag rc --no-git-tag-version
+          npm publish --tag rc
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

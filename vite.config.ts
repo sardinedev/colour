@@ -1,5 +1,5 @@
-import { defineConfig } from "vite";
 import { resolve } from "node:path";
+import { defineConfig } from "vite";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -9,12 +9,16 @@ export default defineConfig({
 		minify: true,
 		lib: {
 			entry: resolve(__dirname, "src/index.ts"),
+			formats: ["es", "cjs", "umd"],
+			name: "Colour",
 			// ESM will be .mjs and CJS will be .cjs
 			fileName: (format, entryName) => {
 				const extension = format === "es" ? "mjs" : format;
+				if (format === "umd") {
+					return `${entryName}.min.js`;
+				}
 				return `${entryName}.${extension}`;
 			},
-			formats: ["es", "cjs"],
 		},
 	},
 });

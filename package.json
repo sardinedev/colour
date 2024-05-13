@@ -6,6 +6,7 @@
   "module": "./dist/index.mjs",
   "main": "./dist/index.cjs",
   "types": "./dist/index.d.ts",
+  "unpkg": "./dist/index.min.js",
   "sideEffects": false,
   "exports": {
     ".": {

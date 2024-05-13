@@ -50,6 +50,8 @@ jobs:
         run: |
           npx changeset pre enter rc
           npx changeset version
+          git add .
+          git commit -m "Version packages"
           npx changeset publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

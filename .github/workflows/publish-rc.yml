@@ -46,6 +46,9 @@ jobs:
       - name: Build package
         run: npm run build
 
+      - name: Build for unpkg
+        run: npx esbuild ./dist/index.mjs --minify --outfile=./dist/index.min.js
+
       - name: Publish Colour Release Candidate
         run: |
           npx changeset pre enter rc

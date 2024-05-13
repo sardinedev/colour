@@ -1,6 +1,6 @@
 {
   "name": "@sardine/colour",
-  "version": "2.1.0-rc.0",
+  "version": "2.0.2",
   "description": "It does things to colours",
   "type": "module",
   "module": "./dist/index.mjs",

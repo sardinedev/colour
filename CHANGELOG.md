@@ -1,5 +1,11 @@
 # @sardine/colour
 
+## 2.1.1
+
+### Patch Changes
+
+- 0387fa3: Export TypeScript types
+
 ## 2.1.0
 
 ### Minor Changes

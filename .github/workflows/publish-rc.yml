@@ -48,6 +48,9 @@ jobs:
       - name: Build package
         run: npm run build
 
+      - name: Export types
+        run: npm run types:emit
+
       - name: Build for unpkg
         run: npx esbuild ./dist/index.mjs --minify --outfile=./dist/index.min.js
 

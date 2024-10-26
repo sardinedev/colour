@@ -8,7 +8,7 @@ import {
 } from "./util/index";
 
 /**
- * Mesures the colour difference between two colours in the Lab space
+ * Measures the colour difference between two colours in the Lab space
  *
  * Math taken from:
  *
@@ -18,124 +18,130 @@ import {
  * @param colour2 First colour to be compared
  */
 export function ciede2000(colour1: LabColour, colour2: LabColour): number {
-	/**
-	 * Glossary
-	 * L - Lightness as defined by L*a*b*
-	 * a - Describes the green–red opponent colors as defined by L*a*b*
-	 * b - Describes the blue–yellow opponent colours as defined by L*a*b*
-	 * C - Chroma as defined by CIE94
-	 *
-	 * Math notation
-	 * _d - Derivative
-	 * Δ - Difference between values
-	 * ̅  - Mean value
-	 */
-
 	/** Lightness for colour 1 */
-	const L1 = colour1.L;
+	const lightness1 = colour1.L;
 
 	/** green–red colour opponent for colour 1 */
-	const a1 = colour1.a;
+	const greenRed1 = colour1.a;
 
 	/** blue–yellow colour opponent for colour 1 */
-	const b1 = colour1.b;
+	const blueYellow1 = colour1.b;
 
 	/** Lightness for colour 2 */
-	const L2 = colour2.L;
+	const lightness2 = colour2.L;
 
-	/** green–red colour opponent for colour 1 */
-	const a2 = colour2.a;
+	/** green–red colour opponent for colour 2 */
+	const greenRed2 = colour2.a;
 
-	/** blue–yellow colour opponent for colour 1 */
-	const b2 = colour2.b;
+	/** blue–yellow colour opponent for colour 2 */
+	const blueYellow2 = colour2.b;
 
 	/** Weighting factor for Luminance */
-	const kL = 1;
+	const luminanceWeight = 1;
 
 	/** Weighting factor for Chroma */
-	const kC = 1;
+	const chromaWeight = 1;
 
 	/** Weighting factor for Hue */
-	const kH = 1;
+	const hueWeight = 1;
 
 	/** Chroma for colour 1 */
-	const C1 = Math.sqrt(a1 ** 2 + b1 ** 2);
+	const chroma1 = Math.sqrt(greenRed1 ** 2 + blueYellow1 ** 2);
 
 	/** Chroma for colour 2 */
-	const C2 = Math.sqrt(a2 ** 2 + b2 ** 2);
+	const chroma2 = Math.sqrt(greenRed2 ** 2 + blueYellow2 ** 2);
 
 	/** Derivative of the Lightness difference */
-	const ΔL_d = L2 - L1;
+	const deltaLightness = lightness2 - lightness1;
 
 	/** Chroma mean value */
-	const C̅ = (C1 + C2) / 2;
+	const meanChroma = (chroma1 + chroma2) / 2;
 
-	const G = 0.5 * (1 - bigSquare(C̅));
+	const G = 0.5 * (1 - bigSquare(meanChroma));
 
-	/** Derivative of a1 */
-	const a1_d = a1 * (1 + G);
+	/** Derivative of greenRed1 */
+	const greenRed1Prime = greenRed1 * (1 + G);
 
-	/** Derivative of a2 */
-	const a2_d = a2 * (1 + G);
+	/** Derivative of greenRed2 */
+	const greenRed2Prime = greenRed2 * (1 + G);
 
-	/** Derivative of C1 */
-	const C1_d = Math.sqrt(a1_d ** 2 + b1 ** 2);
+	/** Derivative of chroma1 */
+	const chroma1Prime = Math.sqrt(greenRed1Prime ** 2 + blueYellow1 ** 2);
 
-	/** Derivative of C2 */
-	const C2_d = Math.sqrt(a2_d ** 2 + b2 ** 2);
+	/** Derivative of chroma2 */
+	const chroma2Prime = Math.sqrt(greenRed2Prime ** 2 + blueYellow2 ** 2);
 
 	/** Derivative of Chroma mean */
-	const C̅_d = (C1_d + C2_d) / 2;
+	const meanChromaPrime = (chroma1Prime + chroma2Prime) / 2;
 
 	/** Derivative of the mean difference of Chroma */
-	const ΔC̅_d = C2_d - C1_d;
+	const deltaChromaPrime = chroma2Prime - chroma1Prime;
 
 	/** Derivative of colour 1 Hue */
-	const h1_d = hue_d(b1, a1_d);
+	const hue1Prime = hue_d(blueYellow1, greenRed1Prime);
 
 	/** Derivative of colour 2 Hue */
-	const h2_d = hue_d(b2, a2_d);
+	const hue2Prime = hue_d(blueYellow2, greenRed2Prime);
 
 	/** Hue difference */
-	const Δh_d = deltaHue_d({ C1, C2, h1_d, h2_d });
+	const deltaHuePrime = deltaHue_d({
+		C1: chroma1,
+		C2: chroma2,
+		h1_d: hue1Prime,
+		h2_d: hue2Prime,
+	});
 
-	const ΔH_d = 2 * Math.sqrt(C1_d * C2_d) * Math.sin(toRadians(Δh_d) / 2);
+	const deltaHue =
+		2 *
+		Math.sqrt(chroma1Prime * chroma2Prime) *
+		Math.sin(toRadians(deltaHuePrime) / 2);
 
 	/** Derivative of mean hue */
-	const H̅_d = meanHue_d({ C1, C2, h1_d, h2_d });
+	const meanHuePrime = meanHue_d({
+		C1: chroma1,
+		C2: chroma2,
+		h1_d: hue1Prime,
+		h2_d: hue2Prime,
+	});
 
 	/** Lightness Mean value*/
-	const L̅ = (L1 + L2) / 2;
+	const meanLightness = (lightness1 + lightness2) / 2;
 
 	/** Compensation for neutral colours (the primed values in the L*C*h differences) */
 	const T =
 		1 -
-		0.17 * Math.cos(toRadians(H̅_d - 30)) +
-		0.24 * Math.cos(toRadians(2 * H̅_d)) +
-		0.32 * Math.cos(toRadians(3 * H̅_d + 6)) -
-		0.2 * Math.cos(toRadians(4 * H̅_d - 63));
+		0.17 * Math.cos(toRadians(meanHuePrime - 30)) +
+		0.24 * Math.cos(toRadians(2 * meanHuePrime)) +
+		0.32 * Math.cos(toRadians(3 * meanHuePrime + 6)) -
+		0.2 * Math.cos(toRadians(4 * meanHuePrime - 63));
 
 	/** Compensation for lightness */
-	const SL = 1 + (0.015 * (L̅ - 50) ** 2) / Math.sqrt(20 + (L̅ - 50) ** 2);
+	const SL =
+		1 +
+		(0.015 * (meanLightness - 50) ** 2) /
+			Math.sqrt(20 + (meanLightness - 50) ** 2);
 
 	/** Compensation for chroma */
-	const SC = 0.045 * C̅_d + 1;
+	const SC = 0.045 * meanChromaPrime + 1;
 
 	/** Compensation for hue */
-	const SH = 1 + 0.015 * C̅_d * T;
+	const SH = 1 + 0.015 * meanChromaPrime * T;
 
-	const rotation = 30 * Math.exp(-(((H̅_d - 275) / 25) ** 2));
+	const rotation = 30 * Math.exp(-(((meanHuePrime - 275) / 25) ** 2));
 
 	/** A hue rotation term, to deal with the problematic blue region (hue angles in the neighborhood of 275°) */
-	const RT = -2 * bigSquare(C̅_d) * Math.sin(toRadians(rotation * 2));
+	const RT =
+		-2 * bigSquare(meanChromaPrime) * Math.sin(toRadians(rotation * 2));
 
 	/** Colour difference */
-	const ΔE = Math.sqrt(
-		(ΔL_d / (kL * SL)) ** 2 +
-			(ΔC̅_d / (kC * SC)) ** 2 +
-			(ΔH_d / (kH * SH)) ** 2 +
-			RT * (ΔC̅_d / (kC * SC)) * (ΔH_d / (kH * SH)),
+	const deltaE = Math.sqrt(
+		(deltaLightness / (luminanceWeight * SL)) ** 2 +
+			(deltaChromaPrime / (chromaWeight * SC)) ** 2 +
+			(deltaHue / (hueWeight * SH)) ** 2 +
+			RT *
+				(deltaChromaPrime / (chromaWeight * SC)) *
+				(deltaHue / (hueWeight * SH)),
 	);
 
-	return ΔE;
+	return deltaE;
 }

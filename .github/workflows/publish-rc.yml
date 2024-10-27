@@ -37,6 +37,7 @@ jobs:
           node-version: 20
           registry-url: "https://registry.npmjs.org"
           scope: "@sardine"
+          cache: "npm"
 
       - name: "Setup npm"
         run: |

@@ -1,5 +1,14 @@
 # @sardine/colour
 
+## 2.2.0
+
+### Minor Changes
+
+- a808056: Add getContrastRatioFromCSSRGB function
+- a808056: Add getContrastRatioFromNamedCSSColour function
+- 202ef96: Adds getContrastRatioFromHex
+- a808056: Add getContrastRatio function
+
 ## 2.1.1
 
 ### Patch Changes

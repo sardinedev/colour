@@ -1,5 +1,11 @@
 # @sardine/colour
 
+## 2.2.1
+
+### Patch Changes
+
+- 4c803cc: Optimise bundle size by refactoring repeated code. Saved 0.02 kB
+
 ## 2.2.0
 
 ### Minor Changes

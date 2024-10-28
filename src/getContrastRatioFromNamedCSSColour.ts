@@ -6,8 +6,8 @@ import type { NamedCSSColour, WCAG } from "./types";
  * Calculates the contrast ratio between two named CSS colours in.
  *
  * See list here https://developer.mozilla.org/en-US/docs/Web/CSS/named-color
- * @param colour1 The first colour in hexadecimal format
- * @param colour2 The second colour in hexadecimal format
+ * @param colour1 The first named CSS colour
+ * @param colour2 The second named CSS colour
  * @param standard The standard to evaluate the contrast ratio against, defaults to WCAG2.1
  * @returns The contrast ratio between the two colours truncated to 3 decimal places
  */

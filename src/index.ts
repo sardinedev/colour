@@ -17,6 +17,7 @@ export { findNearestColour } from "./findNearestColour";
 export { findNearestHexColour } from "./findNearestHexColour";
 export { findNearestNamedCSSColour } from "./findNearestNamedCSSColour";
 export { findNearestRGBColour } from "./findNearestRGBColour";
+export { getContrastRatio } from "./getContrastRatio";
 export { getContrastRatioFromCSSRGB } from "./getContrastRatioFromCSSRGB";
 export { getContrastRatioFromHex } from "./getContrastRatioFromHex";
 export { getContrastRatioFromNamedCSSColour } from "./getContrastRatioFromNamedCSSColour";

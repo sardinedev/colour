@@ -26,17 +26,14 @@ export function deltaHue_d({ C1, C2, h1_d, h2_d }: HueHelper): number {
 	if (C1 * C2 === 0) {
 		return 0;
 	}
-	if (Math.abs(h2_d - h1_d) <= 180) {
-		return h2_d - h1_d;
+	const delta = h2_d - h1_d;
+	if (Math.abs(delta) <= 180) {
+		return delta;
 	}
-	if (h2_d - h1_d > 180) {
-		return h2_d - h1_d - 360;
+	if (delta > 180) {
+		return delta - 360;
 	}
-	if (h2_d - h1_d < -180) {
-		return h2_d - h1_d + 360;
-	}
-	// it should never reach this point
-	return 0;
+	return delta + 360; // Handles the case where delta < -180
 }
 
 /**
@@ -47,17 +44,14 @@ export function meanHue_d({ C1, C2, h1_d, h2_d }: HueHelper): number {
 	if (C1 * C2 === 0) {
 		return h2_d + h1_d;
 	}
-	if (Math.abs(h1_d - h2_d) <= 180) {
+	const delta = Math.abs(h1_d - h2_d);
+	if (delta <= 180) {
 		return (h2_d + h1_d) / 2;
 	}
-	if (Math.abs(h1_d - h2_d) > 180 && h1_d + h2_d < 360) {
+	if (delta > 180 && h1_d + h2_d < 360) {
 		return (h2_d + h1_d + 360) / 2;
 	}
-	if (Math.abs(h1_d - h2_d) > 180 && h1_d + h2_d >= 360) {
-		return (h2_d + h1_d - 360) / 2;
-	}
-	// it should never reach this point
-	return 0;
+	return (h2_d + h1_d - 360) / 2; // Handles the case where delta > 180 and h1_d + h2_d >= 360
 }
 
 /**

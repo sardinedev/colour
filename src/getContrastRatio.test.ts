@@ -42,4 +42,24 @@ describe("getContrastRatio", () => {
 					See https://developer.mozilla.org/en-US/docs/Web/CSS/named-color`,
 		);
 	});
+
+	it("should return the correct contrast ratio for two hexadecimal colors", () => {
+		const ratio = getContrastRatio("#000000", "#FFFFFF", standard);
+		expect(ratio).toBe(21);
+	});
+
+	it("should throw an error for invalid CSS RGB color", () => {
+		expect(() =>
+			getContrastRatio("rgb(300,300,300)", "invalid2", standard),
+		).toThrow(
+			`getContrastRatio expects valid CSS named colours.
+					invalid2 is not a valid CSS named colour.
+					See https://developer.mozilla.org/en-US/docs/Web/CSS/named-color`,
+		);
+	});
+
+	it("should accept a Named CSS Colour as the second argument", () => {
+		const ratio = getContrastRatio("#000", "white", standard);
+		expect(ratio).toBe(21);
+	});
 });

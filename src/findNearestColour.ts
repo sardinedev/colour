@@ -72,12 +72,9 @@ export function findNearestColour(
 	if (colourType === "hex") {
 		return convertRGBtoHex(nearest);
 	}
-
 	if (colourType === "cssRGB") {
 		return convertRGBtoCSSRGB(nearest);
 	}
-
-	if (colourType === "namedCSS") {
-		return convertRGBtoNamedCSSColour(nearest) as NamedCSSColour;
-	}
+	// At this point the colourType should be namedCSS
+	return convertRGBtoNamedCSSColour(nearest) as NamedCSSColour;
 }

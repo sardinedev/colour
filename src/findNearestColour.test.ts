@@ -62,3 +62,9 @@ test("should return undefined if base colour is not valid", () => {
 	const colour = "pinkk";
 	expect(findNearestColour(colour, palette), undefined);
 });
+
+test("should return undefined if base colour is invalid", () => {
+	const palette = ["#ffffff", "rgb(5 5 5)", "hotpink"];
+	const invalidColour = "invalidColour";
+	expect(findNearestColour(invalidColour, palette)).toBeUndefined();
+});

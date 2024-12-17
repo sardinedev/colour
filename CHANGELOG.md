@@ -1,5 +1,15 @@
 # @sardine/colour
 
+## 2.3.0
+
+### Minor Changes
+
+- c637706: Adds convertHextoCSSRGB
+
+### Patch Changes
+
+- c637706: convertHextoRGB now returns alpha channel values rounded to two decimal points
+
 ## 2.2.1
 
 ### Patch Changes

@@ -9,7 +9,7 @@ import { convertHextoRGB } from "./convertHextoRGB";
  * - `#ffff`
  * - `#102030ff`
  *
- * @returns {string} `Either a CSS RGB or CSS RGBA string`.
+ * @returns {string} either a CSS RGB or CSS RGBA string.
  */
 export function convertHextoCSSRGB(hex: string): string {
 	const rgb = convertHextoRGB(hex);

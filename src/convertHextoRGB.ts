@@ -15,7 +15,7 @@ import {
  * - `#ffff`
  * - `#102030ff`
  *
- * @returns {RGBColour} - RGB colour object.
+ * @returns {RGBColour} RGB colour object.
  */
 export function convertHextoRGB(hex: string): RGBColour {
 	if (typeof hex !== "string") {
@@ -43,7 +43,9 @@ export function convertHextoRGB(hex: string): RGBColour {
 			R: Number.parseInt(`${hex[1]}${hex[2]}`, 16),
 			G: Number.parseInt(`${hex[3]}${hex[4]}`, 16),
 			B: Number.parseInt(`${hex[5]}${hex[6]}`, 16),
-			A: Number.parseInt(`${hex[7]}${hex[8]}`, 16) / 255,
+			A:
+				Math.round((Number.parseInt(`${hex[7]}${hex[8]}`, 16) / 255) * 100) /
+				100,
 		};
 	}
 
@@ -52,7 +54,9 @@ export function convertHextoRGB(hex: string): RGBColour {
 			R: Number.parseInt(`${hex[1]}${hex[1]}`, 16),
 			G: Number.parseInt(`${hex[2]}${hex[2]}`, 16),
 			B: Number.parseInt(`${hex[3]}${hex[3]}`, 16),
-			A: Number.parseInt(`${hex[4]}${hex[4]}`, 16) / 255,
+			A:
+				Math.round((Number.parseInt(`${hex[4]}${hex[4]}`, 16) / 255) * 100) /
+				100,
 		};
 	}
 

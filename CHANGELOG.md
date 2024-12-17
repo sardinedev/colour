@@ -1,5 +1,11 @@
 # @sardine/colour
 
+## 2.4.0
+
+### Minor Changes
+
+- 94632b1: Adds `isHexColour` and `isNamedCSSColour`
+
 ## 2.3.0
 
 ### Minor Changes

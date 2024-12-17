@@ -4,6 +4,7 @@ export { convertCSSRGBtoHex } from "./convertCSSRGBtoHex";
 export { convertCSSRGBtoRGB } from "./convertCSSRGBtoRGB";
 export { convertHextoNamedCSSColour } from "./convertHextoNamedCSSColour";
 export { convertHextoRGB } from "./convertHextoRGB";
+export { convertHextoCSSRGB } from "./convertHextoCSSRGB";
 export { convertNamedCSSColourtoHex } from "./convertNamedCSSColourtoHex";
 export { convertNamedCSSColourtoRGB } from "./convertNamedCSSColourtoRGB";
 export { convertRGBtoCSSRGB } from "./convertRGBtoCSSRGB";

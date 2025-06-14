@@ -22,7 +22,7 @@ test("convert CSS RGB separated by commas", () => {
 test("convert CSS RGB with percentage values", () => {
 	expect(convertCSSRGBtoRGB("rgb(50%, 25%, 100%)")).toStrictEqual({
 		R: 128, // 50% of 255 = 127.5, rounded to 128
-		G: 64,  // 25% of 255 = 63.75, rounded to 64
+		G: 64, // 25% of 255 = 63.75, rounded to 64
 		B: 255, // 100% of 255 = 255
 		A: undefined,
 	});
@@ -103,7 +103,7 @@ test("convert CSS RGB with decimal values", () => {
 test("convert CSS RGB with decimal percentage values", () => {
 	expect(convertCSSRGBtoRGB("rgb(50.5%, 25.25%, 99.9%)")).toStrictEqual({
 		R: 129, // 50.5% of 255 = 128.775, rounded to 129
-		G: 64,  // 25.25% of 255 = 64.3875, rounded to 64
+		G: 64, // 25.25% of 255 = 64.3875, rounded to 64
 		B: 255, // 99.9% of 255 = 254.745, rounded to 255
 		A: undefined,
 	});

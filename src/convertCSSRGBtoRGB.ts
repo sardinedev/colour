@@ -30,7 +30,7 @@ export function convertCSSRGBtoRGB(colour: string): RGBColour {
 	 * @returns The numeric value
 	 */
 	const parseRGBValue = (value: string, isAlpha = false): number => {
-		if (value.endsWith('%')) {
+		if (value.endsWith("%")) {
 			const percentage = Number.parseFloat(value.slice(0, -1));
 			if (isAlpha) {
 				// Alpha percentages: 0%-100% maps to 0-1
@@ -39,7 +39,7 @@ export function convertCSSRGBtoRGB(colour: string): RGBColour {
 			// RGB percentages: 0%-100% maps to 0-255
 			return Math.round((percentage / 100) * 255);
 		}
-		
+
 		// For non-percentage values, just parse as number
 		return Number.parseFloat(value);
 	};

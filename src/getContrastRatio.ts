@@ -5,8 +5,9 @@ import type { NamedCSSColour, WCAG } from "./types";
 
 /**
  * Calculates the contrast ratio between two colours.
- * @param colour1 The first colour
- * @param colour2 The second colour
+ * Accepts CSS RGB colours (including percentage values), named CSS colours, or hexadecimal colours.
+ * @param colour1 The first colour (e.g., `#ff0000`, `rgb(255,0,0)`, `rgb(100%, 0%, 0%)`, or `red`)
+ * @param colour2 The second colour (e.g., `#00ff00`, `rgb(0,255,0)`, `rgb(0%, 100%, 0%)`, or `lime`)
  * @param standard The standard to evaluate the contrast ratio against, defaults to WCAG2.1
  * @returns The contrast ratio between the two colours truncated to 3 decimal places
  */

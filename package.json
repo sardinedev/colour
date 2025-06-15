@@ -51,11 +51,6 @@
 			"name": "CJS build",
 			"path": "dist/index.cjs",
 			"brotli": false
-		},
-		{
-			"name": "UMD build",
-			"path": "dist/index.min.js",
-			"brotli": false
 		}
 	],
 	"devDependencies": {

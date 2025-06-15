@@ -62,4 +62,54 @@ describe("getContrastRatio", () => {
 		const ratio = getContrastRatio("#000", "white", standard);
 		expect(ratio).toBe(21);
 	});
+
+	it("should return the correct contrast ratio for CSS RGB with percentage values", () => {
+		const ratio = getContrastRatio(
+			"rgb(0%, 0%, 0%)",
+			"rgb(100%, 100%, 100%)",
+			standard,
+		);
+		expect(ratio).toBe(21);
+	});
+
+	it("should return the correct contrast ratio for mixed percentage and integer CSS RGB values", () => {
+		const ratio = getContrastRatio(
+			"rgb(255, 0%, 0)",
+			"rgb(0%, 100%, 0%)",
+			standard,
+		);
+		expect(ratio).toBe(2.913);
+	});
+
+	it("should return the correct contrast ratio for RGBA with percentage values", () => {
+		const ratio = getContrastRatio(
+			"rgba(0%, 0%, 0%, 0.8)",
+			"rgba(100%, 100%, 100%, 90%)",
+			standard,
+		);
+		expect(ratio).toBe(21);
+	});
+
+	it("should return the correct contrast ratio when mixing hex and percentage CSS RGB", () => {
+		const ratio = getContrastRatio(
+			"#777777",
+			"rgb(100%, 100%, 100%)",
+			standard,
+		);
+		expect(ratio).toBe(4.478);
+	});
+
+	it("should return the correct contrast ratio when mixing named colors and percentage CSS RGB", () => {
+		const ratio = getContrastRatio("black", "rgb(100%, 100%, 100%)", standard);
+		expect(ratio).toBe(21);
+	});
+
+	it("should return the correct contrast ratio for decimal percentage values", () => {
+		const ratio = getContrastRatio(
+			"rgb(66.7%, 66.7%, 66.7%)",
+			"rgb(33.3%, 33.3%, 33.3%)",
+			standard,
+		);
+		expect(ratio).toBe(3.209);
+	});
 });

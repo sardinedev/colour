@@ -10,6 +10,9 @@ import type { RGBColour } from "./types";
  * - `rgba(0,0,0,0.4)`
  * - `rgb(0 0 0)`
  * - `rgba(0 0 0 / 0.4)`
+ * - `rgb(50%, 25%, 100%)`
+ * - `rgba(50%, 25%, 100%, 0.8)`
+ * - `rgba(50%, 25%, 100%, 80%)`
  *
  * @returns {string} - An hexadecimal string
  */

@@ -1,79 +1,74 @@
 {
-  "name": "@sardine/colour",
-  "version": "2.4.0",
-  "description": "It does things to colours",
-  "type": "module",
-  "module": "./dist/index.mjs",
-  "main": "./dist/index.cjs",
-  "types": "./dist/index.d.ts",
-  "unpkg": "./dist/index.min.js",
-  "sideEffects": false,
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "require": "./dist/index.cjs",
-      "import": "./dist/index.mjs"
-    }
-  },
-  "scripts": {
-    "build": "npx vite build",
-    "test": "npx vitest run --coverage",
-    "types:emit": "npx tsc -p tsconfig.emit.json",
-    "types:check": "npx tsc --noEmit",
-    "static": "npx biome ci src",
-    "size": "size-limit"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/sardinedev/colour.git"
-  },
-  "files": [
-    "dist"
-  ],
-  "publishConfig": {
-    "access": "public"
-  },
-  "keywords": [
-    "color",
-    "colour"
-  ],
-  "author": "Hugo Nogueira",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/sardinedev/colour/issues"
-  },
-  "homepage": "https://github.com/sardinedev/colour#readme",
-  "engines": {
-    "node": ">= 16"
-  },
-  "size-limit": [
-    {
-      "name": "ESM build",
-      "path": "dist/index.mjs",
-      "brotli": false
-    },
-    {
-      "name": "CJS build",
-      "path": "dist/index.cjs",
-      "brotli": false
-    },
-    {
-      "name": "UMD build",
-      "path": "dist/index.min.js",
-      "brotli": false
-    }
-  ],
-  "devDependencies": {
-    "@biomejs/biome": "1.9.4",
-    "@changesets/cli": "^2.27.1",
-    "@size-limit/preset-small-lib": "^11.2.0",
-    "@tsconfig/node20": "^20.1.4",
-    "@tsconfig/strictest": "^2.0.5",
-    "@vitest/coverage-v8": "^2.0.0",
-    "lefthook": "^1.8.1",
-    "size-limit": "^11.2.0",
-    "typescript": "^5.4.5",
-    "vite": "^6.0.0",
-    "vitest": "^2.0.0"
-  }
+	"name": "@sardine/colour",
+	"version": "2.4.0",
+	"description": "It does things to colours",
+	"type": "module",
+	"module": "./dist/index.mjs",
+	"main": "./dist/index.cjs",
+	"types": "./dist/index.d.ts",
+	"unpkg": "./dist/index.min.js",
+	"sideEffects": false,
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"require": "./dist/index.cjs",
+			"import": "./dist/index.mjs"
+		}
+	},
+	"scripts": {
+		"build": "npx vite build",
+		"test": "npx vitest run --coverage",
+		"types:emit": "npx tsc -p tsconfig.emit.json",
+		"types:check": "npx tsc --noEmit",
+		"static": "npx biome ci src",
+		"size": "size-limit"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/sardinedev/colour.git"
+	},
+	"files": ["dist"],
+	"publishConfig": {
+		"access": "public"
+	},
+	"keywords": ["color", "colour"],
+	"author": "Hugo Nogueira",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/sardinedev/colour/issues"
+	},
+	"homepage": "https://github.com/sardinedev/colour#readme",
+	"engines": {
+		"node": ">= 16"
+	},
+	"size-limit": [
+		{
+			"name": "ESM build",
+			"path": "dist/index.mjs",
+			"brotli": false
+		},
+		{
+			"name": "CJS build",
+			"path": "dist/index.cjs",
+			"brotli": false
+		},
+		{
+			"name": "UMD build",
+			"path": "dist/index.min.js",
+			"brotli": false
+		}
+	],
+	"devDependencies": {
+		"@biomejs/biome": "1.9.4",
+		"@changesets/cli": "^2.27.1",
+		"@size-limit/preset-small-lib": "^11.2.0",
+		"@tsconfig/node20": "^20.1.4",
+		"@tsconfig/strictest": "^2.0.5",
+		"@vitest/coverage-v8": "^2.0.0",
+		"lefthook": "^1.8.1",
+		"size-limit": "^11.2.0",
+		"typescript": "^5.4.5",
+		"vite": "^6.0.0",
+		"vitest": "^2.0.0"
+	}
 }

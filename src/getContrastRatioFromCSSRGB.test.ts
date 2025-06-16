@@ -58,4 +58,49 @@ describe("getContrastRatioFromCSSRGB", () => {
 		);
 		expect(ratio).toBe(3.209);
 	});
+
+	it("should return the correct contrast ratio for percentage values (black and white)", () => {
+		const ratio = getContrastRatioFromCSSRGB(
+			"rgb(0%, 0%, 0%)",
+			"rgb(100%, 100%, 100%)",
+			standard,
+		);
+		expect(ratio).toBe(21);
+	});
+
+	it("should return the correct contrast ratio for mixed percentage and integer values", () => {
+		const ratio = getContrastRatioFromCSSRGB(
+			"rgb(255, 0%, 0)",
+			"rgb(0%, 100%, 0%)",
+			standard,
+		);
+		expect(ratio).toBe(2.913);
+	});
+
+	it("should return the correct contrast ratio with RGBA percentage values", () => {
+		const ratio = getContrastRatioFromCSSRGB(
+			"rgba(0%, 0%, 0%, 0.8)",
+			"rgba(100%, 100%, 100%, 90%)",
+			standard,
+		);
+		expect(ratio).toBe(21);
+	});
+
+	it("should return the correct contrast ratio with modern slash syntax", () => {
+		const ratio = getContrastRatioFromCSSRGB(
+			"rgb(119 119 119 / 0.9)",
+			"rgb(255 255 255 / 0.8)",
+			standard,
+		);
+		expect(ratio).toBe(4.478);
+	});
+
+	it("should return the correct contrast ratio with decimal percentage values", () => {
+		const ratio = getContrastRatioFromCSSRGB(
+			"rgb(66.7% 66.7% 66.7%)",
+			"rgb(33.3%, 33.3%, 33.3%)",
+			standard,
+		);
+		expect(ratio).toBe(3.209);
+	});
 });

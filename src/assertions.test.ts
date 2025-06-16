@@ -25,6 +25,34 @@ test("assert true if string is in the CSS RGBA format with spaces and a percenta
 	expect(isCSSRGBColour("rgba(12 23 111 / 40%)")).toBe(true);
 });
 
+test("assert true if string is in the CSS RGB format with percentage values", () => {
+	expect(isCSSRGBColour("rgb(50%, 25%, 100%)")).toBe(true);
+});
+
+test("assert true if string is in the CSS RGBA format with percentage values and decimal alpha", () => {
+	expect(isCSSRGBColour("rgba(50%, 25%, 100%, 0.8)")).toBe(true);
+});
+
+test("assert true if string is in the CSS RGBA format with percentage values and percentage alpha", () => {
+	expect(isCSSRGBColour("rgba(50%, 25%, 100%, 80%)")).toBe(true);
+});
+
+test("assert true if string is in the CSS RGB format with mixed percentage and integer values", () => {
+	expect(isCSSRGBColour("rgba(128, 25%, 255, 50%)")).toBe(true);
+});
+
+test("assert true if string is in the CSS RGB format with percentage and slash separator", () => {
+	expect(isCSSRGBColour("rgb(50% 25% 100% / 80%)")).toBe(true);
+});
+
+test("assert true if string is in the CSS RGB format with 0% values", () => {
+	expect(isCSSRGBColour("rgb(0%, 0%, 0%)")).toBe(true);
+});
+
+test("assert true if string is in the CSS RGB format with decimal percentage values", () => {
+	expect(isCSSRGBColour("rgb(50.5%, 25.25%, 99.9%)")).toBe(true);
+});
+
 test("assert false if string is not in the CSS RGB format", () => {
 	expect(isCSSRGBColour("zzz( 23, 111, 87)")).toBe(false);
 });

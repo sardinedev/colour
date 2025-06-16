@@ -35,3 +35,19 @@ test("throws an error if not passing a valid CSS RGB format", () => {
 		"rfv(12,23,42) is not a valid colour format. isDarkColour accepts CSS RGB formats, ie rgb(0,0,0) and rgba(255, 255, 255, 0.4), hexadecimal and CSS named colours.",
 	);
 });
+
+test("should return true for CSS RGB with percentage values (dark)", () => {
+	expect(isDarkColour("rgb(8%, 8%, 8%)", "WCAG2.1")).toBe(true);
+});
+
+test("should return false for CSS RGB with percentage values (light)", () => {
+	expect(isDarkColour("rgb(78%, 78%, 78%)", "WCAG2.1")).toBe(false);
+});
+
+test("should return true for CSS RGBA with percentage values", () => {
+	expect(isDarkColour("rgba(8%, 8%, 8%, 0.9)", "WCAG2.1")).toBe(true);
+});
+
+test("should return true for CSS RGB with mixed percentage and integer values", () => {
+	expect(isDarkColour("rgb(20, 8%, 20)", "WCAG2.1")).toBe(true);
+});

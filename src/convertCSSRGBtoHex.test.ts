@@ -53,3 +53,45 @@ test("throws an error if not passing a valid CSS RGB format", () => {
 		"convertCSSRGBtoHex expects a valid CSS RGB string but got rfv(12,23,42)",
 	);
 });
+
+test("converts CSS RGB with percentage values to hexadecimal colour", () => {
+	const expectedHex = "#8040ff";
+	const RGB = "rgb(50%, 25%, 100%)";
+	expect(convertCSSRGBtoHex(RGB)).toBe(expectedHex);
+});
+
+test("converts CSS RGBA with percentage values and decimal alpha to hexadecimal colour", () => {
+	const expectedHex = "#8040ffcc";
+	const RGBA = "rgba(50%, 25%, 100%, 0.8)";
+	expect(convertCSSRGBtoHex(RGBA)).toBe(expectedHex);
+});
+
+test("converts CSS RGBA with percentage values and percentage alpha to hexadecimal colour", () => {
+	const expectedHex = "#8040ffcc";
+	const RGBA = "rgba(50%, 25%, 100%, 80%)";
+	expect(convertCSSRGBtoHex(RGBA)).toBe(expectedHex);
+});
+
+test("converts CSS RGBA with mixed integer and percentage values to hexadecimal colour", () => {
+	const expectedHex = "#8040ff80";
+	const RGBA = "rgba(128, 25%, 255, 50%)";
+	expect(convertCSSRGBtoHex(RGBA)).toBe(expectedHex);
+});
+
+test("converts CSS RGB with percentage and slash separator to hexadecimal colour", () => {
+	const expectedHex = "#8040ffcc";
+	const RGB = "rgb(50% 25% 100% / 80%)";
+	expect(convertCSSRGBtoHex(RGB)).toBe(expectedHex);
+});
+
+test("converts CSS RGB with 0% values to hexadecimal colour", () => {
+	const expectedHex = "#000000";
+	const RGB = "rgb(0%, 0%, 0%)";
+	expect(convertCSSRGBtoHex(RGB)).toBe(expectedHex);
+});
+
+test("converts CSS RGB with decimal percentage values to hexadecimal colour", () => {
+	const expectedHex = "#8140ff";
+	const RGB = "rgb(50.5%, 25.25%, 99.9%)";
+	expect(convertCSSRGBtoHex(RGB)).toBe(expectedHex);
+});

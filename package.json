@@ -27,16 +27,11 @@
 		"type": "git",
 		"url": "https://github.com/sardinedev/colour.git"
 	},
-	"files": [
-		"dist"
-	],
+	"files": ["dist"],
 	"publishConfig": {
 		"access": "public"
 	},
-	"keywords": [
-		"color",
-		"colour"
-	],
+	"keywords": ["color", "colour"],
 	"author": "Hugo Nogueira",
 	"license": "MIT",
 	"bugs": {

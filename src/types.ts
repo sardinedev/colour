@@ -1,4 +1,15 @@
 /**
+ * The HSV colour model represents colours by describing the Hue, Saturation, and Value channels.
+ */
+export interface HSVColour {
+	/** A number between 0 and 360 to describe the Hue channel */
+	h: number;
+	/** A number between 0 and 1 to describe the Saturation channel */
+	s: number;
+	/** A number between 0 and 1 to describe the Value channel */
+	v: number;
+}
+/**
  * The RGB colour model represents a broad array of colours by describing the Red, Green and Blue channels.
  */
 export interface RGBColour {

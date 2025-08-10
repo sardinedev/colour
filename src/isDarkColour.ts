@@ -24,7 +24,7 @@ export function isDarkColour(
 			return isCSSRGBDarkColour(colour, standard);
 		}
 		return isCSSNamedDarkColour(colour as NamedCSSColour, standard);
-	} catch (error) {
+	} catch (_error) {
 		throw new Error(
 			`${colour} is not a valid colour format. isDarkColour accepts CSS RGB formats, ie rgb(0,0,0), rgba(255, 255, 255, 0.4), rgb(50%, 25%, 100%), and rgba(50%, 25%, 100%, 80%), hexadecimal and CSS named colours.`,
 		);

@@ -1,4 +1,4 @@
-export { RGBdistance } from "./RGBdistance";
+export { isCSSRGBColour, isHexColour, isNamedCSSColour } from "./assertions";
 export { ciede2000 } from "./CIEDE2000";
 export { convertCSSRGBtoHex } from "./convertCSSRGBtoHex";
 export { convertCSSRGBtoRGB } from "./convertCSSRGBtoRGB";
@@ -13,8 +13,8 @@ export { convertRGBtoLab } from "./convertRGBtoLab";
 export { convertRGBtoNamedCSSColour } from "./convertRGBtoNamedCSSColour";
 export { convertRGBtoXYZ } from "./convertRGBtoXYZ";
 export { convertXYZtoLab } from "./convertXYZtoLab";
-export { findNearestCSSRGBColour } from "./findNearestCSSRGBColour";
 export { findNearestColour } from "./findNearestColour";
+export { findNearestCSSRGBColour } from "./findNearestCSSRGBColour";
 export { findNearestHexColour } from "./findNearestHexColour";
 export { findNearestNamedCSSColour } from "./findNearestNamedCSSColour";
 export { findNearestRGBColour } from "./findNearestRGBColour";
@@ -25,10 +25,8 @@ export { getContrastRatioFromNamedCSSColour } from "./getContrastRatioFromNamedC
 export { getSRGBLuminanceFromHex } from "./getSRGBLuminanceFromHex";
 export { getSRGBLuminanceFromRGB } from "./getSRGBLuminanceFromRGB";
 export { isCSSNamedDarkColour } from "./isCSSNameDarkColour";
-export { isCSSRGBColour } from "./assertions";
 export { isCSSRGBDarkColour } from "./isCSSRGBDarkColour";
 export { isDarkColour } from "./isDarkColour";
-export { isHexColour } from "./assertions";
 export { isHexDarkColour } from "./isHexDarkColour";
-export { isNamedCSSColour } from "./assertions";
 export { pickHexColourContrast } from "./pickHexColourContrast";
+export { RGBdistance } from "./RGBdistance";

@@ -32,6 +32,3 @@ All functions now support the complete CSS RGB specification:
 - `rgba(100%, 50%, 0%, 80%)` - RGB percentages with percentage alpha
 - `rgb(255 50% 0 / 0.8)` - Mixed integer/percentage with slash syntax
 - All variations with `rgba()` function and alpha channels
-
-### Breaking Changes
-None - this release maintains full backward compatibility with existing CSS RGB integer formats.

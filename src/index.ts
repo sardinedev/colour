@@ -30,3 +30,4 @@ export { isDarkColour } from "./isDarkColour";
 export { isHexDarkColour } from "./isHexDarkColour";
 export { pickHexColourContrast } from "./pickHexColourContrast";
 export { RGBdistance } from "./RGBdistance";
+export { sortHexColours } from "./sortHexColours";

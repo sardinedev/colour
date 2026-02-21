@@ -1,6 +1,6 @@
 {
 	"name": "@sardine/colour",
-	"version": "2.4.0",
+	"version": "3.0.0",
 	"description": "It does things to colours",
 	"type": "module",
 	"module": "./dist/index.mjs",
@@ -27,11 +27,16 @@
 		"type": "git",
 		"url": "https://github.com/sardinedev/colour.git"
 	},
-	"files": ["dist"],
+	"files": [
+		"dist"
+	],
 	"publishConfig": {
 		"access": "public"
 	},
-	"keywords": ["color", "colour"],
+	"keywords": [
+		"color",
+		"colour"
+	],
 	"author": "Hugo Nogueira",
 	"license": "MIT",
 	"bugs": {

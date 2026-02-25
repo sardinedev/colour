@@ -27,11 +27,16 @@
 		"type": "git",
 		"url": "https://github.com/sardinedev/colour.git"
 	},
-	"files": ["dist"],
+	"files": [
+		"dist"
+	],
 	"publishConfig": {
 		"access": "public"
 	},
-	"keywords": ["color", "colour"],
+	"keywords": [
+		"color",
+		"colour"
+	],
 	"author": "Hugo Nogueira",
 	"license": "MIT",
 	"bugs": {
@@ -59,6 +64,7 @@
 		"@size-limit/preset-small-lib": "^12.0.0",
 		"@tsconfig/node22": "^22.0.2",
 		"@tsconfig/strictest": "^2.0.5",
+		"@types/node": "^24.10.13",
 		"@vitest/coverage-v8": "^4.0.0",
 		"lefthook": "^2.0.0",
 		"size-limit": "^12.0.0",

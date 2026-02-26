@@ -35,7 +35,15 @@ export function getGreyscaleOrder(v: number): number {
  */
 export function sortHexColours(hexColours: string[]): string[] {
 	// Precompute HSV+alpha for each colour once — O(n) — so comparators
-	const cache = new Map(hexColours.map((hex) => [hex, getColorInfo(hex)]));
+	// don't repeat the hex→RGB→HSV conversion chain on every comparison.
+	// Use a loop instead of new Map(array.map(...)) to avoid the intermediate
+	// array allocation, and skip duplicates to avoid redundant conversions.
+	const cache = new Map<string, ReturnType<typeof getColorInfo>>();
+	for (const hex of hexColours) {
+		if (!cache.has(hex)) {
+			cache.set(hex, getColorInfo(hex));
+		}
+	}
 
 	// Partition colours
 	const normal: string[] = [];

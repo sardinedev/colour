@@ -187,9 +187,8 @@ test("sortHexColours: throws for an invalid hex value", () => {
 	);
 });
 
-test("sortHexColours: preserves duplicate hex values and caches the conversion only once", () => {
-	// #ff0000 appears twice — the second occurrence should reuse the cached HSV info
-	// and still appear in the sorted output, not be deduplicated
+test("sortHexColours: preserves duplicate hex values in output", () => {
+	// Duplicates should appear in the sorted output, not be deduplicated
 	const result = sortHexColours(["#ff0000", "#00ff00", "#ff0000"]);
 	expect(result).toHaveLength(3);
 	expect(result.filter((c) => c === "#ff0000")).toHaveLength(2);

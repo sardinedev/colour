@@ -34,13 +34,25 @@ export function getGreyscaleOrder(v: number): number {
  * @returns Sorted array of hex colour strings
  */
 export function sortHexColours(hexColours: string[]): string[] {
+	// Precompute HSV+alpha for each colour once — O(n) — so comparators can reuse cached values instead of recomputing colour info
+	// don't repeat the hex→RGB→HSV conversion chain on every comparison.
+	// Use a loop instead of new Map(array.map(...)) to avoid the intermediate
+	// array allocation, and skip duplicates to avoid redundant conversions.
+	const cache = new Map<string, ReturnType<typeof getColorInfo>>();
+	for (const hex of hexColours) {
+		if (!cache.has(hex)) {
+			cache.set(hex, getColorInfo(hex));
+		}
+	}
+
 	// Partition colours
 	const normal: string[] = [];
 	const greyscale: string[] = [];
 	const transparent: string[] = [];
 
 	for (const hex of hexColours) {
-		const { s, a } = getColorInfo(hex);
+		// biome-ignore lint/style/noNonNullAssertion: key was just inserted above
+		const { s, a } = cache.get(hex)!;
 		if (a === 0) {
 			transparent.push(hex);
 		} else if (s === 0) {
@@ -52,16 +64,20 @@ export function sortHexColours(hexColours: string[]): string[] {
 
 	// Sort normal colours by hue, then saturation
 	normal.sort((a, b) => {
-		const ca = getColorInfo(a);
-		const cb = getColorInfo(b);
+		// biome-ignore lint/style/noNonNullAssertion: all keys are in cache
+		const ca = cache.get(a)!;
+		// biome-ignore lint/style/noNonNullAssertion: all keys are in cache
+		const cb = cache.get(b)!;
 		if (ca.h !== cb.h) return ca.h - cb.h;
 		return cb.s - ca.s; // descending saturation
 	});
 
 	// Sort greyscale by a custom order: gray, black, white for common values
 	greyscale.sort((a, b) => {
-		const ca = getColorInfo(a);
-		const cb = getColorInfo(b);
+		// biome-ignore lint/style/noNonNullAssertion: all keys are in cache
+		const ca = cache.get(a)!;
+		// biome-ignore lint/style/noNonNullAssertion: all keys are in cache
+		const cb = cache.get(b)!;
 
 		const orderA = getGreyscaleOrder(ca.v);
 		const orderB = getGreyscaleOrder(cb.v);
@@ -76,11 +92,12 @@ export function sortHexColours(hexColours: string[]): string[] {
 
 	// Sort transparent colours by value (brightness)
 	transparent.sort((a, b) => {
-		const ca = getColorInfo(a);
-		const cb = getColorInfo(b);
+		// biome-ignore lint/style/noNonNullAssertion: all keys are in cache
+		const ca = cache.get(a)!;
+		// biome-ignore lint/style/noNonNullAssertion: all keys are in cache
+		const cb = cache.get(b)!;
 		return ca.v - cb.v;
 	});
 
-	// Transparent colours: keep order
 	return [...normal, ...greyscale, ...transparent];
 }

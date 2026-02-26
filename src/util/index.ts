@@ -58,14 +58,16 @@ export function meanHue_d({ C1, C2, h1_d, h2_d }: HueHelper): number {
  * Converts a number in degrees to radians
  * @param n Number in degrees to be converted
  */
-export const toRadians = (n: number): number => n * (Math.PI / 180);
+const DEG_TO_RAD = Math.PI / 180;
+export const toRadians = (n: number): number => n * DEG_TO_RAD;
 
 /**
  * Calculates a recurring square root
  * @param n Input number
  */
+const POW_25_7 = 25 ** 7; // 6103515625 — precomputed constant
 export const bigSquare = (n: number): number =>
-	Math.sqrt(n ** 7 / (n ** 7 + 25 ** 7));
+	Math.sqrt(n ** 7 / (n ** 7 + POW_25_7));
 
 /**
  * Normalise black and white colorimetry as specified in IEC 61966-2-1
@@ -90,18 +92,14 @@ export function linearRGB(rgbValue: number, WCAG21?: boolean) {
  * The division of the f function domain into two parts was done to prevent an infinite slope at n = 0
  * @param n Number to be constrained
  */
+const LAB_DELTA = 6 / 29; // ≈ 0.20690
+const LAB_DELTA_CUBE = LAB_DELTA ** 3; // ≈ 0.00886 — threshold
+const LAB_DELTA_SQ_3 = 3 * LAB_DELTA ** 2; // ≈ 0.12842 — linear slope denominator
 export function constrainLab(n: number): number {
-	const delta = 6 / 29;
-	const deltaCube = delta ** 3;
-	let t: number;
-
-	if (n > deltaCube) {
-		t = Math.cbrt(n);
-	} else {
-		t = n / (3 * delta ** 2) + 4 / 29;
+	if (n > LAB_DELTA_CUBE) {
+		return Math.cbrt(n);
 	}
-
-	return t;
+	return n / LAB_DELTA_SQ_3 + 4 / 29;
 }
 
 /**
@@ -114,3 +112,7 @@ export function constrainLab(n: number): number {
 export function clamp(value: number, min: number, max: number): number {
 	return Math.min(Math.max(value, min), max);
 }
+
+/** MDN reference for CSS named colours — shared to avoid duplicating the URL string in the bundle */
+export const NAMED_CSS_COLOUR_URL =
+	"https://developer.mozilla.org/en-US/docs/Web/CSS/named-color";

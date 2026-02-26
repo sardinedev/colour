@@ -1,10 +1,5 @@
 import type { RGBColour } from "./types";
-import {
-	hexAlphaRegex,
-	hexRegex,
-	shortAlphaHexRegex,
-	shortHexRegex,
-} from "./util/regexers";
+import { hexAnyRegex } from "./util/regexers";
 
 /**
  * Converts an hexadecimal colour into RGB colour object.
@@ -22,45 +17,40 @@ export function convertHextoRGB(hex: string): RGBColour {
 		throw new Error(`convertHextoRGB expects a string but got a ${typeof hex}`);
 	}
 
-	if (hex.match(hexRegex)) {
-		return {
-			R: Number.parseInt(`${hex[1]}${hex[2]}`, 16),
-			G: Number.parseInt(`${hex[3]}${hex[4]}`, 16),
-			B: Number.parseInt(`${hex[5]}${hex[6]}`, 16),
-		};
+	if (!hexAnyRegex.test(hex)) {
+		throw new Error(
+			`convertHextoRGB expects a valid hexadecimal colour value but got ${hex}`,
+		);
 	}
 
-	if (hex.match(shortHexRegex)) {
-		return {
-			R: Number.parseInt(`${hex[1]}${hex[1]}`, 16),
-			G: Number.parseInt(`${hex[2]}${hex[2]}`, 16),
-			B: Number.parseInt(`${hex[3]}${hex[3]}`, 16),
-		};
+	switch (hex.length) {
+		case 7: // #RRGGBB
+			return {
+				R: parseInt(hex.slice(1, 3), 16),
+				G: parseInt(hex.slice(3, 5), 16),
+				B: parseInt(hex.slice(5, 7), 16),
+			};
+		case 4: // #RGB
+			return {
+				R: parseInt(hex.slice(1, 2).repeat(2), 16),
+				G: parseInt(hex.slice(2, 3).repeat(2), 16),
+				B: parseInt(hex.slice(3, 4).repeat(2), 16),
+			};
+		case 9: // #RRGGBBAA
+			return {
+				R: parseInt(hex.slice(1, 3), 16),
+				G: parseInt(hex.slice(3, 5), 16),
+				B: parseInt(hex.slice(5, 7), 16),
+				A: Math.round((parseInt(hex.slice(7, 9), 16) / 255) * 100) / 100,
+			};
+		default: // #RGBA (length 5)
+			return {
+				R: parseInt(hex.slice(1, 2).repeat(2), 16),
+				G: parseInt(hex.slice(2, 3).repeat(2), 16),
+				B: parseInt(hex.slice(3, 4).repeat(2), 16),
+				A:
+					Math.round((parseInt(hex.slice(4, 5).repeat(2), 16) / 255) * 100) /
+					100,
+			};
 	}
-
-	if (hex.match(hexAlphaRegex)) {
-		return {
-			R: Number.parseInt(`${hex[1]}${hex[2]}`, 16),
-			G: Number.parseInt(`${hex[3]}${hex[4]}`, 16),
-			B: Number.parseInt(`${hex[5]}${hex[6]}`, 16),
-			A:
-				Math.round((Number.parseInt(`${hex[7]}${hex[8]}`, 16) / 255) * 100) /
-				100,
-		};
-	}
-
-	if (hex.match(shortAlphaHexRegex)) {
-		return {
-			R: Number.parseInt(`${hex[1]}${hex[1]}`, 16),
-			G: Number.parseInt(`${hex[2]}${hex[2]}`, 16),
-			B: Number.parseInt(`${hex[3]}${hex[3]}`, 16),
-			A:
-				Math.round((Number.parseInt(`${hex[4]}${hex[4]}`, 16) / 255) * 100) /
-				100,
-		};
-	}
-
-	throw new Error(
-		`convertHextoRGB expects an valid hexadecimal colour value but got ${hex}`,
-	);
 }

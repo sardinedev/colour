@@ -11,11 +11,11 @@ test("verify if `lightgoldenrodyellow` is a dark colour", () => {
 
 test("return undefined if named colour does not exist", () => {
 	const error = assert.throws(() =>
-		/* @ts-ignore-line */
+		/* @ts-expect-error-line */
 		isCSSNamedDarkColour("rose", "WCAG2.1"),
 	) as unknown as Error;
 	expect(
 		error.message,
-		"rose is not a valid colour format. isCSSNamedDarkColour only accepts CSS named colours. Check more details here https://developer.mozilla.org/en-US/docs/Web/CSS/named-color",
+		"rose is not a valid colour format. isCSSNamedDarkColour only accepts CSS named colours. See https://developer.mozilla.org/en-US/docs/Web/CSS/named-color",
 	);
 });

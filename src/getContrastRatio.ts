@@ -2,6 +2,7 @@ import { convertCSSRGBtoHex } from "./convertCSSRGBtoHex";
 import { convertNamedCSSColourtoHex } from "./convertNamedCSSColourtoHex";
 import { getContrastRatioFromHex } from "./getContrastRatioFromHex";
 import type { NamedCSSColour, WCAG } from "./types";
+import { NAMED_CSS_COLOUR_URL } from "./util/index";
 
 /**
  * Calculates the contrast ratio between two colours.
@@ -28,9 +29,7 @@ export function getContrastRatio(
 		const _hexColour1 = convertNamedCSSColourtoHex(colour1 as NamedCSSColour);
 		if (_hexColour1 === undefined) {
 			throw new Error(
-				`getContrastRatio expects valid CSS named colours.
-					${colour1} is not a valid CSS named colour.
-					See https://developer.mozilla.org/en-US/docs/Web/CSS/named-color`,
+				`getContrastRatio expects valid CSS named colours. ${colour1} is not a valid CSS named colour. See ${NAMED_CSS_COLOUR_URL}`,
 			);
 		}
 		hexColour1 = _hexColour1;
@@ -43,9 +42,9 @@ export function getContrastRatio(
 	} else {
 		const _hexColour2 = convertNamedCSSColourtoHex(colour2 as NamedCSSColour);
 		if (_hexColour2 === undefined) {
-			throw new Error(`getContrastRatio expects valid CSS named colours.
-					${colour2} is not a valid CSS named colour.
-					See https://developer.mozilla.org/en-US/docs/Web/CSS/named-color`);
+			throw new Error(
+				`getContrastRatio expects valid CSS named colours. ${colour2} is not a valid CSS named colour. See ${NAMED_CSS_COLOUR_URL}`,
+			);
 		}
 		hexColour2 = _hexColour2;
 	}

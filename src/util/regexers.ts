@@ -1,11 +1,6 @@
-/** Six digit Hexadecimal colour, ie: #12FF21 */
-export const hexRegex = /^#[a-fA-F0-9]{6}$/;
-/** Eight digit Hexadecimal colour, ie: #12FF21BE */
-export const hexAlphaRegex = /^#[a-fA-F0-9]{8}$/;
-/** Three digit Hexadecimal colour, ie: #FFF */
-export const shortHexRegex = /^#[a-fA-F0-9]{3}$/;
-/** Four digit Hexadecimal colour, ie: #FFF4 */
-export const shortAlphaHexRegex = /^#[a-fA-F0-9]{4}$/;
+/** Any valid hexadecimal colour: 3, 4, 6, or 8 hex digits after `#` */
+export const hexAnyRegex =
+	/^#(?:[0-9a-fA-F]{8}|[0-9a-fA-F]{6}|[0-9a-fA-F]{4}|[0-9a-fA-F]{3})$/;
 /**
  * Captures the following CSS RGB formats:
  * - `rgb(0,0,0)`

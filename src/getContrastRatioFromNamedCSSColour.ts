@@ -1,6 +1,7 @@
 import { convertNamedCSSColourtoHex } from "./convertNamedCSSColourtoHex";
 import { getContrastRatioFromHex } from "./getContrastRatioFromHex";
 import type { NamedCSSColour, WCAG } from "./types";
+import { NAMED_CSS_COLOUR_URL } from "./util/index";
 
 /**
  * Calculates the contrast ratio between two named CSS colours in.
@@ -21,9 +22,7 @@ export function getContrastRatioFromNamedCSSColour(
 
 	if (hexColour1 === undefined || hexColour2 === undefined) {
 		throw new Error(
-			`getContrastRatioFromNamedCSSColour expects valid CSS named colours.
-			${colour1} or ${colour2} are not valid CSS named colours.
-			See https://developer.mozilla.org/en-US/docs/Web/CSS/named-color`,
+			`getContrastRatioFromNamedCSSColour expects valid CSS named colours. ${colour1} or ${colour2} are not valid CSS named colours. See ${NAMED_CSS_COLOUR_URL}`,
 		);
 	}
 

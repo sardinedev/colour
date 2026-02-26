@@ -1,6 +1,7 @@
 import { convertNamedCSSColourtoHex } from "./convertNamedCSSColourtoHex";
 import { isHexDarkColour } from "./isHexDarkColour";
 import type { NamedCSSColour, WCAG } from "./types";
+import { NAMED_CSS_COLOUR_URL } from "./util/index";
 
 /**
  * Evaluates if a named CSS colour is dark by measuring the contrast ratio against black and white
@@ -17,6 +18,6 @@ export function isCSSNamedDarkColour(
 		return isHexDarkColour(hex, standard);
 	}
 	throw new Error(
-		`${name} is not a valid colour format. isCSSNamedDarkColour only accepts CSS named colours. Check more details here https://developer.mozilla.org/en-US/docs/Web/CSS/named-color`,
+		`${name} is not a valid colour format. isCSSNamedDarkColour only accepts CSS named colours. See ${NAMED_CSS_COLOUR_URL}`,
 	);
 }

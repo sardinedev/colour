@@ -19,39 +19,37 @@ export function convertHextoRGB(hex: string): RGBColour {
 
 	if (!hexAnyRegex.test(hex)) {
 		throw new Error(
-			`convertHextoRGB expects an valid hexadecimal colour value but got ${hex}`,
+			`convertHextoRGB expects a valid hexadecimal colour value but got ${hex}`,
 		);
 	}
 
 	switch (hex.length) {
 		case 7: // #RRGGBB
 			return {
-				R: Number.parseInt(`${hex[1]}${hex[2]}`, 16),
-				G: Number.parseInt(`${hex[3]}${hex[4]}`, 16),
-				B: Number.parseInt(`${hex[5]}${hex[6]}`, 16),
+				R: parseInt(hex.slice(1, 3), 16),
+				G: parseInt(hex.slice(3, 5), 16),
+				B: parseInt(hex.slice(5, 7), 16),
 			};
 		case 4: // #RGB
 			return {
-				R: Number.parseInt(`${hex[1]}${hex[1]}`, 16),
-				G: Number.parseInt(`${hex[2]}${hex[2]}`, 16),
-				B: Number.parseInt(`${hex[3]}${hex[3]}`, 16),
+				R: parseInt(hex.slice(1, 2).repeat(2), 16),
+				G: parseInt(hex.slice(2, 3).repeat(2), 16),
+				B: parseInt(hex.slice(3, 4).repeat(2), 16),
 			};
 		case 9: // #RRGGBBAA
 			return {
-				R: Number.parseInt(`${hex[1]}${hex[2]}`, 16),
-				G: Number.parseInt(`${hex[3]}${hex[4]}`, 16),
-				B: Number.parseInt(`${hex[5]}${hex[6]}`, 16),
-				A:
-					Math.round((Number.parseInt(`${hex[7]}${hex[8]}`, 16) / 255) * 100) /
-					100,
+				R: parseInt(hex.slice(1, 3), 16),
+				G: parseInt(hex.slice(3, 5), 16),
+				B: parseInt(hex.slice(5, 7), 16),
+				A: Math.round((parseInt(hex.slice(7, 9), 16) / 255) * 100) / 100,
 			};
 		default: // #RGBA (length 5)
 			return {
-				R: Number.parseInt(`${hex[1]}${hex[1]}`, 16),
-				G: Number.parseInt(`${hex[2]}${hex[2]}`, 16),
-				B: Number.parseInt(`${hex[3]}${hex[3]}`, 16),
+				R: parseInt(hex.slice(1, 2).repeat(2), 16),
+				G: parseInt(hex.slice(2, 3).repeat(2), 16),
+				B: parseInt(hex.slice(3, 4).repeat(2), 16),
 				A:
-					Math.round((Number.parseInt(`${hex[4]}${hex[4]}`, 16) / 255) * 100) /
+					Math.round((parseInt(hex.slice(4, 5).repeat(2), 16) / 255) * 100) /
 					100,
 			};
 	}

@@ -22,7 +22,7 @@ export function convertHextoRGB(hex: string): RGBColour {
 		throw new Error(`convertHextoRGB expects a string but got a ${typeof hex}`);
 	}
 
-	if (hex.match(hexRegex)) {
+	if (hexRegex.test(hex)) {
 		return {
 			R: Number.parseInt(`${hex[1]}${hex[2]}`, 16),
 			G: Number.parseInt(`${hex[3]}${hex[4]}`, 16),
@@ -30,7 +30,7 @@ export function convertHextoRGB(hex: string): RGBColour {
 		};
 	}
 
-	if (hex.match(shortHexRegex)) {
+	if (shortHexRegex.test(hex)) {
 		return {
 			R: Number.parseInt(`${hex[1]}${hex[1]}`, 16),
 			G: Number.parseInt(`${hex[2]}${hex[2]}`, 16),
@@ -38,7 +38,7 @@ export function convertHextoRGB(hex: string): RGBColour {
 		};
 	}
 
-	if (hex.match(hexAlphaRegex)) {
+	if (hexAlphaRegex.test(hex)) {
 		return {
 			R: Number.parseInt(`${hex[1]}${hex[2]}`, 16),
 			G: Number.parseInt(`${hex[3]}${hex[4]}`, 16),
@@ -49,7 +49,7 @@ export function convertHextoRGB(hex: string): RGBColour {
 		};
 	}
 
-	if (hex.match(shortAlphaHexRegex)) {
+	if (shortAlphaHexRegex.test(hex)) {
 		return {
 			R: Number.parseInt(`${hex[1]}${hex[1]}`, 16),
 			G: Number.parseInt(`${hex[2]}${hex[2]}`, 16),

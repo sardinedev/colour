@@ -27,7 +27,7 @@ import {
  * @returns {boolean} `true` if the string represents a valid CSS RGB or RGBA colour value, `false` otherwise.
  */
 export function isCSSRGBColour(colour: string): boolean {
-	return !!colour.match(cssRGBARegex);
+	return cssRGBARegex.test(colour);
 }
 
 /**
@@ -38,10 +38,10 @@ export function isCSSRGBColour(colour: string): boolean {
  */
 export function isHexColour(colour: string): boolean {
 	return (
-		!!colour.match(hexRegex) ||
-		!!colour.match(hexAlphaRegex) ||
-		!!colour.match(shortAlphaHexRegex) ||
-		!!colour.match(shortHexRegex)
+		hexRegex.test(colour) ||
+		hexAlphaRegex.test(colour) ||
+		shortAlphaHexRegex.test(colour) ||
+		shortHexRegex.test(colour)
 	);
 }
 

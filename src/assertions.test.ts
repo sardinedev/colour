@@ -57,7 +57,7 @@ test("assert false if string is not in the CSS RGB format", () => {
 	expect(isCSSRGBColour("zzz( 23, 111, 87)")).toBe(false);
 });
 
-test.skip("assert false if string doesn't have 3 colour values", () => {
+test("assert false if string doesn't have 3 colour values", () => {
 	expect(isCSSRGBColour("rgb( 23, 111)")).toBe(false);
 });
 

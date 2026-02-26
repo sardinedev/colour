@@ -3,7 +3,7 @@ import { getContrastRatioFromHex } from "./getContrastRatioFromHex";
 import type { WCAG } from "./types";
 
 describe("getContrastRatioFromHex", () => {
-	const standard: WCAG = "WCAG2.1"; // Assuming WCAG2AA is a valid value for WCAG type
+	const standard: WCAG = "WCAG2.1";
 
 	it("should return the correct contrast ratio for black and white", () => {
 		const ratio = getContrastRatioFromHex("#000000", "#FFFFFF", standard);

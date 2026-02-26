@@ -1,5 +1,5 @@
 ---
-"@sardine/colour": minor
+"@sardine/colour": patch
 ---
 
 perf: Precompute colour info in `sortHexColours` to avoid redundant conversions

@@ -1,5 +1,5 @@
 ---
-"@sardine/colour": minor
+"@sardine/colour": patch
 ---
 
 perf: Replace `.match()` with `.test()` for hex and CSS RGB validation

@@ -1,5 +1,5 @@
 ---
-"@sardine/colour": minor
+"@sardine/colour": patch
 ---
 
 perf: Use a single regex to validate hexadecimal colours

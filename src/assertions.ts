@@ -1,12 +1,6 @@
 import type { NamedCSSColour } from "./types";
 import { namedCSSColours } from "./util/namedCSSColours";
-import {
-	cssRGBARegex,
-	hexAlphaRegex,
-	hexRegex,
-	shortAlphaHexRegex,
-	shortHexRegex,
-} from "./util/regexers";
+import { cssRGBARegex, hexAnyRegex } from "./util/regexers";
 
 /**
  * Determines whether a string represents a valid CSS RGB or RGBA colour value.
@@ -37,12 +31,7 @@ export function isCSSRGBColour(colour: string): boolean {
  * @returns {boolean} True if the string represents a valid hexadecimal colour value, false otherwise.
  */
 export function isHexColour(colour: string): boolean {
-	return (
-		hexRegex.test(colour) ||
-		hexAlphaRegex.test(colour) ||
-		shortAlphaHexRegex.test(colour) ||
-		shortHexRegex.test(colour)
-	);
+	return hexAnyRegex.test(colour);
 }
 
 /**

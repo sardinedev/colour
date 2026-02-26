@@ -16,12 +16,14 @@ export function findNearestRGBColour(
 	if (!palette || palette.length < 2) {
 		return colour;
 	}
-	const map: [RGBColour, number][] = [];
+	let nearest = colour;
+	let minDistance = Number.POSITIVE_INFINITY;
 	for (const paletteColour of palette) {
 		const distance = RGBdistance(colour, paletteColour);
-		map.push([paletteColour, distance]);
+		if (distance < minDistance) {
+			minDistance = distance;
+			nearest = paletteColour;
+		}
 	}
-	const closest: [RGBColour, number][] = map.sort((a, b) => a[1] - b[1]);
-	// @ts-ignore - TS insists that the return type is [RGBColour, number] | undefined even though it's not
-	return closest[0][0];
+	return nearest;
 }

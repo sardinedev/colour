@@ -180,3 +180,12 @@ test("sortHexColours: sorts mixed greyscale including black and white with other
 	expect(sorted[2]).toBe("#000000"); // black third (custom order)
 	expect(sorted[3]).toBe("#ffffff"); // white last (custom order)
 });
+
+test("sortHexColours: preserves duplicate hex values and caches the conversion only once", () => {
+	// #ff0000 appears twice — the second occurrence should reuse the cached HSV info
+	// and still appear in the sorted output, not be deduplicated
+	const result = sortHexColours(["#ff0000", "#00ff00", "#ff0000"]);
+	expect(result).toHaveLength(3);
+	expect(result.filter((c) => c === "#ff0000")).toHaveLength(2);
+	expect(result.filter((c) => c === "#00ff00")).toHaveLength(1);
+});

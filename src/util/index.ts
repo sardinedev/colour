@@ -112,3 +112,7 @@ export function constrainLab(n: number): number {
 export function clamp(value: number, min: number, max: number): number {
 	return Math.min(Math.max(value, min), max);
 }
+
+/** MDN reference for CSS named colours — shared to avoid duplicating the URL string in the bundle */
+export const NAMED_CSS_COLOUR_URL =
+	"https://developer.mozilla.org/en-US/docs/Web/CSS/named-color";

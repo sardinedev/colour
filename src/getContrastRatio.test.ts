@@ -37,9 +37,7 @@ describe("getContrastRatio", () => {
 
 	it("should throw an error for invalid colour name", () => {
 		expect(() => getContrastRatio("invalid", "lime", standard)).toThrow(
-			`getContrastRatio expects valid CSS named colours.
-					invalid is not a valid CSS named colour.
-					See https://developer.mozilla.org/en-US/docs/Web/CSS/named-color`,
+			`getContrastRatio expects valid CSS named colours. invalid is not a valid CSS named colour. See https://developer.mozilla.org/en-US/docs/Web/CSS/named-color`,
 		);
 	});
 
@@ -52,9 +50,7 @@ describe("getContrastRatio", () => {
 		expect(() =>
 			getContrastRatio("rgb(300,300,300)", "invalid2", standard),
 		).toThrow(
-			`getContrastRatio expects valid CSS named colours.
-					invalid2 is not a valid CSS named colour.
-					See https://developer.mozilla.org/en-US/docs/Web/CSS/named-color`,
+			`getContrastRatio expects valid CSS named colours. invalid2 is not a valid CSS named colour. See https://developer.mozilla.org/en-US/docs/Web/CSS/named-color`,
 		);
 	});
 

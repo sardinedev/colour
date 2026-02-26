@@ -16,6 +16,6 @@ test("return undefined if named colour does not exist", () => {
 	) as unknown as Error;
 	expect(
 		error.message,
-		"rose is not a valid colour format. isCSSNamedDarkColour only accepts CSS named colours. Check more details here https://developer.mozilla.org/en-US/docs/Web/CSS/named-color",
+		"rose is not a valid colour format. isCSSNamedDarkColour only accepts CSS named colours. See https://developer.mozilla.org/en-US/docs/Web/CSS/named-color",
 	);
 });

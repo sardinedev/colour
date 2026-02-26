@@ -11,7 +11,7 @@ test("verify if `lightgoldenrodyellow` is a dark colour", () => {
 
 test("return undefined if named colour does not exist", () => {
 	const error = assert.throws(() =>
-		/* @ts-ignore-line */
+		/* @ts-expect-error-line */
 		isCSSNamedDarkColour("rose", "WCAG2.1"),
 	) as unknown as Error;
 	expect(

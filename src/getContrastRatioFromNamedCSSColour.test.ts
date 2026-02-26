@@ -32,6 +32,8 @@ describe("getContrastRatioFromNamedCSSColour", () => {
 		expect(() =>
 			// @ts-expect-error - Testing invalid input
 			getContrastRatioFromNamedCSSColour("invalid", "lime", standard),
-		).toThrow(`getContrastRatioFromNamedCSSColour expects valid CSS named colours. invalid or lime are not valid CSS named colours. See https://developer.mozilla.org/en-US/docs/Web/CSS/named-color`);
+		).toThrow(
+			`getContrastRatioFromNamedCSSColour expects valid CSS named colours. invalid or lime are not valid CSS named colours. See https://developer.mozilla.org/en-US/docs/Web/CSS/named-color`,
+		);
 	});
 });

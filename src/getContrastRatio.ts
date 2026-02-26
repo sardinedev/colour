@@ -42,7 +42,9 @@ export function getContrastRatio(
 	} else {
 		const _hexColour2 = convertNamedCSSColourtoHex(colour2 as NamedCSSColour);
 		if (_hexColour2 === undefined) {
-			throw new Error(`getContrastRatio expects valid CSS named colours. ${colour2} is not a valid CSS named colour. See ${NAMED_CSS_COLOUR_URL}`);
+			throw new Error(
+				`getContrastRatio expects valid CSS named colours. ${colour2} is not a valid CSS named colour. See ${NAMED_CSS_COLOUR_URL}`,
+			);
 		}
 		hexColour2 = _hexColour2;
 	}

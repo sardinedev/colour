@@ -31,16 +31,11 @@ export function findNearestColour(
 	if (isHexColour(colour)) {
 		baseColour = convertHextoRGB(colour);
 		colourType = "hex";
-	}
-
-	if (isCSSRGBColour(colour)) {
+	} else if (isCSSRGBColour(colour)) {
 		baseColour = convertCSSRGBtoRGB(colour);
 		colourType = "cssRGB";
-	}
-
-	// @ts-ignore - At this point colour should be a NamedCSSColour because of the assertions at the top of the function
-	if (isNamedCSSColour(colour)) {
-		baseColour = convertNamedCSSColourtoRGB(colour);
+	} else if (isNamedCSSColour(colour as NamedCSSColour)) {
+		baseColour = convertNamedCSSColourtoRGB(colour as NamedCSSColour);
 		colourType = "namedCSS";
 	}
 
@@ -51,16 +46,11 @@ export function findNearestColour(
 	for (const paletteColour of palette) {
 		if (isHexColour(paletteColour)) {
 			paletteRGB.push(convertHextoRGB(paletteColour));
-		}
-
-		if (isCSSRGBColour(paletteColour)) {
+		} else if (isCSSRGBColour(paletteColour)) {
 			paletteRGB.push(convertCSSRGBtoRGB(paletteColour));
-		}
-
-		// @ts-ignore - At this point colour should be a NamedCSSColour because of the assertions at the top of the function
-		if (isNamedCSSColour(paletteColour)) {
-			// @ts-ignore - The colour is a NamedCSSColour because we just asserted that it is
-			paletteRGB.push(convertNamedCSSColourtoRGB(paletteColour));
+		} else if (isNamedCSSColour(paletteColour as NamedCSSColour)) {
+			const rgb = convertNamedCSSColourtoRGB(paletteColour as NamedCSSColour);
+			if (rgb) paletteRGB.push(rgb);
 		}
 	}
 	if (paletteRGB.length < 2) {

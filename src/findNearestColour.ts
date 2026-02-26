@@ -38,7 +38,6 @@ export function findNearestColour(
 		colourType = "cssRGB";
 	}
 
-	// @ts-ignore - At this point colour should be a NamedCSSColour because of the assertions at the top of the function
 	if (isNamedCSSColour(colour)) {
 		baseColour = convertNamedCSSColourtoRGB(colour);
 		colourType = "namedCSS";
@@ -57,9 +56,7 @@ export function findNearestColour(
 			paletteRGB.push(convertCSSRGBtoRGB(paletteColour));
 		}
 
-		// @ts-ignore - At this point colour should be a NamedCSSColour because of the assertions at the top of the function
 		if (isNamedCSSColour(paletteColour)) {
-			// @ts-ignore - The colour is a NamedCSSColour because we just asserted that it is
 			paletteRGB.push(convertNamedCSSColourtoRGB(paletteColour));
 		}
 	}

@@ -48,11 +48,9 @@ export function isHexColour(colour: string): boolean {
 /**
  * Determines whether a string represents a valid named CSS colour.
  *
- * @param {NamedCSSColour} colour - The string to test.
+ * @param {string} colour - The string to test.
  * @returns {boolean} `true` if the string represents a valid named CSS colour, `false` otherwise.
  */
-export function isNamedCSSColour(
-	colour: NamedCSSColour,
-): colour is NamedCSSColour {
-	return namedCSSColours.has(colour);
+export function isNamedCSSColour(colour: string): colour is NamedCSSColour {
+	return namedCSSColours.has(colour as NamedCSSColour);
 }

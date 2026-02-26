@@ -22,6 +22,5 @@ export function findNearestRGBColour(
 		map.push([paletteColour, distance]);
 	}
 	const closest: [RGBColour, number][] = map.sort((a, b) => a[1] - b[1]);
-	// @ts-ignore - TS insists that the return type is [RGBColour, number] | undefined even though it's not
-	return closest[0][0];
+	return closest[0]![0];
 }

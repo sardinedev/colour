@@ -181,6 +181,12 @@ test("sortHexColours: sorts mixed greyscale including black and white with other
 	expect(sorted[3]).toBe("#ffffff"); // white last (custom order)
 });
 
+test("sortHexColours: throws for an invalid hex value", () => {
+	expect(() => sortHexColours(["#ff0000", "#gg0000"])).toThrow(
+		"convertHextoRGB expects a valid hexadecimal colour value but got #gg0000",
+	);
+});
+
 test("sortHexColours: preserves duplicate hex values and caches the conversion only once", () => {
 	// #ff0000 appears twice — the second occurrence should reuse the cached HSV info
 	// and still appear in the sorted output, not be deduplicated

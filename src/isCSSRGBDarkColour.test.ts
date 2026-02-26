@@ -28,3 +28,12 @@ test("verify if CSS RGB with mixed percentage and integer values works", () => {
 test("verify if CSS RGB with modern slash syntax works", () => {
 	expect(isCSSRGBDarkColour("rgb(20 20 20 / 0.8)", "WCAG2.1")).toBe(true);
 });
+
+test("isCSSRGBDarkColour: fully transparent dark colour is still considered dark (alpha ignored)", () => {
+	// Alpha channel is not part of luminance calculation — only RGB channels matter
+	expect(isCSSRGBDarkColour("rgba(0, 0, 0, 0)", "WCAG2.1")).toBe(true);
+});
+
+test("isCSSRGBDarkColour: fully transparent light colour is still considered light (alpha ignored)", () => {
+	expect(isCSSRGBDarkColour("rgba(255, 255, 255, 0)", "WCAG2.1")).toBe(false);
+});

@@ -47,3 +47,20 @@ test("should return true for CSS RGBA with percentage values", () => {
 test("should return true for CSS RGB with mixed percentage and integer values", () => {
 	expect(isDarkColour("rgb(20, 8%, 20)", "WCAG2.1")).toBe(true);
 });
+
+test("isDarkColour: fully transparent dark RGBA is still considered dark (alpha ignored)", () => {
+	// Alpha channel is not part of luminance calculation — only RGB channels matter
+	expect(isDarkColour("rgba(0, 0, 0, 0)", "WCAG2.1")).toBe(true);
+});
+
+test("isDarkColour: fully transparent light RGBA is still considered light (alpha ignored)", () => {
+	expect(isDarkColour("rgba(255, 255, 255, 0)", "WCAG2.1")).toBe(false);
+});
+
+test("isDarkColour: 8-digit hex with zero alpha on a dark colour is still dark (alpha ignored)", () => {
+	expect(isDarkColour("#00000000", "WCAG2.1")).toBe(true);
+});
+
+test("isDarkColour: 8-digit hex with zero alpha on a light colour is still light (alpha ignored)", () => {
+	expect(isDarkColour("#ffffff00", "WCAG2.1")).toBe(false);
+});

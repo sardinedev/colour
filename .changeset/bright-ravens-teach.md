@@ -1,5 +1,5 @@
 ---
-"@sardine/colour": minor
+"@sardine/colour": patch
 ---
 
 perf: Hoist repeated constant expressions in `constrainLab`, `bigSquare`, and `toRadians`

@@ -34,7 +34,7 @@ export function getGreyscaleOrder(v: number): number {
  * @returns Sorted array of hex colour strings
  */
 export function sortHexColours(hexColours: string[]): string[] {
-	// Precompute HSV+alpha for each colour once — O(n) — so comparators
+	// Precompute HSV+alpha for each colour once — O(n) — so comparators can reuse cached values instead of recomputing colour info
 	// don't repeat the hex→RGB→HSV conversion chain on every comparison.
 	// Use a loop instead of new Map(array.map(...)) to avoid the intermediate
 	// array allocation, and skip duplicates to avoid redundant conversions.

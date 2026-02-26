@@ -1,4 +1,4 @@
-import { assert, expect, test } from "vitest";
+import { expect, test } from "vitest";
 import { convertCSSRGBtoHex } from "./convertCSSRGBtoHex";
 
 test("converts CSS RGB format to hexadecimal colour", () => {
@@ -45,12 +45,8 @@ test("converts CSS RGBA with space separated values and forward slash for the al
 
 test("throws an error if not passing a valid CSS RGB format", () => {
 	const rgb = "rfv(12,23,42)";
-	const error = assert.throws(() =>
-		convertCSSRGBtoHex(rgb),
-	) as unknown as Error;
-	expect(
-		error.message,
-		"convertCSSRGBtoHex expects a valid CSS RGB string but got rfv(12,23,42)",
+	expect(() => convertCSSRGBtoHex(rgb)).toThrow(
+		"convertCSSRGBtoRGB expects a valid CSS RGB string but got rfv(12,23,42)",
 	);
 });
 

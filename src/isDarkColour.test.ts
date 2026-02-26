@@ -1,4 +1,4 @@
-import { assert, expect, test } from "vitest";
+import { expect, test } from "vitest";
 import { isDarkColour } from "./isDarkColour";
 
 test("should return true for `darkblue`", () => {
@@ -27,12 +27,8 @@ test("should return true for #666666 colour", () => {
 
 test("throws an error if not passing a valid CSS RGB format", () => {
 	const rgb = "rfv(12,23,42)";
-	const error = assert.throws(() =>
-		isDarkColour(rgb, "WCAG2.1"),
-	) as unknown as Error;
-	expect(
-		error.message,
-		"rfv(12,23,42) is not a valid colour format. isDarkColour accepts CSS RGB formats, ie rgb(0,0,0) and rgba(255, 255, 255, 0.4), hexadecimal and CSS named colours.",
+	expect(() => isDarkColour(rgb, "WCAG2.1")).toThrow(
+		"rfv(12,23,42) is not a valid colour format. isDarkColour accepts CSS RGB formats, ie rgb(0,0,0), rgba(255, 255, 255, 0.4), rgb(50%, 25%, 100%), and rgba(50%, 25%, 100%, 80%), hexadecimal and CSS named colours.",
 	);
 });
 

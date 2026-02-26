@@ -17,12 +17,12 @@ export function getColorInfo(hex: string) {
 /**
  * Helper to get custom order for greyscale values
  * @param v HSV value (brightness) from 0 to 1
- * @returns Order priority: 0 for gray/other, 1 for black, 2 for white
+ * @returns Order priority: 0 for grey/other, 1 for black, 2 for white
  */
 export function getGreyscaleOrder(v: number): number {
 	if (v === 0) return 1; // black second
 	if (v === 1) return 2; // white last
-	return 0; // gray and other values first
+	return 0; // grey and other values first
 }
 
 /**
@@ -72,7 +72,7 @@ export function sortHexColours(hexColours: string[]): string[] {
 		return cb.s - ca.s; // descending saturation
 	});
 
-	// Sort greyscale by a custom order: gray, black, white for common values
+	// Sort greyscale by a custom order: grey, black, white for common values
 	greyscale.sort((a, b) => {
 		// biome-ignore lint/style/noNonNullAssertion: all keys are in cache
 		const ca = cache.get(a)!;

@@ -7,7 +7,7 @@ import type { LabColour } from "./types";
  * http://www2.ece.rochester.edu/~gsharma/ciede2000/dataNprograms/ciede2000testdata.txt
  */
 
-test("mesures colour difference #1", () => {
+test("measures colour difference #1", () => {
 	const colour1: LabColour = {
 		L: 50.0,
 		a: 2.6772,
@@ -22,7 +22,7 @@ test("mesures colour difference #1", () => {
 	expect(ciede2000(colour1, colour2)).toBe(2.0424596801565738);
 });
 
-test("mesures colour difference #2", () => {
+test("measures colour difference #2", () => {
 	const colour1: LabColour = {
 		L: 60.2574,
 		a: -34.0099,
@@ -37,7 +37,7 @@ test("mesures colour difference #2", () => {
 	expect(ciede2000(colour1, colour2)).toBe(1.2644200135991919);
 });
 
-test("mesures colour difference #3", () => {
+test("measures colour difference #3", () => {
 	const colour1: LabColour = {
 		L: 50,
 		a: 2.5,
@@ -52,7 +52,7 @@ test("mesures colour difference #3", () => {
 	expect(ciede2000(colour1, colour2)).toBe(19.453521433392584);
 });
 
-test("mesures colour difference #4", () => {
+test("measures colour difference #4", () => {
 	const colour1: LabColour = {
 		L: 50,
 		a: 2.5,
@@ -67,7 +67,7 @@ test("mesures colour difference #4", () => {
 	expect(ciede2000(colour1, colour2)).toBe(0.9999999764765461);
 });
 
-test("mesures colour difference #5", () => {
+test("measures colour difference #5", () => {
 	const colour1: LabColour = {
 		L: 90.9257,
 		a: -0.5406,
@@ -79,5 +79,5 @@ test("mesures colour difference #5", () => {
 		a: -0.8985,
 		b: -0.7239,
 	};
-	expect(ciede2000(colour1, colour2).toFixed(4)).toBe("1.5381");
+	expect(ciede2000(colour1, colour2)).toBeCloseTo(1.5381, 4);
 });

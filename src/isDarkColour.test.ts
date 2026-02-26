@@ -1,4 +1,4 @@
-import { assert, expect, test } from "vitest";
+import { expect, test } from "vitest";
 import { isDarkColour } from "./isDarkColour";
 
 test("should return true for `darkblue`", () => {
@@ -27,12 +27,8 @@ test("should return true for #666666 colour", () => {
 
 test("throws an error if not passing a valid CSS RGB format", () => {
 	const rgb = "rfv(12,23,42)";
-	const error = assert.throws(() =>
-		isDarkColour(rgb, "WCAG2.1"),
-	) as unknown as Error;
-	expect(
-		error.message,
-		"rfv(12,23,42) is not a valid colour format. isDarkColour accepts CSS RGB formats, ie rgb(0,0,0) and rgba(255, 255, 255, 0.4), hexadecimal and CSS named colours.",
+	expect(() => isDarkColour(rgb, "WCAG2.1")).toThrow(
+		"rfv(12,23,42) is not a valid colour format. isDarkColour accepts CSS RGB formats, ie rgb(0,0,0), rgba(255, 255, 255, 0.4), rgb(50%, 25%, 100%), and rgba(50%, 25%, 100%, 80%), hexadecimal and CSS named colours.",
 	);
 });
 
@@ -50,4 +46,21 @@ test("should return true for CSS RGBA with percentage values", () => {
 
 test("should return true for CSS RGB with mixed percentage and integer values", () => {
 	expect(isDarkColour("rgb(20, 8%, 20)", "WCAG2.1")).toBe(true);
+});
+
+test("isDarkColour: fully transparent dark RGBA is still considered dark (alpha ignored)", () => {
+	// Alpha channel is not part of luminance calculation — only RGB channels matter
+	expect(isDarkColour("rgba(0, 0, 0, 0)", "WCAG2.1")).toBe(true);
+});
+
+test("isDarkColour: fully transparent light RGBA is still considered light (alpha ignored)", () => {
+	expect(isDarkColour("rgba(255, 255, 255, 0)", "WCAG2.1")).toBe(false);
+});
+
+test("isDarkColour: 8-digit hex with zero alpha on a dark colour is still dark (alpha ignored)", () => {
+	expect(isDarkColour("#00000000", "WCAG2.1")).toBe(true);
+});
+
+test("isDarkColour: 8-digit hex with zero alpha on a light colour is still light (alpha ignored)", () => {
+	expect(isDarkColour("#ffffff00", "WCAG2.1")).toBe(false);
 });

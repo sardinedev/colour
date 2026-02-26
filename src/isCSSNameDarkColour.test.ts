@@ -1,4 +1,4 @@
-import { assert, expect, test } from "vitest";
+import { expect, test } from "vitest";
 import { isCSSNamedDarkColour } from "./isCSSNameDarkColour";
 
 test("verify if `darkblue` is a dark colour", () => {
@@ -10,12 +10,10 @@ test("verify if `lightgoldenrodyellow` is a dark colour", () => {
 });
 
 test("return undefined if named colour does not exist", () => {
-	const error = assert.throws(() =>
-		/* @ts-expect-error-line */
+	expect(() =>
+		// @ts-expect-error - TS would complain about this, but it's a valid test for users consuming JS
 		isCSSNamedDarkColour("rose", "WCAG2.1"),
-	) as unknown as Error;
-	expect(
-		error.message,
+	).toThrow(
 		"rose is not a valid colour format. isCSSNamedDarkColour only accepts CSS named colours. See https://developer.mozilla.org/en-US/docs/Web/CSS/named-color",
 	);
 });

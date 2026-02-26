@@ -1,4 +1,4 @@
-import { assert, expect, test } from "vitest";
+import { expect, test } from "vitest";
 import { convertHextoRGB } from "./convertHextoRGB";
 import type { RGBColour } from "./types";
 
@@ -46,18 +46,15 @@ test("converts a 4 digit hexadecimal (RGB + Alpha) colour string to RGBA format"
 
 test("throws an error if not passing a string", () => {
 	const hex = 235434;
-	// @ts-ignore: Passing wrong type for test only
-	const error = assert.throws(() => convertHextoRGB(hex)) as Error;
-	expect(error.message).toBe(
+	// @ts-expect-error: Passing wrong type for test only
+	expect(() => convertHextoRGB(hex)).toThrow(
 		"convertHextoRGB expects a string but got a number",
 	);
 });
 
 test("throws an error if not passing a valid hexadecimal value", () => {
 	const hex = "HH77ZZs";
-	const error = assert.throws(() => convertHextoRGB(hex)) as unknown as Error;
-	expect(
-		error.message,
-		"convertHextoRGB expects an valid hexadecimal colour value but got HH77ZZs",
+	expect(() => convertHextoRGB(hex)).toThrow(
+		"convertHextoRGB expects a valid hexadecimal colour value but got HH77ZZs",
 	);
 });

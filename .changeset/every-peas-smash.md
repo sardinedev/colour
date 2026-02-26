@@ -24,7 +24,7 @@ import { sortHexColours } from '@sardine/colour';
 const colors = [
   '#ff0000',    // red
   '#00ff00',    // green  
-  '#808080',    // gray
+  '#808080',    // grey
   '#000000',    // black
   '#ffffff',    // white
   '#00000000'   // transparent black

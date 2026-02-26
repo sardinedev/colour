@@ -78,7 +78,7 @@ test("getGreyscaleOrder: returns 2 for white (value 1)", () => {
 	expect(getGreyscaleOrder(1)).toBe(2);
 });
 
-test("getGreyscaleOrder: returns 0 for gray values", () => {
+test("getGreyscaleOrder: returns 0 for grey values", () => {
 	expect(getGreyscaleOrder(0.5)).toBe(0);
 	expect(getGreyscaleOrder(0.502)).toBe(0);
 	expect(getGreyscaleOrder(0.3)).toBe(0);
@@ -153,30 +153,30 @@ test("sortHexColours: sorts colors with same hue by descending saturation", () =
 
 test("sortHexColours: sorts multiple greyscale colors that aren't pure black or white", () => {
 	const input = [
-		"#404040", // dark gray (value ~0.25)
-		"#c0c0c0", // light gray (value ~0.75)
-		"#808080", // medium gray (value ~0.5)
-		"#202020", // darker gray (value ~0.125)
+		"#404040", // dark grey (value ~0.25)
+		"#c0c0c0", // light grey (value ~0.75)
+		"#808080", // medium grey (value ~0.5)
+		"#202020", // darker grey (value ~0.125)
 	];
 	const sorted = sortHexColours(input);
 	// Should be sorted by ascending value: darkest to lightest
-	expect(sorted[0]).toBe("#202020"); // darkest gray first
-	expect(sorted[1]).toBe("#404040"); // dark gray second
-	expect(sorted[2]).toBe("#808080"); // medium gray third
-	expect(sorted[3]).toBe("#c0c0c0"); // light gray last
+	expect(sorted[0]).toBe("#202020"); // darkest grey first
+	expect(sorted[1]).toBe("#404040"); // dark grey second
+	expect(sorted[2]).toBe("#808080"); // medium grey third
+	expect(sorted[3]).toBe("#c0c0c0"); // light grey last
 });
 
-test("sortHexColours: sorts mixed greyscale including black and white with other grays", () => {
+test("sortHexColours: sorts mixed greyscale including black and white with other greys", () => {
 	const input = [
 		"#ffffff", // white (custom order: last)
-		"#606060", // gray (custom order: first, then by value)
+		"#606060", // grey (custom order: first, then by value)
 		"#000000", // black (custom order: second)
-		"#a0a0a0", // lighter gray (custom order: first, then by value)
+		"#a0a0a0", // lighter grey (custom order: first, then by value)
 	];
 	const sorted = sortHexColours(input);
-	// Custom order: grays first (sorted by value), then black, then white
-	expect(sorted[0]).toBe("#606060"); // darker gray first
-	expect(sorted[1]).toBe("#a0a0a0"); // lighter gray second
+	// Custom order: greys first (sorted by value), then black, then white
+	expect(sorted[0]).toBe("#606060"); // darker grey first
+	expect(sorted[1]).toBe("#a0a0a0"); // lighter grey second
 	expect(sorted[2]).toBe("#000000"); // black third (custom order)
 	expect(sorted[3]).toBe("#ffffff"); // white last (custom order)
 });

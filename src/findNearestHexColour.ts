@@ -1,7 +1,7 @@
-import type { RGBColour } from "./types";
 import { convertHextoRGB } from "./convertHextoRGB";
 import { convertRGBtoHex } from "./convertRGBtoHex";
 import { findNearestRGBColour } from "./findNearestRGBColour";
+import type { RGBColour } from "./types";
 
 /**
  * Finds the nearest hexadecimal colour in a palette to the given hex colour.

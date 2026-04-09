@@ -10,17 +10,11 @@ import { hexAnyRegex } from "./util/regexers";
  * - `#ffff`
  * - `#102030ff`
  *
- * @returns {RGBColour} RGB colour object.
+ * @returns {RGBColour | null} RGB colour object, or `null` if the input is not a valid hexadecimal colour.
  */
-export function convertHextoRGB(hex: string): RGBColour {
-	if (typeof hex !== "string") {
-		throw new Error(`convertHextoRGB expects a string but got a ${typeof hex}`);
-	}
-
-	if (!hexAnyRegex.test(hex)) {
-		throw new Error(
-			`convertHextoRGB expects a valid hexadecimal colour value but got ${hex}`,
-		);
+export function convertHextoRGB(hex: string): RGBColour | null {
+	if (typeof hex !== "string" || !hexAnyRegex.test(hex)) {
+		return null;
 	}
 
 	switch (hex.length) {

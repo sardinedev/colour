@@ -23,7 +23,7 @@ export function findNearestColour(
 		return colour;
 	}
 
-	let baseColour: RGBColour | undefined;
+	let baseColour: RGBColour | null | undefined;
 	let colourType: "hex" | "cssRGB" | "namedCSS" | undefined;
 
 	const paletteRGB: RGBColour[] = [];
@@ -45,7 +45,8 @@ export function findNearestColour(
 
 	for (const paletteColour of palette) {
 		if (isHexColour(paletteColour)) {
-			paletteRGB.push(convertHextoRGB(paletteColour));
+			const rgb = convertHextoRGB(paletteColour);
+			if (rgb) paletteRGB.push(rgb);
 		} else if (isCSSRGBColour(paletteColour)) {
 			paletteRGB.push(convertCSSRGBtoRGB(paletteColour));
 		} else if (isNamedCSSColour(paletteColour as NamedCSSColour)) {

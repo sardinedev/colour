@@ -17,3 +17,11 @@ test("isHexDarkColour: 8-digit hex with zero alpha on a dark colour is still dar
 test("isHexDarkColour: 8-digit hex with zero alpha on a light colour is still light (alpha ignored)", () => {
 	expect(isHexDarkColour("#ffffff00", "WCAG2.1")).toBe(false);
 });
+
+test("isHexDarkColour: returns false for invalid hex colour", () => {
+	expect(isHexDarkColour("transparent", "WCAG2.1")).toBe(false);
+});
+
+test("isHexDarkColour: returns false for invalid hex colour", () => {
+	expect(isHexDarkColour("#HHHHII", "WCAG2.1")).toBe(false);
+});

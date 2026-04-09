@@ -11,8 +11,9 @@ import { convertHextoRGB } from "./convertHextoRGB";
  *
  * @returns {string} either a CSS RGB or CSS RGBA string.
  */
-export function convertHextoCSSRGB(hex: string): string {
+export function convertHextoCSSRGB(hex: string): string | null {
 	const rgb = convertHextoRGB(hex);
+	if (!rgb) return null;
 
 	if (rgb.A) {
 		return `rgba(${rgb.R},${rgb.G},${rgb.B},${rgb.A})`;

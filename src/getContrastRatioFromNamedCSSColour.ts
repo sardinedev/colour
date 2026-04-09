@@ -16,7 +16,7 @@ export function getContrastRatioFromNamedCSSColour(
 	colour1: NamedCSSColour,
 	colour2: NamedCSSColour,
 	standard: WCAG,
-): number {
+): number | null {
 	const hexColour1 = convertNamedCSSColourtoHex(colour1);
 	const hexColour2 = convertNamedCSSColourtoHex(colour2);
 

@@ -1,6 +1,7 @@
 import { convertHextoRGB } from "./convertHextoRGB";
 import { convertRGBtoHex } from "./convertRGBtoHex";
 import { findNearestRGBColour } from "./findNearestRGBColour";
+import type { RGBColour } from "./types";
 
 /**
  * Finds the nearest hexadecimal colour in a palette to the given hex colour.
@@ -18,9 +19,10 @@ export function findNearestHexColour(
 		return colour;
 	}
 	const baseRGBColour = convertHextoRGB(colour);
-	const paletteRGBColours = palette.map((hexColour) =>
-		convertHextoRGB(hexColour),
-	);
+	if (!baseRGBColour) return colour;
+	const paletteRGBColours = palette
+		.map((hexColour) => convertHextoRGB(hexColour))
+		.filter((rgb): rgb is RGBColour => rgb !== null);
 	const nearestRGBColour = findNearestRGBColour(
 		baseRGBColour,
 		paletteRGBColours,

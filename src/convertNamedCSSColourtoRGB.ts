@@ -15,5 +15,5 @@ export function convertNamedCSSColourtoRGB(
 	if (!hex) {
 		return undefined;
 	}
-	return convertHextoRGB(hex);
+	return convertHextoRGB(hex) || undefined;
 }

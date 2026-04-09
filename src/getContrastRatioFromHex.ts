@@ -13,10 +13,11 @@ export function getContrastRatioFromHex(
 	colour1: string,
 	colour2: string,
 	standard: WCAG,
-): number {
+): number | null {
 	// Get the luminance of each colour
 	const luminance1 = getSRGBLuminanceFromHex(colour1, standard);
 	const luminance2 = getSRGBLuminanceFromHex(colour2, standard);
+	if (luminance1 === null || luminance2 === null) return null;
 
 	return calculateContrastRatio(luminance1, luminance2);
 }

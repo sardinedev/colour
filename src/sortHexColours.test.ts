@@ -27,6 +27,7 @@ test("getColorInfo: correctly parses 8-digit hex colors with alpha", () => {
 
 test("getColorInfo: correctly parses greyscale colors", () => {
 	const result = getColorInfo("#808080");
+	if (!result) throw new Error("expected result");
 	expect(result.h).toBe(0);
 	expect(result.s).toBe(0);
 	expect(result.v).toBeCloseTo(0.502, 3);
@@ -63,11 +64,9 @@ test("getColorInfo: correctly parses transparent colors", () => {
 	});
 });
 
-test("getColorInfo: throws error for invalid input type", () => {
+test("getColorInfo: returns null for invalid input type", () => {
 	// @ts-expect-error - intentionally testing invalid input
-	expect(() => getColorInfo(123)).toThrow(
-		"convertHextoRGB expects a string but got a number",
-	);
+	expect(getColorInfo(123)).toBeNull();
 });
 
 test("getGreyscaleOrder: returns 1 for black (value 0)", () => {
@@ -181,10 +180,8 @@ test("sortHexColours: sorts mixed greyscale including black and white with other
 	expect(sorted[3]).toBe("#ffffff"); // white last (custom order)
 });
 
-test("sortHexColours: throws for an invalid hex value", () => {
-	expect(() => sortHexColours(["#ff0000", "#gg0000"])).toThrow(
-		"convertHextoRGB expects a valid hexadecimal colour value but got #gg0000",
-	);
+test("sortHexColours: silently skips invalid hex values", () => {
+	expect(sortHexColours(["#ff0000", "#gg0000"])).toEqual(["#ff0000"]);
 });
 
 test("sortHexColours: preserves duplicate hex values in output", () => {

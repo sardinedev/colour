@@ -44,17 +44,13 @@ test("converts a 4 digit hexadecimal (RGB + Alpha) colour string to RGBA format"
 	expect(convertHextoRGB(hex)).toStrictEqual(expectedRGB);
 });
 
-test("throws an error if not passing a string", () => {
+test("returns null if not passed a string", () => {
 	const hex = 235434;
 	// @ts-expect-error: Passing wrong type for test only
-	expect(() => convertHextoRGB(hex)).toThrow(
-		"convertHextoRGB expects a string but got a number",
-	);
+	expect(convertHextoRGB(hex)).toBeNull();
 });
 
-test("throws an error if not passing a valid hexadecimal value", () => {
+test("returns null if not passed a valid hexadecimal value", () => {
 	const hex = "HH77ZZs";
-	expect(() => convertHextoRGB(hex)).toThrow(
-		"convertHextoRGB expects a valid hexadecimal colour value but got HH77ZZs",
-	);
+	expect(convertHextoRGB(hex)).toBeNull();
 });

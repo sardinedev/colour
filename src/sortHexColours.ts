@@ -7,7 +7,9 @@ import { convertRGBtoHSV } from "./convertRGBtoHSV";
  * @returns Object with hue, saturation, value, and alpha
  */
 export function getColorInfo(hex: string) {
-	const { R, G, B, A } = convertHextoRGB(hex);
+	const rgb = convertHextoRGB(hex);
+	if (!rgb) return null;
+	const { R, G, B, A } = rgb;
 	// If A (alpha) is not defined, assume fully opaque
 	const a = typeof A === "number" ? A : 1;
 	const { h, s, v } = convertRGBtoHSV(R, G, B);
@@ -38,10 +40,11 @@ export function sortHexColours(hexColours: string[]): string[] {
 	// don't repeat the hex→RGB→HSV conversion chain on every comparison.
 	// Use a loop instead of new Map(array.map(...)) to avoid the intermediate
 	// array allocation, and skip duplicates to avoid redundant conversions.
-	const cache = new Map<string, ReturnType<typeof getColorInfo>>();
+	const cache = new Map<string, NonNullable<ReturnType<typeof getColorInfo>>>();
 	for (const hex of hexColours) {
 		if (!cache.has(hex)) {
-			cache.set(hex, getColorInfo(hex));
+			const info = getColorInfo(hex);
+			if (info) cache.set(hex, info);
 		}
 	}
 
@@ -51,8 +54,9 @@ export function sortHexColours(hexColours: string[]): string[] {
 	const transparent: string[] = [];
 
 	for (const hex of hexColours) {
-		// biome-ignore lint/style/noNonNullAssertion: key was just inserted above
-		const { s, a } = cache.get(hex)!;
+		const info = cache.get(hex);
+		if (!info) continue;
+		const { s, a } = info;
 		if (a === 0) {
 			transparent.push(hex);
 		} else if (s === 0) {

@@ -15,5 +15,6 @@ import type { WCAG } from "./types";
  */
 export function getSRGBLuminanceFromHex(colour: string, standard?: WCAG) {
 	const rgbColor = convertHextoRGB(colour);
+	if (!rgbColor) return null;
 	return getSRGBLuminanceFromRGB(rgbColor, standard);
 }

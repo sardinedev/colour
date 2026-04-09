@@ -38,15 +38,13 @@ test("uses WCAG3.0 standard to pick the higher contrast colour", () => {
 	expect(pickHexColourContrast(colours, "WCAG3.0")).toBe("#000000");
 });
 
-test("pickHexColourContrast: throws for an invalid background hex value", () => {
+test("pickHexColourContrast: returns null for an invalid background hex value", () => {
 	const colours = {
 		backgroundColour: "#zzzzzz",
 		optionOneColour: "#000000",
 		optionTwoColour: "#ffffff",
 	};
-	expect(() => pickHexColourContrast(colours, "WCAG2.1")).toThrow(
-		"convertHextoRGB expects a valid hexadecimal colour value but got #zzzzzz",
-	);
+	expect(pickHexColourContrast(colours, "WCAG2.1")).toBeNull();
 });
 
 test("returns optionTwoColour when both options have equal contrast against the background", () => {

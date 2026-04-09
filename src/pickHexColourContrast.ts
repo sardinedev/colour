@@ -17,13 +17,14 @@ const relativeContrast = (firstColour: number, secondColour: number) => {
 export const pickHexColourContrast = (
 	{ backgroundColour, optionOneColour, optionTwoColour }: ColorArgs,
 	standard: WCAG,
-): string => {
-	const backgroundColourLuminance =
-		getSRGBLuminanceFromHex(backgroundColour, standard) + 0.05;
-	const optionOneColourLuminance =
-		getSRGBLuminanceFromHex(optionOneColour, standard) + 0.05;
-	const optionTwoColourLuminance =
-		getSRGBLuminanceFromHex(optionTwoColour, standard) + 0.05;
+): string | null => {
+	const bgLum = getSRGBLuminanceFromHex(backgroundColour, standard);
+	const opt1Lum = getSRGBLuminanceFromHex(optionOneColour, standard);
+	const opt2Lum = getSRGBLuminanceFromHex(optionTwoColour, standard);
+	if (bgLum === null || opt1Lum === null || opt2Lum === null) return null;
+	const backgroundColourLuminance = bgLum + 0.05;
+	const optionOneColourLuminance = opt1Lum + 0.05;
+	const optionTwoColourLuminance = opt2Lum + 0.05;
 
 	const optionOneContrast = relativeContrast(
 		optionOneColourLuminance,

@@ -49,5 +49,11 @@ export function getContrastRatio(
 		hexColour2 = _hexColour2;
 	}
 
-	return getContrastRatioFromHex(hexColour1, hexColour2, standard);
+	const result = getContrastRatioFromHex(hexColour1, hexColour2, standard);
+	if (result === null) {
+		throw new Error(
+			`getContrastRatio expects valid hexadecimal colours but received ${hexColour1} or ${hexColour2}.`,
+		);
+	}
+	return result;
 }

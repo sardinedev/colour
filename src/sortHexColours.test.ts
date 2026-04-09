@@ -27,6 +27,7 @@ test("getColorInfo: correctly parses 8-digit hex colors with alpha", () => {
 
 test("getColorInfo: correctly parses greyscale colors", () => {
 	const result = getColorInfo("#808080");
+	if (!result) throw new Error("expected result");
 	expect(result.h).toBe(0);
 	expect(result.s).toBe(0);
 	expect(result.v).toBeCloseTo(0.502, 3);

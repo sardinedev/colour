@@ -2,11 +2,19 @@ name: Run Tests
 
 on:
   pull_request:
+    branches:
+      - main
+  merge_group:
+    branches:
+      - main
 
 jobs:
   types:
-    name: Static Checks
+    name: Check ${{ matrix.test }}
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        test: ["types:check", "lint"]
     steps:
       - uses: actions/checkout@v7
 
@@ -18,14 +26,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Check types
-        run: npm run types:check
-
-      - name: Check lint and format
-        run: npm run static
+      - name: Run ${{ matrix.test }}
+        run: npm run ${{ matrix.test }}
 
   test:
-    name: Test
+    name: Tests on Node ${{ matrix.node }}
     runs-on: ubuntu-latest
     strategy:
       matrix:

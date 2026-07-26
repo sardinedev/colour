@@ -20,7 +20,7 @@
 		"test": "npx vitest run --coverage",
 		"types:emit": "npx tsc -p tsconfig.emit.json",
 		"types:check": "npx tsc --noEmit",
-		"static": "npx biome ci src",
+		"lint": "npx biome ci src",
 		"size": "size-limit"
 	},
 	"repository": {

@@ -30,7 +30,7 @@ jobs:
         run: npm run ${{ matrix.test }}
 
   test:
-    name: Test
+    name: Tests on Node ${{ matrix.node }}
     runs-on: ubuntu-latest
     strategy:
       matrix:

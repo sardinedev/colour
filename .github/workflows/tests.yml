@@ -10,11 +10,11 @@ on:
 
 jobs:
   types:
-    name: Static Checks
+    name: Check ${{ matrix.test }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        test: ["types:check", "static"]
+        test: ["types:check", "lint"]
     steps:
       - uses: actions/checkout@v7
 

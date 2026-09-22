@@ -64,7 +64,7 @@
 		"@size-limit/preset-small-lib": "13.1.1",
 		"@tsconfig/node24": "24.0.5",
 		"@tsconfig/strictest": "2.0.8",
-		"@types/node": "24.13.5",
+		"@types/node": "24.13.6",
 		"@vitest/coverage-v8": "5.0.1",
 		"lefthook": "2.1.14",
 		"size-limit": "13.1.1",

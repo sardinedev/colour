@@ -18,6 +18,7 @@
 	"scripts": {
 		"build": "npx vite build",
 		"test": "npx vitest run --coverage",
+		"bench": "npx vitest bench --run",
 		"types:emit": "npx tsc -p tsconfig.emit.json",
 		"types:check": "npx tsc --noEmit",
 		"lint": "npx biome ci src",
@@ -61,6 +62,7 @@
 	"devDependencies": {
 		"@biomejs/biome": "2.5.15",
 		"@changesets/cli": "2.31.1",
+		"@codspeed/vitest-plugin": "6.0.1",
 		"@size-limit/preset-small-lib": "13.1.1",
 		"@tsconfig/node24": "24.0.5",
 		"@tsconfig/strictest": "2.0.8",

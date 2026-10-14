@@ -21,6 +21,8 @@ On your command line client of choice, navigate to the root of the project and r
 
 To test if everything is installed correctly you can run `npm test` to fire the test suite.
 
+Performance benchmarks live in the `bench` folder and can be run with `npm run bench`. They are also run on every pull request with [CodSpeed](https://app.codspeed.io/sardinedev/colour) to catch performance regressions.
+
 ## I have found an issue but don't know how to fix it
 
 Pesky little bugs! You can check the [issue tracker](https://github.com/sardinedev/colour/issues) to see if anyone already reported the issue and leave a "like" reaction to the issue, it helps to have a sense how widespread the problem is.

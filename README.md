@@ -2,6 +2,8 @@
 
 # @sardine/colour
 
+[![CodSpeed](https://img.shields.io/endpoint?url=https://codspeed.io/badge.json)](https://app.codspeed.io/sardinedev/colour?utm_source=badge)
+
 Dependency-free TypeScript utilities for working with colours in JavaScript. Convert between common colour formats, calculate contrast and luminance, find the closest colour in a palette, and pick readable foreground colours without pulling in a larger colour toolkit.
 
 - **Common formats.** Work with hex strings, RGB objects, CSS `rgb()`/`rgba()` strings, named CSS colours, XYZ, and Lab.

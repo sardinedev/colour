@@ -15,6 +15,7 @@ import {
 	RGBdistance,
 	sortHexColours,
 } from "../src/index";
+import type { WCAG } from "../src/types";
 import {
 	CSS_RGB_COLOURS,
 	CSS_RGB_PALETTE,
@@ -23,7 +24,6 @@ import {
 	LARGE_RGB_PALETTE,
 	RGB_COLOURS,
 } from "./fixtures";
-import type { WCAG } from "../src/types";
 
 const LAB_COLOURS = RGB_COLOURS.map((c) => convertRGBtoLab(c));
 const MIXED_PALETTE = [

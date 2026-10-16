@@ -68,7 +68,7 @@
 		"@tsconfig/strictest": "2.0.8",
 		"@types/node": "24.19.2",
 		"@vitest/coverage-v8": "5.0.4",
-		"lefthook": "2.2.1",
+		"lefthook": "2.2.2",
 		"size-limit": "13.1.1",
 		"typescript": "7.0.2",
 		"vite": "8.3.4",

@@ -1,7 +1,9 @@
 # Issue 491: performance baseline implementation plan
 
 Handoff plan for Opus 5.5. Implementation has not started and benchmarks have
-not been run. Development dependencies have been installed.
+not been run. Development dependencies were installed during planning, but
+`node_modules` was subsequently observed absent. Re-check dependency availability
+and run `npm ci` before capture.
 
 - Issue: [#491 — Establish runtime, bundle-size and startup performance baselines](https://github.com/sardinedev/colour/issues/491)
 - Tracker: [#490 — Track 5.0.0](https://github.com/sardinedev/colour/issues/490)
@@ -14,6 +16,11 @@ not been run. Development dependencies have been installed.
    Read #491 and its tracker, #490. Record the source revision, working-tree
    state, lockfile hash, Node version, OS, architecture, CPU, and relevant runtime
    flags for each baseline capture.
+
+   Pin production source and the dependency lockfile for the v4 baseline to
+   `e8a8d81e3d4f7ff12ec3b8f30f83e863fc9f1c63`, recording the added harness
+   revision separately. A post-#494 capture is a distinct baseline. Do not
+   substitute the 4.0.0 tag without verifying equivalence.
 
    This task establishes evidence. Preserve production algorithms, public APIs,
    and the dependency-free runtime. The later v5 baseline depends on approved
@@ -34,10 +41,21 @@ not been run. Development dependencies have been installed.
    measurements. A successful process exit alone is insufficient. Distinguish
    local timing results from CodSpeed simulation results.
 
+   Preserve existing benchmark identities (file, suite/test path, and name)
+   only where measured work stays equivalent. Changed inputs, batch sizes, or
+   added result consumption require a new identity or a documented baseline
+   reset; preserving a name alone does not preserve comparability.
+
 3. **Expand deterministic workloads.**
 
    Cover all combinations of palette sizes **2, 16, 256, and 1,000**, target
    counts **1, 10, and 100**, and **RGB, hex, CSS, and mixed formats**.
+
+   Start with the full 48-case grid, including CSS palettes through 1,000
+   entries. Preserve the existing 200-entry CSS workload where retained.
+   Measure actual CodSpeed runtime before reducing coverage. If runtime
+   warrants a PR subset, document its selection and keep full-grid CodSpeed
+   coverage on main or manual dispatch, alongside full local baseline captures.
 
    Reuse each palette across its changing targets. Generate fixtures outside
    timed callbacks using fixed seeds. Keep equivalent underlying colours across
@@ -47,6 +65,11 @@ not been run. Development dependencies have been installed.
    channels, CSS comma/space/slash/percentage forms, invalid inputs, and
    named-colour hits, misses, and aliases. Retain existing analysis, contrast,
    distance, and sorting coverage.
+
+   Add a separate WCAG 2.x workload family for comparison. Treat the existing
+   mixed-format composite containing a WCAG3.0 call as historical v4-only
+   coverage. Account explicitly for #493's breakpoint correction when
+   establishing v5 expected outputs.
 
    Keep empty and singleton palettes in correctness tests rather than treating
    their early returns as matching throughput.
@@ -67,7 +90,9 @@ not been run. Development dependencies have been installed.
    into requirements for v5.
 
    Keep consumption overhead small and consistent, and document that it is
-   included in timings.
+   included in timings. Adding result consumption changes measured work, so
+   affected existing cases require a new identity or a documented baseline
+   reset under step 2's rule.
 
 5. **Capture repeated steady-state results.**
 
@@ -109,17 +134,34 @@ not been run. Development dependencies have been installed.
    and named-colour lookup. Ensure bundlers retain the measured functionality.
 
    Record JavaScript build time, declaration build time, packed tarball size,
-   and unpacked package size as distinct metrics. Run `npm run size`.
+   and unpacked package size as distinct metrics. Use a separately selected
+   configuration such as `bench/size-limit.config.json` for additional size
+   measurements. Keep the package's existing size-limit configuration and PR
+   comment stable, and continue running `npm run size` alongside the expanded
+   capture.
 
-   Inspect `.github/workflows/publish.yml` before claiming the tarball represents
-   release output: it creates a browser artifact using `npx esbuild`. Reproduce
-   and record the tooling used; do not silently substitute a different minifier.
+   Inspect `.github/workflows/publish.yml`: it creates a browser artifact using
+   `npx esbuild`. The lockfile lists esbuild only as Vite's optional peer, with
+   no resolved esbuild package. Record the version npm actually resolves and
+   use that exact version for all captures and reproduction commands. Report
+   the unpinned release tooling as a finding. Pinning a project dependency or
+   changing publishing is a separate change; do not silently substitute a
+   different minifier.
+
+   Build JavaScript, emit declarations, generate the browser artifact with the
+   recorded esbuild version, then pack. Verify the package file list and avoid
+   stale artifacts. Describe this as a reproduction of the release recipe;
+   reproducing historical published bytes requires the original tooling
+   versions.
 
 8. **Document comparison rules and the v5 follow-up.**
 
-   Check in a compact v4 baseline report and reproducible commands, with enough
-   raw evidence to audit the conclusions. Keep bulky generated profiles out of
-   normal source control.
+   Check in the v4 baseline report and reproducible commands under
+   `bench/baselines/v4-e8a8d81/<environment-id>/`, with `README.md`,
+   `manifest.json`, and compact `runs/*.json` providing enough raw evidence to
+   audit the conclusions. Write disposable bundles, tarballs, and profiles
+   beneath an ignored `.performance/` directory. Add explicit `*.cpuprofile`
+   and `*.heapprofile` ignore entries to prevent accidental profile commits.
 
    Explain how measured variability informs regression investigation and
    eventual accepted budgets. Initial observations should not silently become
@@ -131,6 +173,10 @@ not been run. Development dependencies have been installed.
    algorithmic speedups.
 
 9. **Verify and report limits honestly.**
+
+   Widen the lint command to include `bench/` and any capture-script directory
+   alongside `src`, so CI enforces those checks too. Limit formatting changes
+   to the relevant files.
 
    Run `npm run test`, `npm run lint`, `npm run types:check`, `npm run build`,
    `npm run types:emit`, `npm run bench`, and `npm run size`.

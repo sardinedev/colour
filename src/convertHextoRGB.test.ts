@@ -54,3 +54,15 @@ test("returns null if not passed a valid hexadecimal value", () => {
 	const hex = "HH77ZZs";
 	expect(convertHextoRGB(hex)).toBeNull();
 });
+
+test.each([
+	["#000000", { R: 0, G: 0, B: 0 }],
+	["#010203", { R: 1, G: 2, B: 3 }],
+	["#12aBcD", { R: 18, G: 171, B: 205 }],
+	["#800000", { R: 128, G: 0, B: 0 }],
+	["#00ff00", { R: 0, G: 255, B: 0 }],
+	["#0000ff", { R: 0, G: 0, B: 255 }],
+	["#ff8001", { R: 255, G: 128, B: 1 }],
+] as const)("extracts independent channels from %s", (hex, expected) => {
+	expect(convertHextoRGB(hex)).toStrictEqual(expected);
+});

@@ -21,6 +21,7 @@ import {
 	RGBdistance,
 	sortHexColours,
 } from "../src/index";
+import type { WCAG } from "../src/types";
 import {
 	CSS_RGB_COLOURS,
 	CSS_RGB_PALETTE,
@@ -139,6 +140,48 @@ describe("analysis", () => {
 			}),
 		);
 	});
+
+	for (const standard of ["WCAG2.1", "WCAG3.0"] satisfies WCAG[]) {
+		test(`darkness (${standard})`, async ({ bench }) => {
+			await bench.compare(
+				bench("isDarkColour (hex)", () => {
+					for (const hex of HEX_COLOURS) isDarkColour(hex, standard);
+				}),
+				bench("isDarkColour (CSS RGB)", () => {
+					for (const rgb of CSS_RGB_COLOURS) isDarkColour(rgb, standard);
+				}),
+				bench("isDarkColour (named)", () => {
+					for (const name of [
+						"black",
+						"white",
+						"red",
+						"darkblue",
+						"rebeccapurple",
+						"aliceblue",
+						"lightgoldenrodyellow",
+						"hotpink",
+					]) {
+						isDarkColour(name, standard);
+					}
+				}),
+				bench("isDarkColour (varied hex)", () => {
+					for (const hex of LARGE_HEX_PALETTE) isDarkColour(hex, standard);
+				}),
+				bench("isDarkColour (CSS formats)", () => {
+					for (const rgb of [
+						"rgb(8%, 8%, 8%)",
+						"rgba(78%, 78%, 78%, 80%)",
+						"rgb(12 34 56)",
+						"rgba(200 210 220 / 0.5)",
+						"rgb(10.1, 10.2, 10.3)",
+						"rgb(116.5, 116.5, 116.5)",
+					]) {
+						isDarkColour(rgb, standard);
+					}
+				}),
+			);
+		});
+	}
 
 	test("sorting", async ({ bench }) => {
 		await bench.compare(

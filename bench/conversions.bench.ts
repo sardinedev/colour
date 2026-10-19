@@ -13,8 +13,18 @@ import {
 	convertRGBtoNamedCSSColour,
 	convertRGBtoXYZ,
 	convertXYZtoLab,
+	isCSSRGBColour,
+	isHexColour,
+	isNamedCSSColour,
 } from "../src/index";
-import { CSS_RGB_COLOURS, HEX_COLOURS, RGB_COLOURS } from "./fixtures";
+import type { NamedCSSColour } from "../src/types";
+import {
+	CSS_RGB_COLOURS,
+	HEX_COLOURS,
+	INVALID_COLOURS,
+	NAMED_COLOURS,
+	RGB_COLOURS,
+} from "./fixtures";
 
 const XYZ_COLOURS = RGB_COLOURS.map((c) => convertRGBtoXYZ(c));
 const NAMED_HEX_COLOURS = [
@@ -24,6 +34,21 @@ const NAMED_HEX_COLOURS = [
 	"#000000",
 	"#ff6347",
 ];
+const HEX_INPUTS = [
+	...HEX_COLOURS,
+	"#fff",
+	"#ffff",
+	"#ff000080",
+	...INVALID_COLOURS,
+];
+const CSS_RGB_INPUTS = [
+	...CSS_RGB_COLOURS,
+	"rgba(12, 23, 111, 0.4)",
+	"rgb(12 23 111 / 40%)",
+	"rgb(50%, 25%, 100%)",
+	...INVALID_COLOURS,
+];
+const NAMED_INPUTS = [...NAMED_COLOURS, ...INVALID_COLOURS] as NamedCSSColour[];
 
 describe("conversions", () => {
 	test("hex", async ({ bench }) => {
@@ -82,6 +107,20 @@ describe("conversions", () => {
 				convertNamedCSSColourtoRGB("rebeccapurple");
 				convertNamedCSSColourtoRGB("aliceblue");
 				convertNamedCSSColourtoRGB("yellowgreen");
+			}),
+		);
+	});
+
+	test("validation", async ({ bench }) => {
+		await bench.compare(
+			bench("isHexColour", () => {
+				for (const input of HEX_INPUTS) isHexColour(input);
+			}),
+			bench("isCSSRGBColour", () => {
+				for (const input of CSS_RGB_INPUTS) isCSSRGBColour(input);
+			}),
+			bench("isNamedCSSColour", () => {
+				for (const input of NAMED_INPUTS) isNamedCSSColour(input);
 			}),
 		);
 	});

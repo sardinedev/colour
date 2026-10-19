@@ -1,4 +1,4 @@
-import type { RGBColour } from "../src/types";
+import type { NamedCSSColour, RGBColour } from "../src/types";
 
 /** Deterministic pseudo-random generator so every run uses the same inputs. */
 function createRandom(seed: number) {
@@ -34,3 +34,33 @@ export const CSS_RGB_COLOURS = RGB_COLOURS.map(
 export const CSS_RGB_PALETTE = LARGE_RGB_PALETTE.slice(0, 200).map(
 	(c) => `rgb(${c.R}, ${c.G}, ${c.B})`,
 );
+
+/** Includes the `grey`/`gray` and `cyan`/`aqua` aliases. */
+export const NAMED_COLOURS: NamedCSSColour[] = [
+	"aliceblue",
+	"aqua",
+	"black",
+	"cornflowerblue",
+	"cyan",
+	"darkslategray",
+	"gold",
+	"gray",
+	"grey",
+	"hotpink",
+	"navy",
+	"rebeccapurple",
+	"white",
+	"yellowgreen",
+];
+
+/** Strings that none of the format assertions should accept. */
+export const INVALID_COLOURS = [
+	"",
+	"fff",
+	"#ggg",
+	"#12345",
+	"zzz(23, 111, 87)",
+	"rgb(12, 23)",
+	"neve",
+	"Red",
+];

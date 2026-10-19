@@ -8,18 +8,26 @@ import {
 	findNearestNamedCSSColour,
 	findNearestRGBColour,
 	getContrastRatio,
+	getContrastRatioFromCSSRGB,
 	getContrastRatioFromHex,
+	getContrastRatioFromNamedCSSColour,
 	getSRGBLuminanceFromHex,
+	getSRGBLuminanceFromRGB,
+	isCSSNamedDarkColour,
+	isCSSRGBDarkColour,
 	isDarkColour,
+	isHexDarkColour,
 	pickHexColourContrast,
 	RGBdistance,
 	sortHexColours,
 } from "../src/index";
 import {
+	CSS_RGB_COLOURS,
 	CSS_RGB_PALETTE,
 	HEX_COLOURS,
 	LARGE_HEX_PALETTE,
 	LARGE_RGB_PALETTE,
+	NAMED_COLOURS,
 	RGB_COLOURS,
 } from "./fixtures";
 
@@ -55,9 +63,22 @@ describe("analysis", () => {
 			bench("getSRGBLuminanceFromHex", () => {
 				for (const hex of HEX_COLOURS) getSRGBLuminanceFromHex(hex, "WCAG2.1");
 			}),
+			bench("getSRGBLuminanceFromRGB", () => {
+				for (const rgb of RGB_COLOURS) getSRGBLuminanceFromRGB(rgb, "WCAG2.1");
+			}),
 			bench("getContrastRatioFromHex", () => {
 				for (const hex of HEX_COLOURS) {
 					getContrastRatioFromHex(hex, "#ffffff", "WCAG2.1");
+				}
+			}),
+			bench("getContrastRatioFromCSSRGB", () => {
+				for (const css of CSS_RGB_COLOURS) {
+					getContrastRatioFromCSSRGB(css, "rgb(255, 255, 255)", "WCAG2.1");
+				}
+			}),
+			bench("getContrastRatioFromNamedCSSColour", () => {
+				for (const name of NAMED_COLOURS) {
+					getContrastRatioFromNamedCSSColour(name, "white", "WCAG2.1");
 				}
 			}),
 			bench("getContrastRatio (mixed formats)", () => {
@@ -79,6 +100,15 @@ describe("analysis", () => {
 			}),
 			bench("isDarkColour", () => {
 				for (const hex of HEX_COLOURS) isDarkColour(hex, "WCAG2.1");
+			}),
+			bench("isHexDarkColour", () => {
+				for (const hex of HEX_COLOURS) isHexDarkColour(hex, "WCAG2.1");
+			}),
+			bench("isCSSRGBDarkColour", () => {
+				for (const css of CSS_RGB_COLOURS) isCSSRGBDarkColour(css, "WCAG2.1");
+			}),
+			bench("isCSSNamedDarkColour", () => {
+				for (const name of NAMED_COLOURS) isCSSNamedDarkColour(name, "WCAG2.1");
 			}),
 		);
 	});

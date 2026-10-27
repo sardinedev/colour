@@ -60,7 +60,7 @@
 		}
 	],
 	"devDependencies": {
-		"@biomejs/biome": "2.6.2",
+		"@biomejs/biome": "2.6.3",
 		"@changesets/cli": "2.31.1",
 		"@codspeed/vitest-plugin": "6.1.0",
 		"@size-limit/preset-small-lib": "14.3.0",

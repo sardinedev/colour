@@ -1,6 +1,56 @@
 import { expect, test } from "vitest";
 import type { HueHelper } from "../types";
-import { bigSquare, deltaHue_d, hue_d, meanHue_d, toRadians } from "./index";
+import {
+	bigSquare,
+	deltaHue_d,
+	hue_d,
+	linearRGB,
+	meanHue_d,
+	toRadians,
+} from "./index";
+
+function referenceLinearRGB(value: number, wcag21?: boolean): number {
+	const ratio = value / 255;
+	return ratio > (wcag21 ? 0.03928 : 0.04045)
+		? ((ratio + 0.055) / 1.055) ** 2.4
+		: ratio / 12.92;
+}
+
+test("linearRGB exactly matches the formula for every 8-bit channel and standard", () => {
+	for (const standard of [true, false, undefined]) {
+		for (let channel = 0; channel <= 255; channel++) {
+			expect(linearRGB(channel, standard)).toBe(
+				referenceLinearRGB(channel, standard),
+			);
+		}
+	}
+});
+
+test("linearRGB preserves fractional, out-of-range and non-finite inputs", () => {
+	for (const standard of [true, false, undefined]) {
+		for (const channel of [
+			-256,
+			-1,
+			-0,
+			0.5,
+			10.01,
+			10.1,
+			10.31475,
+			10.4,
+			116.5,
+			254.5,
+			255.5,
+			256,
+			Number.NaN,
+			Number.NEGATIVE_INFINITY,
+			Number.POSITIVE_INFINITY,
+		]) {
+			expect(linearRGB(channel, standard)).toBe(
+				referenceLinearRGB(channel, standard),
+			);
+		}
+	}
+});
 
 test("converts degrees to radians", () => {
 	expect(toRadians(120)).toBe(2.0943951023931953);

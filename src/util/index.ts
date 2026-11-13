@@ -69,12 +69,22 @@ const POW_25_7 = 25 ** 7; // 6103515625 — precomputed constant
 export const bigSquare = (n: number): number =>
 	Math.sqrt(n ** 7 / (n ** 7 + POW_25_7));
 
+// Both WCAG thresholds fall between channels 10 and 11 for 8-bit integers.
+const LINEAR_RGB = Float64Array.from({ length: 256 }, (_, channel) => {
+	const ratio = channel / 255;
+	return ratio > 0.04045 ? ((ratio + 0.055) / 1.055) ** 2.4 : ratio / 12.92;
+});
+
 /**
  * Normalise black and white colorimetry as specified in IEC 61966-2-1
  * It takes a RGB channel in the range [0 - 255] and returns a value between 0 and 1
  * @param rgbValue number to be normalised
  */
 export function linearRGB(rgbValue: number, WCAG21?: boolean) {
+	// Keep zero on the fallback path to preserve negative zero.
+	if (Number.isInteger(rgbValue) && rgbValue > 0 && rgbValue <= 255) {
+		return LINEAR_RGB[rgbValue] as number;
+	}
 	const rgbRatio = rgbValue / 255;
 	const threshold = WCAG21 ? 0.03928 : 0.04045;
 	let linearValue: number;

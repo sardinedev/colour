@@ -18,12 +18,15 @@ export function convertHextoRGB(hex: string): RGBColour | null {
 	}
 
 	switch (hex.length) {
-		case 7: // #RRGGBB
+		case 7: {
+			// #RRGGBB
+			const channels = parseInt(hex.slice(1), 16);
 			return {
-				R: parseInt(hex.slice(1, 3), 16),
-				G: parseInt(hex.slice(3, 5), 16),
-				B: parseInt(hex.slice(5, 7), 16),
+				R: channels >> 16,
+				G: (channels >> 8) & 255,
+				B: channels & 255,
 			};
+		}
 		case 4: // #RGB
 			return {
 				R: parseInt(hex.slice(1, 2).repeat(2), 16),

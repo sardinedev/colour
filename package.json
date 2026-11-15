@@ -65,7 +65,7 @@
 		"@codspeed/vitest-plugin": "6.1.1",
 		"@size-limit/preset-small-lib": "14.3.0",
 		"@tsconfig/node24": "24.0.6",
-		"@tsconfig/strictest": "2.0.8",
+		"@tsconfig/strictest": "2.0.9",
 		"@types/node": "26.6.6",
 		"@vitest/coverage-v8": "5.1.0",
 		"lefthook": "2.2.2",

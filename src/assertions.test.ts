@@ -53,8 +53,18 @@ test("assert true if string is in the CSS RGB format with decimal percentage val
 	expect(isCSSRGBColour("rgb(50.5%, 25.25%, 99.9%)")).toBe(true);
 });
 
+test("assert true if string has leading-dot decimal channels", () => {
+	expect(isCSSRGBColour("rgb(.5, 1.25, 2)")).toBe(true);
+});
+
 test("assert false if string is not in the CSS RGB format", () => {
 	expect(isCSSRGBColour("zzz( 23, 111, 87)")).toBe(false);
+});
+
+test("rejects malformed CSS RGB with a long numeric channel", () => {
+	const longChannel = "9".repeat(10_000);
+
+	expect(isCSSRGBColour(`rgb(${longChannel}x, 9, 9)`)).toBe(false);
 });
 
 test("assert false if string doesn't have 3 colour values", () => {

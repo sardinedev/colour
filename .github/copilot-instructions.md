@@ -1,7 +1,7 @@
 # Copilot instructions (@sardine/colour)
 
 ## Project context
-- This is a small, pure TypeScript colour utility library (no runtime deps) published as ESM + CJS (+ a minified unpkg build in CI).
+- This is a small, pure TypeScript colour utility library (no runtime deps) published as ESM (+ a minified unpkg build in CI).
 - Source lives in `src/` as many small, single-purpose functions (e.g. `convertRGBtoHex`, `getContrastRatioFromHex`, `findNearestColour`).
 - Public API is the barrel export in `src/index.ts`. Add new exports there when adding a new utility.
 
@@ -16,8 +16,7 @@
 - Tests: `npm run test` (Vitest + coverage).
 - Static checks: `npm run static` (Biome). Typecheck: `npm run types:check`.
 - Build artifacts:
-  - JS bundles: `npm run build` (Vite library mode → `dist/*.mjs` + `dist/*.cjs`, no minify).
-  - Types: `npm run types:emit` (tsc emits `.d.ts` only).
+  - `npm run build` emits the ESM bundle and bundled `dist/index.d.ts`.
 
 ## Code patterns to follow
 - “Normalize → compute → convert back” is common:

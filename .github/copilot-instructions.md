@@ -16,8 +16,7 @@
 - Tests: `npm run test` (Vitest + coverage).
 - Static checks: `npm run static` (Biome). Typecheck: `npm run types:check`.
 - Build artifacts:
-  - JS bundles: `npm run build` (Vite library mode → `dist/*.mjs`, no minify).
-  - Types: `npm run types:emit` (tsc emits `.d.ts` only).
+  - `npm run build` emits the ESM bundle and bundled `dist/index.d.ts`.
 
 ## Code patterns to follow
 - “Normalize → compute → convert back” is common:

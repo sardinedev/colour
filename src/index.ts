@@ -29,5 +29,11 @@ export { isCSSRGBDarkColour } from "./isCSSRGBDarkColour";
 export { isDarkColour } from "./isDarkColour";
 export { isHexDarkColour } from "./isHexDarkColour";
 export { pickHexColourContrast } from "./pickHexColourContrast";
+export type {
+	PaletteColour,
+	PreparedPalette,
+	PreparedRGBColour,
+} from "./preparePalette";
+export { preparePalette } from "./preparePalette";
 export { RGBdistance } from "./RGBdistance";
 export { sortHexColours } from "./sortHexColours";

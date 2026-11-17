@@ -15,7 +15,7 @@ Dependency-free TypeScript utilities for working with colours in JavaScript. Con
 import { convertHextoRGB, getContrastRatio } from "@sardine/colour";
 
 convertHextoRGB("#bed"); //=> { R: 187, G: 238, B: 221 }
-getContrastRatio("red", "#00FF00", "WCAG2.1"); //=> 2.913
+getContrastRatio("red", "#00FF00"); //=> 2.913
 ```
 
 ## Requirements
@@ -41,7 +41,6 @@ pickHexColourContrast(
 		optionOneColour: "#FFFFFF",
 		optionTwoColour: "#000000",
 	},
-	"WCAG2.1",
 );
 ```
 

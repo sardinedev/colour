@@ -1,7 +1,7 @@
 import { convertCSSRGBtoHex } from "./convertCSSRGBtoHex";
 import { convertNamedCSSColourtoHex } from "./convertNamedCSSColourtoHex";
 import { getContrastRatioFromHex } from "./getContrastRatioFromHex";
-import type { NamedCSSColour, WCAG } from "./types";
+import type { NamedCSSColour } from "./types";
 import { NAMED_CSS_COLOUR_URL } from "./util/index";
 
 /**
@@ -9,13 +9,11 @@ import { NAMED_CSS_COLOUR_URL } from "./util/index";
  * Accepts CSS RGB colours (including percentage values), named CSS colours, or hexadecimal colours.
  * @param colour1 The first colour (e.g., `#ff0000`, `rgb(255,0,0)`, `rgb(100%, 0%, 0%)`, or `red`)
  * @param colour2 The second colour (e.g., `#00ff00`, `rgb(0,255,0)`, `rgb(0%, 100%, 0%)`, or `lime`)
- * @param standard The standard to evaluate the contrast ratio against, defaults to WCAG2.1
  * @returns The contrast ratio between the two colours truncated to 3 decimal places
  */
 export function getContrastRatio(
 	colour1: string | NamedCSSColour,
 	colour2: string | NamedCSSColour,
-	standard: WCAG,
 ): number {
 	// The colour can be a named CSS colour, a CSS RGB colour or a hexadecimal colour
 	// So we normalize the input to a hexadecimal colour
@@ -49,7 +47,7 @@ export function getContrastRatio(
 		hexColour2 = _hexColour2;
 	}
 
-	const result = getContrastRatioFromHex(hexColour1, hexColour2, standard);
+	const result = getContrastRatioFromHex(hexColour1, hexColour2);
 	if (result === null) {
 		throw new Error(
 			`getContrastRatio expects valid hexadecimal colours but received ${hexColour1} or ${hexColour2}.`,

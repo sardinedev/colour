@@ -74,9 +74,9 @@ export const bigSquare = (n: number): number =>
  * It takes a RGB channel in the range [0 - 255] and returns a value between 0 and 1
  * @param rgbValue number to be normalised
  */
-export function linearRGB(rgbValue: number, WCAG21?: boolean) {
+export function linearRGB(rgbValue: number) {
 	const rgbRatio = rgbValue / 255;
-	const threshold = WCAG21 ? 0.03928 : 0.04045;
+	const threshold = 0.04045;
 	let linearValue: number;
 
 	if (rgbRatio > threshold) {

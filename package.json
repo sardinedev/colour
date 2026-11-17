@@ -17,7 +17,7 @@
 		"build": "npx vite build",
 		"test": "npx vitest run --coverage",
 		"bench": "npx vitest bench --run",
-		"types:emit": "npx tsc -p tsconfig.emit.json",
+		"types:emit": "npx tsc -p tsconfig.emit.json && node scripts/fix-declaration-imports.mjs",
 		"types:check": "npx tsc --noEmit",
 		"lint": "npx biome ci src",
 		"size": "size-limit"

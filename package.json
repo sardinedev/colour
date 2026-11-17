@@ -17,7 +17,7 @@
 		"build": "npx vite build",
 		"test": "npx vitest run --coverage",
 		"bench": "npx vitest bench --run",
-		"types:emit": "npx tsc -p tsconfig.emit.json && node scripts/fix-declaration-imports.mjs",
+		"types:emit": "npx vite build --config vite.types.config.ts",
 		"types:check": "npx tsc --noEmit",
 		"lint": "npx biome ci src",
 		"size": "size-limit"
@@ -56,6 +56,7 @@
 		"@biomejs/biome": "2.6.7",
 		"@changesets/cli": "2.31.1",
 		"@codspeed/vitest-plugin": "6.1.1",
+		"@microsoft/api-extractor": "^7.60.1",
 		"@size-limit/preset-small-lib": "14.3.0",
 		"@tsconfig/node26": "26.0.2",
 		"@tsconfig/strictest": "2.0.9",
@@ -64,6 +65,7 @@
 		"lefthook": "2.2.2",
 		"size-limit": "14.3.0",
 		"typescript": "7.0.2",
+		"unplugin-dts": "^1.1.2",
 		"vite": "8.3.8",
 		"vitest": "5.1.0"
 	}

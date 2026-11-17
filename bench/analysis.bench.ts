@@ -61,30 +61,30 @@ describe("analysis", () => {
 	test("contrast and luminance", async ({ bench }) => {
 		await bench.compare(
 			bench("getSRGBLuminanceFromHex", () => {
-				for (const hex of HEX_COLOURS) getSRGBLuminanceFromHex(hex, "WCAG2.1");
+				for (const hex of HEX_COLOURS) getSRGBLuminanceFromHex(hex);
 			}),
 			bench("getSRGBLuminanceFromRGB", () => {
-				for (const rgb of RGB_COLOURS) getSRGBLuminanceFromRGB(rgb, "WCAG2.1");
+				for (const rgb of RGB_COLOURS) getSRGBLuminanceFromRGB(rgb);
 			}),
 			bench("getContrastRatioFromHex", () => {
 				for (const hex of HEX_COLOURS) {
-					getContrastRatioFromHex(hex, "#ffffff", "WCAG2.1");
+					getContrastRatioFromHex(hex, "#ffffff");
 				}
 			}),
 			bench("getContrastRatioFromCSSRGB", () => {
 				for (const css of CSS_RGB_COLOURS) {
-					getContrastRatioFromCSSRGB(css, "rgb(255, 255, 255)", "WCAG2.1");
+					getContrastRatioFromCSSRGB(css, "rgb(255, 255, 255)");
 				}
 			}),
 			bench("getContrastRatioFromNamedCSSColour", () => {
 				for (const name of NAMED_COLOURS) {
-					getContrastRatioFromNamedCSSColour(name, "white", "WCAG2.1");
+					getContrastRatioFromNamedCSSColour(name, "white");
 				}
 			}),
 			bench("getContrastRatio (mixed formats)", () => {
-				getContrastRatio("red", "#00FF00", "WCAG2.1");
-				getContrastRatio("rgb(12, 34, 56)", "aliceblue", "WCAG2.1");
-				getContrastRatio("#bada55", "rgb(255, 255, 255)", "WCAG3.0");
+				getContrastRatio("red", "#00FF00");
+				getContrastRatio("rgb(12, 34, 56)", "aliceblue");
+				getContrastRatio("#bada55", "rgb(255, 255, 255)");
 			}),
 			bench("pickHexColourContrast", () => {
 				for (const hex of HEX_COLOURS) {
@@ -94,21 +94,20 @@ describe("analysis", () => {
 							optionOneColour: "#FFFFFF",
 							optionTwoColour: "#000000",
 						},
-						"WCAG2.1",
 					);
 				}
 			}),
 			bench("isDarkColour", () => {
-				for (const hex of HEX_COLOURS) isDarkColour(hex, "WCAG2.1");
+				for (const hex of HEX_COLOURS) isDarkColour(hex);
 			}),
 			bench("isHexDarkColour", () => {
-				for (const hex of HEX_COLOURS) isHexDarkColour(hex, "WCAG2.1");
+				for (const hex of HEX_COLOURS) isHexDarkColour(hex);
 			}),
 			bench("isCSSRGBDarkColour", () => {
-				for (const css of CSS_RGB_COLOURS) isCSSRGBDarkColour(css, "WCAG2.1");
+				for (const css of CSS_RGB_COLOURS) isCSSRGBDarkColour(css);
 			}),
 			bench("isCSSNamedDarkColour", () => {
-				for (const name of NAMED_COLOURS) isCSSNamedDarkColour(name, "WCAG2.1");
+				for (const name of NAMED_COLOURS) isCSSNamedDarkColour(name);
 			}),
 		);
 	});

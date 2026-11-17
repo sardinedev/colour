@@ -7,7 +7,7 @@ test("should return #FFFFFF as the best colour for a #333333 background", () => 
 		optionOneColour: "#FFFFFF",
 		optionTwoColour: "#000000",
 	};
-	expect(pickHexColourContrast(colours, "WCAG2.1")).toBe("#FFFFFF");
+	expect(pickHexColourContrast(colours)).toBe("#FFFFFF");
 });
 
 test("should return #000000 as the best colour for a #BED background", () => {
@@ -16,7 +16,7 @@ test("should return #000000 as the best colour for a #BED background", () => {
 		optionOneColour: "#FFFFFF",
 		optionTwoColour: "#000000",
 	};
-	expect(pickHexColourContrast(colours, "WCAG2.1")).toBe("#000000");
+	expect(pickHexColourContrast(colours)).toBe("#000000");
 });
 
 test("should return #000000 as the best colour for a #DD337F background", () => {
@@ -25,17 +25,7 @@ test("should return #000000 as the best colour for a #DD337F background", () => 
 		optionOneColour: "#FFFFFF",
 		optionTwoColour: "#000000",
 	};
-	expect(pickHexColourContrast(colours, "WCAG2.1")).toBe("#000000");
-});
-
-test("uses WCAG3.0 standard to pick the higher contrast colour", () => {
-	// WCAG3.0 luminance formula differs slightly; black should still win on a white background
-	const colours = {
-		backgroundColour: "#ffffff",
-		optionOneColour: "#000000",
-		optionTwoColour: "#888888",
-	};
-	expect(pickHexColourContrast(colours, "WCAG3.0")).toBe("#000000");
+	expect(pickHexColourContrast(colours)).toBe("#000000");
 });
 
 test("pickHexColourContrast: returns null for an invalid background hex value", () => {
@@ -44,7 +34,7 @@ test("pickHexColourContrast: returns null for an invalid background hex value", 
 		optionOneColour: "#000000",
 		optionTwoColour: "#ffffff",
 	};
-	expect(pickHexColourContrast(colours, "WCAG2.1")).toBeNull();
+	expect(pickHexColourContrast(colours)).toBeNull();
 });
 
 test("returns optionTwoColour when both options have equal contrast against the background", () => {
@@ -54,5 +44,5 @@ test("returns optionTwoColour when both options have equal contrast against the 
 		optionOneColour: "#ffffff",
 		optionTwoColour: "#ffffff",
 	};
-	expect(pickHexColourContrast(colours, "WCAG2.1")).toBe("#ffffff");
+	expect(pickHexColourContrast(colours)).toBe("#ffffff");
 });

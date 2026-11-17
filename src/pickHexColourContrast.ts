@@ -1,5 +1,4 @@
 import { getSRGBLuminanceFromHex } from "./getSRGBLuminanceFromHex";
-import type { WCAG } from "./types";
 
 type ColorArgs = {
 	backgroundColour: string;
@@ -14,13 +13,14 @@ const relativeContrast = (firstColour: number, secondColour: number) => {
 	return secondColour / firstColour;
 };
 
-export const pickHexColourContrast = (
-	{ backgroundColour, optionOneColour, optionTwoColour }: ColorArgs,
-	standard: WCAG,
-): string | null => {
-	const bgLum = getSRGBLuminanceFromHex(backgroundColour, standard);
-	const opt1Lum = getSRGBLuminanceFromHex(optionOneColour, standard);
-	const opt2Lum = getSRGBLuminanceFromHex(optionTwoColour, standard);
+export const pickHexColourContrast = ({
+	backgroundColour,
+	optionOneColour,
+	optionTwoColour,
+}: ColorArgs): string | null => {
+	const bgLum = getSRGBLuminanceFromHex(backgroundColour);
+	const opt1Lum = getSRGBLuminanceFromHex(optionOneColour);
+	const opt2Lum = getSRGBLuminanceFromHex(optionTwoColour);
 	if (bgLum === null || opt1Lum === null || opt2Lum === null) return null;
 	const backgroundColourLuminance = bgLum + 0.05;
 	const optionOneColourLuminance = opt1Lum + 0.05;

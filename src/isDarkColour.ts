@@ -1,7 +1,7 @@
 import { isCSSNamedDarkColour } from "./isCSSNameDarkColour";
 import { isCSSRGBDarkColour } from "./isCSSRGBDarkColour";
 import { isHexDarkColour } from "./isHexDarkColour";
-import type { NamedCSSColour, WCAG } from "./types";
+import type { NamedCSSColour } from "./types";
 
 /**
  * Evaluates if a colour is dark by measuring the contrast ratio against black and white.
@@ -9,21 +9,17 @@ import type { NamedCSSColour, WCAG } from "./types";
  *
  * If you know in advance the type of colour you want to evaluate consider using `isCSSNamedDarkColour`, `isCSSRGBDarkColour` or `isHexDarkColour` as they are smaller functions
  * @param {string | NamedCSSColour} colour - A colour value, ie: `hotpink`, `#333222`, `rgb(12,34,45)`, or `rgb(50%, 25%, 100%)`
- * @param {"WCAG2.1" | "WCAG3.0"} standard - Evaluate agains "WCAG2.1" or "WCAG3.0"
  * @returns {boolean} Returns `true`, `false` or `undefined` if name is not a valid CSS named colour
  */
-export function isDarkColour(
-	colour: string | NamedCSSColour,
-	standard: WCAG,
-): boolean {
+export function isDarkColour(colour: string | NamedCSSColour): boolean {
 	try {
 		if (colour.startsWith("#")) {
-			return isHexDarkColour(colour, standard);
+			return isHexDarkColour(colour);
 		}
 		if (colour.startsWith("rgb")) {
-			return isCSSRGBDarkColour(colour, standard);
+			return isCSSRGBDarkColour(colour);
 		}
-		return isCSSNamedDarkColour(colour as NamedCSSColour, standard);
+		return isCSSNamedDarkColour(colour as NamedCSSColour);
 	} catch (_error) {
 		throw new Error(
 			`${colour} is not a valid colour format. isDarkColour accepts CSS RGB formats, ie rgb(0,0,0), rgba(255, 255, 255, 0.4), rgb(50%, 25%, 100%), and rgba(50%, 25%, 100%, 80%), hexadecimal and CSS named colours.`,

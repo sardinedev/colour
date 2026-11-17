@@ -1,6 +1,6 @@
 import { convertNamedCSSColourtoHex } from "./convertNamedCSSColourtoHex";
 import { getContrastRatioFromHex } from "./getContrastRatioFromHex";
-import type { NamedCSSColour, WCAG } from "./types";
+import type { NamedCSSColour } from "./types";
 import { NAMED_CSS_COLOUR_URL } from "./util/index";
 
 /**
@@ -9,13 +9,11 @@ import { NAMED_CSS_COLOUR_URL } from "./util/index";
  * See list here https://developer.mozilla.org/en-US/docs/Web/CSS/named-color
  * @param colour1 The first named CSS colour
  * @param colour2 The second named CSS colour
- * @param standard The standard to evaluate the contrast ratio against, defaults to WCAG2.1
  * @returns The contrast ratio between the two colours truncated to 3 decimal places
  */
 export function getContrastRatioFromNamedCSSColour(
 	colour1: NamedCSSColour,
 	colour2: NamedCSSColour,
-	standard: WCAG,
 ): number | null {
 	const hexColour1 = convertNamedCSSColourtoHex(colour1);
 	const hexColour2 = convertNamedCSSColourtoHex(colour2);
@@ -26,5 +24,5 @@ export function getContrastRatioFromNamedCSSColour(
 		);
 	}
 
-	return getContrastRatioFromHex(hexColour1, hexColour2, standard);
+	return getContrastRatioFromHex(hexColour1, hexColour2);
 }

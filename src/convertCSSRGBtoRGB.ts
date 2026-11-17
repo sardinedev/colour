@@ -1,5 +1,5 @@
 import type { RGBColour } from "./types";
-import { cssRGBARegex } from "./util/regexers";
+import { parseCSSRGB } from "./util/regexers";
 
 /**
  * Converts a CSS RGB/Alpha value to its numeric equivalent
@@ -52,7 +52,7 @@ export function convertCssAlphaChannelValue(
  * @returns {RGBColour} - RGB colour object.
  */
 export function convertCSSRGBtoRGB(colour: string): RGBColour {
-	const match = colour.match(cssRGBARegex);
+	const match = parseCSSRGB(colour);
 	if (!match) {
 		throw new Error(
 			`convertCSSRGBtoRGB expects a valid CSS RGB string but got ${colour}`,
@@ -60,9 +60,9 @@ export function convertCSSRGBtoRGB(colour: string): RGBColour {
 	}
 
 	return {
-		R: convertCssRgbChannelValue(match[1]) as number,
-		G: convertCssRgbChannelValue(match[2]) as number,
-		B: convertCssRgbChannelValue(match[3]) as number,
-		A: convertCssAlphaChannelValue(match[4]),
+		R: convertCssRgbChannelValue(match[0]) as number,
+		G: convertCssRgbChannelValue(match[1]) as number,
+		B: convertCssRgbChannelValue(match[2]) as number,
+		A: convertCssAlphaChannelValue(match[3]),
 	};
 }

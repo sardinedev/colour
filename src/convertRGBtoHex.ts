@@ -12,9 +12,7 @@ import { clamp } from "./util/index";
  * @returns - An hexadecimal string
  */
 export function convertRGBtoHex({ R, G, B, A }: RGBColour): string {
-	const hex = (n: number) => {
-		const value = clamp(n, 0, 255);
-		return value.toString(16).padStart(2, "0");
-	};
-	return `#${hex(R)}${hex(G)}${hex(B)}${A ? hex(Math.round(A * 255)) : ""}`;
+	const hex = (n: number) => Math.round(clamp(n, 0, 255)).toString(16).padStart(2, "0");
+	const alpha = A === undefined ? "" : hex(clamp(A, 0, 1) * 255);
+	return `#${hex(R)}${hex(G)}${hex(B)}${alpha}`;
 }

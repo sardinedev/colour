@@ -1,4 +1,5 @@
-import { RGBdistance } from "./RGBdistance";
+import { ciede2000 } from "./CIEDE2000";
+import { convertRGBtoLab } from "./convertRGBtoLab";
 import type { RGBColour } from "./types";
 
 /**
@@ -16,10 +17,11 @@ export function findNearestRGBColour(
 	if (!palette || palette.length < 2) {
 		return colour;
 	}
+	const colourLab = convertRGBtoLab(colour);
 	let nearest = colour;
 	let minDistance = Number.POSITIVE_INFINITY;
 	for (const paletteColour of palette) {
-		const distance = RGBdistance(colour, paletteColour);
+		const distance = ciede2000(colourLab, convertRGBtoLab(paletteColour));
 		if (distance < minDistance) {
 			minDistance = distance;
 			nearest = paletteColour;

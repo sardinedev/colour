@@ -2,4 +2,4 @@
 "@sardine/colour": patch
 ---
 
-Reuse the target Lab conversion when matching RGB palettes.
+Improve nearest-colour palette matching performance across RGB, hex, CSS RGB, and mixed-format palettes by reusing the target Lab conversion.

@@ -9,7 +9,7 @@ Dependency-free TypeScript utilities for working with colours in JavaScript. Con
 - **Common formats.** Work with hex strings, RGB objects, CSS `rgb()`/`rgba()` strings, named CSS colours, XYZ, and Lab.
 - **Accessibility helpers.** Calculate WCAG contrast ratios, get sRGB luminance, and choose the higher-contrast hex colour for a background.
 - **Palette matching.** Find the nearest colour from hex, CSS RGB, named CSS, RGB object, or mixed-format palettes.
-- **Ready to bundle.** Ships ESM, CommonJS, TypeScript declarations, and an unpkg build with no runtime dependencies.
+- **Ready to bundle.** Ships ESM, TypeScript declarations, and an unpkg build with no runtime dependencies.
 
 ```ts
 import { convertHextoRGB, getContrastRatio } from "@sardine/colour";
@@ -48,3 +48,19 @@ pickHexColourContrast(
 ## Documentation
 
 Read the full API documentation at <https://colour.sardine.dev/>.
+
+## CommonJS migration
+
+Version 5 and later are ESM-only. Use an ESM `import`:
+
+```js
+import { convertHextoRGB } from "@sardine/colour";
+```
+
+For CommonJS applications, use asynchronous `import()` where practical:
+
+```js
+const { convertHextoRGB } = await import("@sardine/colour");
+```
+
+If your application cannot use ESM or asynchronous imports, remain on version 4.x.

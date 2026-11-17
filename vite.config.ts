@@ -9,12 +9,8 @@ export default defineConfig({
 		minify: false,
 		lib: {
 			entry: resolve(__dirname, "src/index.ts"),
-			formats: ["es", "cjs"],
-			// ESM will be .mjs and CJS will be .cjs
-			fileName: (format, entryName) => {
-				const extension = format === "es" ? "mjs" : format;
-				return `${entryName}.${extension}`;
-			},
+			formats: ["es"],
+			fileName: (_format, entryName) => `${entryName}.mjs`,
 		},
 	},
 });

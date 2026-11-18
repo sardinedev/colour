@@ -34,8 +34,8 @@ export function findNearestColour(
 	} else if (isCSSRGBColour(colour)) {
 		baseColour = convertCSSRGBtoRGB(colour);
 		colourType = "cssRGB";
-	} else if (isNamedCSSColour(colour as NamedCSSColour)) {
-		baseColour = convertNamedCSSColourtoRGB(colour as NamedCSSColour);
+	} else if (isNamedCSSColour(colour)) {
+		baseColour = convertNamedCSSColourtoRGB(colour);
 		colourType = "namedCSS";
 	}
 
@@ -50,8 +50,8 @@ export function findNearestColour(
 		} else if (isCSSRGBColour(paletteColour)) {
 			const rgb = convertCSSRGBtoRGB(paletteColour);
 			if (rgb) paletteRGB.push(rgb);
-		} else if (isNamedCSSColour(paletteColour as NamedCSSColour)) {
-			const rgb = convertNamedCSSColourtoRGB(paletteColour as NamedCSSColour);
+		} else if (isNamedCSSColour(paletteColour)) {
+			const rgb = convertNamedCSSColourtoRGB(paletteColour);
 			if (rgb) paletteRGB.push(rgb);
 		}
 	}

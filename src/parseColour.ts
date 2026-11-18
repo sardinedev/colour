@@ -1,4 +1,4 @@
-import { isCSSRGBColour, isHexColour, isNamedCSSColour } from "./assertions";
+import { isNamedCSSColour } from "./assertions";
 import { convertCSSRGBtoRGB } from "./convertCSSRGBtoRGB";
 import { convertHextoRGB } from "./convertHextoRGB";
 import { convertNamedCSSColourtoRGB } from "./convertNamedCSSColourtoRGB";
@@ -43,10 +43,12 @@ function parseRGBObject(value: object): RGBColour | null {
  */
 export function parseColour(colour: unknown): RGBColour | null {
 	if (typeof colour === "string") {
-		if (isHexColour(colour)) return convertHextoRGB(colour);
-		if (isCSSRGBColour(colour)) return convertCSSRGBtoRGB(colour);
-		if (isNamedCSSColour(colour)) return convertNamedCSSColourtoRGB(colour);
-		return null;
+		// Each converter validates its own format, so pick one and let it decide
+		if (colour.startsWith("#")) return convertHextoRGB(colour);
+		return (
+			convertCSSRGBtoRGB(colour) ??
+			(isNamedCSSColour(colour) ? convertNamedCSSColourtoRGB(colour) : null)
+		);
 	}
 	if (typeof colour === "object" && colour !== null) {
 		return parseRGBObject(colour);

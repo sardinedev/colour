@@ -109,3 +109,9 @@ test.each([null, undefined, 0, 255, true, [255, 0, 0], () => "#fff"])(
 		expect(parseColour(input)).toBeNull();
 	},
 );
+
+test("accepts uppercase hex and CSS RGB, but not uppercase names", () => {
+	expect(parseColour("#FFF")).toStrictEqual({ R: 255, G: 255, B: 255 });
+	expect(parseColour("RGB(0, 0, 0)")).toStrictEqual({ R: 0, G: 0, B: 0 });
+	expect(parseColour("Navy")).toBeNull();
+});

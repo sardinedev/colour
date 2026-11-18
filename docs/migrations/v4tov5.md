@@ -109,8 +109,10 @@ that needs a check.
 ### Predicates return `false`
 
 `isDarkColour`, `isCSSRGBDarkColour` and `isCSSNamedDarkColour` return `false`
-for invalid input instead of throwing, matching `isHexDarkColour`. To tell an
-invalid colour apart from a light one, parse it first:
+for invalid input instead of throwing, matching `isHexDarkColour`.
+`isDarkColour` accepts exactly the strings `parseColour` accepts, so uppercase
+`RGB(0, 0, 0)` is now evaluated; in v4 it threw. To tell an invalid colour
+apart from a light one, parse it first:
 
 ```ts
 const rgb = parseColour(input);

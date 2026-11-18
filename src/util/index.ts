@@ -134,7 +134,3 @@ export function isDarkLuminance(luminance: number): boolean {
 	// White luminance is 1 (1 + 0.05) and black luminance is 0 (0 + 0.05)
 	return 1.05 / colourLuminance > colourLuminance / 0.05;
 }
-
-/** MDN reference for CSS named colours — shared to avoid duplicating the URL string in the bundle */
-export const NAMED_CSS_COLOUR_URL =
-	"https://developer.mozilla.org/en-US/docs/Web/CSS/named-color";

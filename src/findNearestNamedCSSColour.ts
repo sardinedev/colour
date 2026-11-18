@@ -28,5 +28,6 @@ export function findNearestNamedCSSColour(
 		baseRGBColour,
 		filteredPaletteRGBColours,
 	);
-	return convertRGBtoNamedCSSColour(nearestRGBColour) as NamedCSSColour;
+	// The nearest entry comes from a named palette, so it always maps back to a name
+	return convertRGBtoNamedCSSColour(nearestRGBColour) ?? colour;
 }

@@ -1,5 +1,8 @@
 import { expect, test } from "vitest";
+import { getSRGBLuminanceFromRGB } from "./getSRGBLuminanceFromRGB";
 import { isDarkColour } from "./isDarkColour";
+import { parseColour } from "./parseColour";
+import { isDarkLuminance } from "./util/index";
 
 test("should return true for `darkblue`", () => {
 	expect(isDarkColour("darkblue")).toBe(true);
@@ -70,4 +73,30 @@ test("isDarkColour: 8-digit hex with zero alpha on a dark colour is still dark (
 
 test("isDarkColour: 8-digit hex with zero alpha on a light colour is still light (alpha ignored)", () => {
 	expect(isDarkColour("#ffffff00")).toBe(false);
+});
+
+test("accepts uppercase CSS RGB, like parseColour does", () => {
+	expect(isDarkColour("RGB(0,0,0)")).toBe(true);
+	expect(isDarkColour("RGBA(255, 255, 255, 0.5)")).toBe(false);
+});
+
+test.each([
+	"#000",
+	"#FFF",
+	"#80808080",
+	"rgb(128 128 128)",
+	"RGB(20, 20, 20)",
+	"rgb(150% 0% 0%)",
+	"navy",
+	"white",
+	"transparent",
+	"Navy",
+	"rgb(1, 2)",
+	"#12345",
+	"",
+])("agrees with parseColour for %j", (colour) => {
+	const rgb = parseColour(colour);
+	const expected =
+		rgb !== null && isDarkLuminance(getSRGBLuminanceFromRGB(rgb));
+	expect(isDarkColour(colour)).toBe(expected);
 });

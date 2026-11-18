@@ -1,7 +1,7 @@
-import { isCSSNamedDarkColour } from "./isCSSNameDarkColour";
-import { isCSSRGBDarkColour } from "./isCSSRGBDarkColour";
-import { isHexDarkColour } from "./isHexDarkColour";
+import { getSRGBLuminanceFromRGB } from "./getSRGBLuminanceFromRGB";
+import { parseColour } from "./parseColour";
 import type { NamedCSSColour } from "./types";
+import { isDarkLuminance } from "./util/index";
 
 /**
  * Evaluates if a colour is dark by measuring the contrast ratio against black and white.
@@ -14,12 +14,9 @@ import type { NamedCSSColour } from "./types";
  * @returns {boolean} `true` if the colour is dark, `false` if it is light or not a valid colour
  */
 export function isDarkColour(colour: string | NamedCSSColour): boolean {
+	// parseColour also accepts RGB objects; this API is string-only
 	if (typeof colour !== "string") return false;
-	if (colour.startsWith("#")) {
-		return isHexDarkColour(colour);
-	}
-	if (colour.startsWith("rgb")) {
-		return isCSSRGBDarkColour(colour);
-	}
-	return isCSSNamedDarkColour(colour as NamedCSSColour);
+	const rgb = parseColour(colour);
+	if (!rgb) return false;
+	return isDarkLuminance(getSRGBLuminanceFromRGB(rgb));
 }

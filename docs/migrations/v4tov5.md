@@ -1,11 +1,12 @@
 # Migrating from v4 to v5
 
-Version 5 has four breaking changes:
+Version 5 has five breaking changes:
 
 1. The package is ESM only.
 2. WCAG standard arguments are gone.
 3. Invalid input returns `null` (or `false` from predicates) instead of throwing.
 4. Numbers are no longer rounded for display.
+5. Palette matching returns the original palette entry, or `null`.
 
 It also adds `parseColour` and exports the public types from the package root.
 
@@ -15,6 +16,7 @@ Checklist:
 - [ ] Remove every `"WCAG2.1"` / `"WCAG3.0"` argument ([WCAG standard arguments](#wcag-standard-arguments)).
 - [ ] Replace `try`/`catch` and `=== undefined` checks with `null` checks ([Invalid input](#invalid-input-returns-null)).
 - [ ] Format contrast ratios and alpha where you display them ([Precision](#numbers-are-no-longer-rounded)).
+- [ ] Handle `null` from `findNearest*` and stop relying on normalized results ([Palette matching](#palette-matching-returns-the-original-entry)).
 - [ ] Update tests that compare exact parsed objects or rounded numbers.
 
 The reasoning behind each change is in [`docs/decisions`](../decisions/README.md).
@@ -123,18 +125,6 @@ if (rgb === null) {
 }
 ```
 
-### Palette matching
-
-The way the `findNearest*` functions pick and return a result is unchanged in
-v5.0.0; that contract is being decided in #496. Two things do change:
-
-- `findNearestCSSRGBColour` no longer throws. Like `findNearestHexColour`, it
-  now skips invalid palette entries and returns an invalid target unchanged.
-- Results are re-serialized from the parsed colour, so they show the precision
-  changes below. For example, `findNearestCSSRGBColour` can return
-  `rgb(127.5 0 0)` where v4 returned `rgb(128 0 0)`, and `findNearestHexColour`
-  keeps `#00000001` where v4 returned `#00000000`.
-
 ## New: `parseColour`
 
 `parseColour(value)` accepts hex, CSS RGB and named CSS strings and RGB
@@ -169,8 +159,8 @@ string ([0005](../decisions/0005-full-numeric-precision.md)).
 - **Hex alpha:** `convertHextoCSSRGB` still prints the short form browsers use
   (`#00000080` becomes `rgba(0,0,0,0.5)`), and `convertRGBtoHex` round-trips
   every alpha byte.
-- **CSS percentages:** `convertRGBtoCSSRGB` and `findNearestCSSRGBColour` can
-  now print fractional channels, such as `rgb(127.5 0 0)`. That's valid CSS.
+- **CSS percentages:** `convertRGBtoCSSRGB` can now print fractional channels,
+  such as `rgb(127.5 0 0)`. That's valid CSS.
 
 ## CSS RGB values are clamped
 
@@ -215,6 +205,60 @@ import type {
   Remove any `@ts-expect-error` or casts you used to pass plain strings to it.
   Names are still matched exactly, so `"Red"` is not a named colour.
 - The `WCAG` and `ColourSpace` types are removed.
+
+## Palette matching returns the original entry
+
+The five `findNearest*` functions now return a member of the palette, exactly
+as you passed it, or `null` ([0009](../decisions/0009-palette-match-results.md)).
+v4 rebuilt the result in the target's format and fell back to the target when
+matching wasn't possible.
+
+| Call | v4 | v5 |
+| ---- | -- | -- |
+| `findNearestHexColour("#f00", ["#FA0000", "#000"])` | `"#fa0000"` | `"#FA0000"` |
+| `findNearestCSSRGBColour("rgb(255,0,0)", ["rgb(250, 0, 0)", "rgb(0,0,0)"])` | `"rgb(250 0 0)"` | `"rgb(250, 0, 0)"` |
+| `findNearestNamedCSSColour("cyan", ["cyan", "red"])` | `"aqua"` | `"cyan"` |
+| `findNearestColour("#f00", ["red", "blue"])` | `"#ff0000"` | `"red"` |
+| `findNearestColour("red", ["#fa0000", "#00f"])` | `undefined` | `"#fa0000"` |
+| `findNearestHexColour("#f00", ["#00f"])` (one entry) | `"#f00"` | `"#00f"` |
+| `findNearestHexColour("#f00", [])` | `"#f00"` | `null` |
+| `findNearestHexColour("nope", ["#000", "#fff"])` | `"nope"` | `null` |
+| `findNearestRGBColour(target, [onlyEntry])` | `target` | `onlyEntry` |
+
+- **Failure is `null`:** an invalid target, a missing or empty palette, or a
+  palette with no valid entry returns `null`. To keep the v4 fallback, write
+  `findNearestHexColour(colour, palette) ?? colour`.
+- **Nothing throws.** In v4, `findNearestCSSRGBColour` threw for an invalid
+  target or any invalid palette entry. It now returns `null` or skips the
+  entry, so remove `try`/`catch` around it and check for `null` instead.
+- **Entries in the wrong format are skipped.** The specialized functions only
+  consider their own format; `findNearestColour` accepts any mix of hex, CSS
+  RGB and named strings. `findNearestRGBColour` skips objects that
+  `parseColour` would reject, and measures out-of-range channels as clamped.
+- **The result keeps its own format.** In a mixed palette, `findNearestColour`
+  can return a different format from the target's. If you need a specific
+  format, convert the result, for example
+  `const rgb = parseColour(result); if (rgb) convertRGBtoHex(rgb)`.
+- **`findNearestRGBColour` returns the palette object itself**, now including
+  single-entry palettes.
+- **Ties keep the first entry**, and alpha is ignored when measuring, as before.
+- **Types:** palettes can be `readonly`, and the return type is the palette's
+  element type, so literal unions and RGB subtypes are preserved:
+
+```ts
+const brand = ["#0055ff", "#ff3366"] as const;
+const hit = findNearestHexColour(input, brand); // "#0055ff" | "#ff3366" | null
+```
+
+  This also applies to array literals passed inline, so a variable you reuse
+  for other palettes needs a wider annotation:
+
+```ts
+let match = findNearestHexColour(input, ["#fff", "#000"]); // "#fff" | "#000" | null
+match = findNearestHexColour(input, userPalette); // ❌ 'string | null' is not assignable
+
+let match: string | null = findNearestHexColour(input, ["#fff", "#000"]); // ✅
+```
 
 ## Fixes that change results
 

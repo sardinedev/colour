@@ -3,27 +3,7 @@ import { convertCSSRGBtoRGB } from "./convertCSSRGBtoRGB";
 import { convertHextoRGB } from "./convertHextoRGB";
 import { convertNamedCSSColourtoRGB } from "./convertNamedCSSColourtoRGB";
 import type { RGBColour } from "./types";
-import { clamp } from "./util/index";
-
-function isFiniteNumber(value: unknown): value is number {
-	return typeof value === "number" && Number.isFinite(value);
-}
-
-function parseRGBObject(value: object): RGBColour | null {
-	const { R, G, B, A } = value as Record<string, unknown>;
-	if (!isFiniteNumber(R) || !isFiniteNumber(G) || !isFiniteNumber(B)) {
-		return null;
-	}
-	const rgb: RGBColour = {
-		R: clamp(R, 0, 255),
-		G: clamp(G, 0, 255),
-		B: clamp(B, 0, 255),
-	};
-	if (A === undefined) return rgb;
-	if (!isFiniteNumber(A)) return null;
-	rgb.A = clamp(A, 0, 1);
-	return rgb;
-}
+import { parseRGBObject } from "./util/rgbObject";
 
 /**
  * Parses any supported colour into a new RGB colour object.
@@ -50,8 +30,5 @@ export function parseColour(colour: unknown): RGBColour | null {
 			(isNamedCSSColour(colour) ? convertNamedCSSColourtoRGB(colour) : null)
 		);
 	}
-	if (typeof colour === "object" && colour !== null) {
-		return parseRGBObject(colour);
-	}
-	return null;
+	return parseRGBObject(colour);
 }

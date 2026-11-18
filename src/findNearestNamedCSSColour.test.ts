@@ -1,31 +1,52 @@
-import { expect, test } from "vitest";
+import { describe, expect, expectTypeOf, test } from "vitest";
 import { findNearestNamedCSSColour } from "./findNearestNamedCSSColour";
-import type { NamedCSSColour } from "./types";
 
-test("should return the nearest named CSS colour from a palette", () => {
-	const palette: NamedCSSColour[] = ["hotpink", "white"];
-	const colour = "pink";
-	expect(findNearestNamedCSSColour(colour, palette)).toBe("hotpink");
+test("returns the nearest palette entry", () => {
+	expect(
+		findNearestNamedCSSColour("pink", ["red", "hotpink", "aliceblue"]),
+	).toBe("hotpink");
 });
 
-test("should return the base colour if palette is an empty array", () => {
-	// @ts-expect-error - TS would complain about this, but it's a valid test for users consuming JS
-	const palette = [];
-	const colour = "pink";
-	// @ts-expect-error - TS would complain about this, but it's a valid test for users consuming JS
-	expect(findNearestNamedCSSColour(colour, palette)).toBe("pink");
+test.each([
+	["cyan", ["cyan", "red"], "cyan"],
+	["aqua", ["cyan", "red"], "cyan"],
+	["grey", ["grey", "red"], "grey"],
+	["magenta", ["lime", "magenta"], "magenta"],
+] as const)("keeps aliases as given (%s)", (colour, palette, expected) => {
+	expect(findNearestNamedCSSColour(colour, palette)).toBe(expected);
 });
 
-test("should return the base colour if palette is not provided", () => {
-	const colour = "pink";
-	// @ts-expect-error - TS would complain about this, but it's a valid test for users consuming JS
-	expect(findNearestNamedCSSColour(colour, undefined)).toBe("pink");
+describe("edge cases", () => {
+	test.each([
+		["missing palette", "pink", undefined],
+		["empty palette", "pink", []],
+		["all entries invalid", "pink", ["rose", "Red", "#f00"]],
+		["invalid target", "rose", ["red", "blue"]],
+	])("returns null for %s", (_, colour, palette) => {
+		expect(
+			// @ts-expect-error - checking runtime behaviour for JS consumers
+			findNearestNamedCSSColour(colour, palette),
+		).toBeNull();
+	});
+
+	test("returns the only valid entry", () => {
+		expect(findNearestNamedCSSColour("red", ["blue"])).toBe("blue");
+		expect(
+			// @ts-expect-error - checking runtime behaviour for JS consumers
+			findNearestNamedCSSColour("red", ["rose", "crimson"]),
+		).toBe("crimson");
+	});
+
+	test("keeps the first of equally near entries", () => {
+		expect(findNearestNamedCSSColour("black", ["gray", "grey"])).toBe("gray");
+		expect(findNearestNamedCSSColour("black", ["grey", "gray"])).toBe("grey");
+	});
 });
 
-test("should return the base colour if after sanitising the colours palette has less than two options", () => {
-	const colour = "pink";
-	// @ts-expect-error - TS would complain about this, but it's a valid test for users consuming JS
-	const palette: NamedCSSColour[] = ["neve", "white"];
-
-	expect(findNearestNamedCSSColour(colour, palette)).toBe("pink");
+test("accepts readonly palettes, keeps literal types and does not mutate", () => {
+	const palette = Object.freeze(["navy", "gold"] as const);
+	const result = findNearestNamedCSSColour("blue", palette);
+	expectTypeOf(result).toEqualTypeOf<"navy" | "gold" | null>();
+	expect(result).toBe("navy");
+	expect(palette).toEqual(["navy", "gold"]);
 });

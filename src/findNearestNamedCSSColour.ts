@@ -1,33 +1,23 @@
 import { convertNamedCSSColourtoRGB } from "./convertNamedCSSColourtoRGB";
-import { convertRGBtoNamedCSSColour } from "./convertRGBtoNamedCSSColour";
-import { findNearestRGBColour } from "./findNearestRGBColour";
-import type { NamedCSSColour, RGBColour } from "./types";
+import type { NamedCSSColour } from "./types";
+import { findNearestEntry } from "./util/findNearestEntry";
 
-export function findNearestNamedCSSColour(
+/**
+ * Finds the named CSS colour in a palette that is nearest to the given named CSS colour, using CIEDE2000.
+ *
+ * - Returns the palette entry exactly as given, so aliases are kept (`"cyan"` stays `"cyan"`, not `"aqua"`).
+ * - Entries that are not named CSS colours (matched exactly, lowercase) are skipped.
+ * - When several entries are equally near, the first one wins.
+ *
+ * @param {NamedCSSColour} colour - The named CSS colour to find the nearest match for.
+ * @param {readonly NamedCSSColour[]} palette - The named CSS colours to search. It is not modified.
+ * @returns {NamedCSSColour | null} The nearest palette entry, or `null` if the colour is not a named CSS colour or the palette is missing or has no valid entry.
+ */
+export function findNearestNamedCSSColour<T extends NamedCSSColour>(
 	colour: NamedCSSColour,
-	palette: NamedCSSColour[],
-): NamedCSSColour {
-	if (!palette || palette.length < 2) {
-		return colour;
-	}
-	const baseRGBColour = convertNamedCSSColourtoRGB(colour);
-	const paletteRGBColours = palette.map((hexColour) =>
-		convertNamedCSSColourtoRGB(hexColour),
-	);
-
-	const filteredPaletteRGBColours = paletteRGBColours.filter(
-		(paletteRGBColour): paletteRGBColour is RGBColour =>
-			paletteRGBColour !== null,
-	);
-
-	if (!baseRGBColour || filteredPaletteRGBColours.length < 2) {
-		return colour;
-	}
-
-	const nearestRGBColour = findNearestRGBColour(
-		baseRGBColour,
-		filteredPaletteRGBColours,
-	);
-	// The nearest entry comes from a named palette, so it always maps back to a name
-	return convertRGBtoNamedCSSColour(nearestRGBColour) ?? colour;
+	palette: readonly T[],
+): T | null {
+	const target = convertNamedCSSColourtoRGB(colour);
+	if (target === null) return null;
+	return findNearestEntry(target, palette, convertNamedCSSColourtoRGB);
 }

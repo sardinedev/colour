@@ -44,6 +44,6 @@ formatting ended up mixed with calculation.
     `{ R: 127.5, G: 63.75, B: 255 }`.
 - Tests cover all 256 long-hex alpha bytes and the 16 shorthand values. Each one
   must survive hex → RGB → hex and hex → CSS → RGB → hex unchanged.
-- `findNearestCSSRGBColour` re-serializes its result, so it can now return
-  fractional channels such as `rgb(5.1 5.1 5.1)`, until #496 decides whether to
-  return the original palette entry.
+- Palette matching returns the original palette entry
+  ([0009](0009-palette-match-results.md)), so these precision changes don't
+  show up in `findNearest*` results.

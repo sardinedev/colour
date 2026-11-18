@@ -51,3 +51,10 @@ test("agrees with isHexDarkColour for every grey level", () => {
 		);
 	}
 });
+
+test.each(["rfv(12,23,42)", "rgb(12,23)", ""])(
+	"returns false for invalid CSS RGB colour %j",
+	(colour) => {
+		expect(isCSSRGBDarkColour(colour)).toBe(false);
+	},
+);

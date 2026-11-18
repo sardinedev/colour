@@ -23,12 +23,12 @@ test("converts pure red to 'red'", () => {
 	expect(convertRGBtoNamedCSSColour(colour)).toBe("red");
 });
 
-test("returns undefined for an RGB colour that has no named CSS equivalent", () => {
+test("returns null for an RGB colour that has no named CSS equivalent", () => {
 	const colour: RGBColour = { R: 1, G: 2, B: 3 };
-	expect(convertRGBtoNamedCSSColour(colour)).toBeUndefined();
+	expect(convertRGBtoNamedCSSColour(colour)).toBeNull();
 });
 
-test("returns undefined for an arbitrary mid-tone with no named equivalent", () => {
+test("returns null for an arbitrary mid-tone with no named equivalent", () => {
 	const colour: RGBColour = { R: 123, G: 45, B: 67 };
-	expect(convertRGBtoNamedCSSColour(colour)).toBeUndefined();
+	expect(convertRGBtoNamedCSSColour(colour)).toBeNull();
 });

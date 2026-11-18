@@ -1,5 +1,8 @@
 import { expect, test } from "vitest";
+import { getSRGBLuminanceFromRGB } from "./getSRGBLuminanceFromRGB";
 import { isDarkColour } from "./isDarkColour";
+import { parseColour } from "./parseColour";
+import { isDarkLuminance } from "./util/index";
 
 test("should return true for `darkblue`", () => {
 	expect(isDarkColour("darkblue")).toBe(true);
@@ -25,11 +28,18 @@ test("should return true for #666666 colour", () => {
 	expect(isDarkColour("#666666")).toBe(true);
 });
 
-test("throws an error if not passing a valid CSS RGB format", () => {
-	const rgb = "rfv(12,23,42)";
-	expect(() => isDarkColour(rgb)).toThrow(
-		"rfv(12,23,42) is not a valid colour format. isDarkColour accepts CSS RGB formats, ie rgb(0,0,0), rgba(255, 255, 255, 0.4), rgb(50%, 25%, 100%), and rgba(50%, 25%, 100%, 80%), hexadecimal and CSS named colours.",
-	);
+test.each(["rfv(12,23,42)", "rgb(12,23)", "#12345", "not-a-colour", ""])(
+	"returns false for invalid colour %j",
+	(colour) => {
+		expect(isDarkColour(colour)).toBe(false);
+	},
+);
+
+test("returns false for non-string input from JavaScript callers", () => {
+	// @ts-expect-error - checking runtime behaviour for JS consumers
+	expect(isDarkColour(null)).toBe(false);
+	// @ts-expect-error - checking runtime behaviour for JS consumers
+	expect(isDarkColour({ R: 0, G: 0, B: 0 })).toBe(false);
 });
 
 test("should return true for CSS RGB with percentage values (dark)", () => {
@@ -63,4 +73,30 @@ test("isDarkColour: 8-digit hex with zero alpha on a dark colour is still dark (
 
 test("isDarkColour: 8-digit hex with zero alpha on a light colour is still light (alpha ignored)", () => {
 	expect(isDarkColour("#ffffff00")).toBe(false);
+});
+
+test("accepts uppercase CSS RGB, like parseColour does", () => {
+	expect(isDarkColour("RGB(0,0,0)")).toBe(true);
+	expect(isDarkColour("RGBA(255, 255, 255, 0.5)")).toBe(false);
+});
+
+test.each([
+	"#000",
+	"#FFF",
+	"#80808080",
+	"rgb(128 128 128)",
+	"RGB(20, 20, 20)",
+	"rgb(150% 0% 0%)",
+	"navy",
+	"white",
+	"transparent",
+	"Navy",
+	"rgb(1, 2)",
+	"#12345",
+	"",
+])("agrees with parseColour for %j", (colour) => {
+	const rgb = parseColour(colour);
+	const expected =
+		rgb !== null && isDarkLuminance(getSRGBLuminanceFromRGB(rgb));
+	expect(isDarkColour(colour)).toBe(expected);
 });

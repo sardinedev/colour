@@ -1,6 +1,5 @@
 import { convertCSSRGBtoRGB } from "./convertCSSRGBtoRGB";
 import { convertRGBtoHex } from "./convertRGBtoHex";
-import type { RGBColour } from "./types";
 
 /**
  * Converts CSS RGB colour format into Hexadecimal.
@@ -14,9 +13,10 @@ import type { RGBColour } from "./types";
  * - `rgba(50%, 25%, 100%, 0.8)`
  * - `rgba(50%, 25%, 100%, 80%)`
  *
- * @returns {string} - An hexadecimal string
+ * @returns {string | null} - An hexadecimal string, or `null` if the input is not a valid CSS RGB colour.
  */
-export function convertCSSRGBtoHex(colour: string): string {
-	const rgb: RGBColour = convertCSSRGBtoRGB(colour);
+export function convertCSSRGBtoHex(colour: string): string | null {
+	const rgb = convertCSSRGBtoRGB(colour);
+	if (!rgb) return null;
 	return convertRGBtoHex(rgb);
 }

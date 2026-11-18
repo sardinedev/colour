@@ -10,6 +10,8 @@ import { hexAnyRegex } from "./util/regexers";
  * - `#ffff`
  * - `#102030ff`
  *
+ * Alpha is kept unrounded as `byte / 255` (`#00000080` gives `A: 128 / 255`).
+ *
  * @returns {RGBColour | null} RGB colour object, or `null` if the input is not a valid hexadecimal colour.
  */
 export function convertHextoRGB(hex: string): RGBColour | null {
@@ -35,16 +37,14 @@ export function convertHextoRGB(hex: string): RGBColour | null {
 				R: parseInt(hex.slice(1, 3), 16),
 				G: parseInt(hex.slice(3, 5), 16),
 				B: parseInt(hex.slice(5, 7), 16),
-				A: Math.round((parseInt(hex.slice(7, 9), 16) / 255) * 100) / 100,
+				A: parseInt(hex.slice(7, 9), 16) / 255,
 			};
 		default: // #RGBA (length 5)
 			return {
 				R: parseInt(hex.slice(1, 2).repeat(2), 16),
 				G: parseInt(hex.slice(2, 3).repeat(2), 16),
 				B: parseInt(hex.slice(3, 4).repeat(2), 16),
-				A:
-					Math.round((parseInt(hex.slice(4, 5).repeat(2), 16) / 255) * 100) /
-					100,
+				A: parseInt(hex.slice(4, 5).repeat(2), 16) / 255,
 			};
 	}
 }

@@ -86,6 +86,6 @@ test("assert true if string is a valid named CSS colour", () => {
 });
 
 test("assert false if string is not a valid named CSS colour", () => {
-	// @ts-expect-error - TS would complain about this, but it's a valid test for users consuming JS
+	// Any string is accepted since v5; only canonical names narrow to NamedCSSColour
 	expect(isNamedCSSColour("neve")).toBe(false);
 });

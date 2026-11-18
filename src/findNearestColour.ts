@@ -34,8 +34,8 @@ export function findNearestColour(
 	} else if (isCSSRGBColour(colour)) {
 		baseColour = convertCSSRGBtoRGB(colour);
 		colourType = "cssRGB";
-	} else if (isNamedCSSColour(colour as NamedCSSColour)) {
-		baseColour = convertNamedCSSColourtoRGB(colour as NamedCSSColour);
+	} else if (isNamedCSSColour(colour)) {
+		baseColour = convertNamedCSSColourtoRGB(colour);
 		colourType = "namedCSS";
 	}
 
@@ -48,9 +48,10 @@ export function findNearestColour(
 			const rgb = convertHextoRGB(paletteColour);
 			if (rgb) paletteRGB.push(rgb);
 		} else if (isCSSRGBColour(paletteColour)) {
-			paletteRGB.push(convertCSSRGBtoRGB(paletteColour));
-		} else if (isNamedCSSColour(paletteColour as NamedCSSColour)) {
-			const rgb = convertNamedCSSColourtoRGB(paletteColour as NamedCSSColour);
+			const rgb = convertCSSRGBtoRGB(paletteColour);
+			if (rgb) paletteRGB.push(rgb);
+		} else if (isNamedCSSColour(paletteColour)) {
+			const rgb = convertNamedCSSColourtoRGB(paletteColour);
 			if (rgb) paletteRGB.push(rgb);
 		}
 	}
@@ -66,6 +67,7 @@ export function findNearestColour(
 	if (colourType === "cssRGB") {
 		return convertRGBtoCSSRGB(nearest);
 	}
-	// At this point the colourType should be namedCSS
-	return convertRGBtoNamedCSSColour(nearest) as NamedCSSColour;
+	// At this point the colourType should be namedCSS. The result contract is
+	// unchanged here (still undefined on a miss); #496 decides the final one.
+	return convertRGBtoNamedCSSColour(nearest) ?? undefined;
 }

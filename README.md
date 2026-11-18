@@ -15,7 +15,7 @@ Dependency-free TypeScript utilities for working with colours in JavaScript. Con
 import { convertHextoRGB, getContrastRatio } from "@sardine/colour";
 
 convertHextoRGB("#bed"); //=> { R: 187, G: 238, B: 221 }
-getContrastRatio("red", "#00FF00"); //=> 2.913
+getContrastRatio("red", "#00FF00"); //=> 2.9139375476009137
 ```
 
 ## Requirements
@@ -44,6 +44,21 @@ pickHexColourContrast(
 );
 ```
 
+## Invalid input
+
+Functions that can fail return `null` instead of throwing, and predicates such as `isDarkColour` return `false`. To check a value before using it, or to tell an invalid colour apart from a `false` result, use `parseColour`:
+
+```ts
+import { parseColour, type RGBColour } from "@sardine/colour";
+
+parseColour("rgb(50% 25% 100% / 0.5)"); //=> { R: 127.5, G: 63.75, B: 255, A: 0.5 }
+parseColour("not-a-colour"); //=> null
+
+const colour: RGBColour | null = parseColour(input);
+```
+
+Numbers are not rounded for display: contrast ratios, alpha and percentage channels keep full precision. Format them where you show them, for example `ratio.toFixed(2)`.
+
 ## Documentation
 
 Read the full API documentation at <https://colour.sardine.dev/>.
@@ -63,3 +78,5 @@ const { convertHextoRGB } = await import("@sardine/colour");
 ```
 
 If your application cannot use ESM or asynchronous imports, remain on version 4.x.
+
+See the [v4 to v5 migration guide](docs/migrations/v4tov5.md) for every breaking change in version 5.

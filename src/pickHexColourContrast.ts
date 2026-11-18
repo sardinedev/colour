@@ -1,10 +1,5 @@
 import { getSRGBLuminanceFromHex } from "./getSRGBLuminanceFromHex";
-
-type ColorArgs = {
-	backgroundColour: string;
-	optionOneColour: string;
-	optionTwoColour: string;
-};
+import type { PickHexColourContrastOptions } from "./types";
 
 const relativeContrast = (firstColour: number, secondColour: number) => {
 	if (firstColour > secondColour) {
@@ -17,7 +12,7 @@ export const pickHexColourContrast = ({
 	backgroundColour,
 	optionOneColour,
 	optionTwoColour,
-}: ColorArgs): string | null => {
+}: PickHexColourContrastOptions): string | null => {
 	const bgLum = getSRGBLuminanceFromHex(backgroundColour);
 	const opt1Lum = getSRGBLuminanceFromHex(optionOneColour);
 	const opt2Lum = getSRGBLuminanceFromHex(optionTwoColour);

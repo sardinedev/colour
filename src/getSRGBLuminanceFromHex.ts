@@ -8,8 +8,9 @@ import { getSRGBLuminanceFromRGB } from "./getSRGBLuminanceFromRGB";
  *
  * https://www.w3.org/WAI/GL/wiki/Relative_luminance
  * @param colour an hexadecimal colour
+ * @returns The relative luminance from 0 to 1, or `null` if the input is not a valid hexadecimal colour
  */
-export function getSRGBLuminanceFromHex(colour: string) {
+export function getSRGBLuminanceFromHex(colour: string): number | null {
 	const rgbColor = convertHextoRGB(colour);
 	if (!rgbColor) return null;
 	return getSRGBLuminanceFromRGB(rgbColor);

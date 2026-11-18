@@ -6,8 +6,9 @@ test("converts named CSS colour to RGB colour", () => {
 	expect(convertNamedCSSColourtoRGB("snow")).toStrictEqual(expectedRGB);
 });
 
-test("returns undefined if named CSS colour doesn't exist", () => {
-	const expectedRGB = undefined;
+test("returns null if named CSS colour doesn't exist", () => {
 	/*@ts-expect-error*/
-	expect(convertNamedCSSColourtoRGB("neve")).toBe(expectedRGB);
+	expect(convertNamedCSSColourtoRGB("neve")).toBeNull();
+	/*@ts-expect-error*/
+	expect(convertNamedCSSColourtoRGB("Red")).toBeNull();
 });

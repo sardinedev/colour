@@ -43,11 +43,13 @@ test("converts CSS RGBA with space separated values and forward slash for the al
 	expect(convertCSSRGBtoHex(RGBA)).toBe(expectedHex);
 });
 
-test("throws an error if not passing a valid CSS RGB format", () => {
-	const rgb = "rfv(12,23,42)";
-	expect(() => convertCSSRGBtoHex(rgb)).toThrow(
-		"convertCSSRGBtoRGB expects a valid CSS RGB string but got rfv(12,23,42)",
-	);
+test("returns null if not passing a valid CSS RGB format", () => {
+	expect(convertCSSRGBtoHex("rfv(12,23,42)")).toBeNull();
+});
+
+test("rounds fractional percentage channels only when serializing to hex", () => {
+	// 50.2% of 255 = 128.01, kept fractional by the parser and rounded to 0x80 here
+	expect(convertCSSRGBtoHex("rgb(50.2% 0% 0%)")).toBe("#800000");
 });
 
 test("converts CSS RGB with percentage values to hexadecimal colour", () => {

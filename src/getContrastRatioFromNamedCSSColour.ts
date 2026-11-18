@@ -1,15 +1,14 @@
 import { convertNamedCSSColourtoHex } from "./convertNamedCSSColourtoHex";
 import { getContrastRatioFromHex } from "./getContrastRatioFromHex";
 import type { NamedCSSColour } from "./types";
-import { NAMED_CSS_COLOUR_URL } from "./util/index";
 
 /**
- * Calculates the contrast ratio between two named CSS colours in.
+ * Calculates the contrast ratio between two named CSS colours.
  *
  * See list here https://developer.mozilla.org/en-US/docs/Web/CSS/named-color
  * @param colour1 The first named CSS colour
  * @param colour2 The second named CSS colour
- * @returns The contrast ratio between the two colours truncated to 3 decimal places
+ * @returns The unrounded contrast ratio between the two colours, or `null` if either name is not a named CSS colour
  */
 export function getContrastRatioFromNamedCSSColour(
 	colour1: NamedCSSColour,
@@ -17,12 +16,6 @@ export function getContrastRatioFromNamedCSSColour(
 ): number | null {
 	const hexColour1 = convertNamedCSSColourtoHex(colour1);
 	const hexColour2 = convertNamedCSSColourtoHex(colour2);
-
-	if (hexColour1 === undefined || hexColour2 === undefined) {
-		throw new Error(
-			`getContrastRatioFromNamedCSSColour expects valid CSS named colours. ${colour1} or ${colour2} are not valid CSS named colours. See ${NAMED_CSS_COLOUR_URL}`,
-		);
-	}
-
+	if (hexColour1 === null || hexColour2 === null) return null;
 	return getContrastRatioFromHex(hexColour1, hexColour2);
 }

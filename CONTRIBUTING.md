@@ -44,3 +44,7 @@ Worry not! [Create a new issue](https://github.com/sardinedev/colour/issues/new)
 ## I have an idea for a new feature and I'm ready to code
 
 Good stuff! [Create a new issue](https://github.com/sardinedev/colour/issues/new) describing your idea, tell us what your use case is and let us know you are available to implement it. We’ll review it and if it fits our goals, we’ll add it to our backlog and assign it to you. 
+
+## Design decisions
+
+Decisions that shape the public API, packaging or numerical behaviour are recorded in [`docs/decisions`](docs/decisions/README.md). Check them before proposing a change in those areas. If your change reverses or extends one, add a new record and mark the old one as superseded rather than editing it.

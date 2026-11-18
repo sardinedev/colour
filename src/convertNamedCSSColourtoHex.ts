@@ -7,10 +7,10 @@ import { namedCSSColours } from "./util/namedCSSColours";
  * List of colours sourced here:
  * https://developer.mozilla.org/en-US/docs/Web/CSS/named-color
  * @param {NamedCSSColour} name - A named CSS colour
- * @returns {string} - An hexadecimal string
+ * @returns {string | null} - An hexadecimal string, or `null` if the name is not a named CSS colour.
  */
 export function convertNamedCSSColourtoHex(
 	name: NamedCSSColour,
-): string | undefined {
-	return namedCSSColours.get(name);
+): string | null {
+	return namedCSSColours.get(name) ?? null;
 }

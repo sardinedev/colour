@@ -13,14 +13,12 @@ test("should return the correct contrast ratio for same colors", () => {
 
 test("should return the correct contrast ratio for different colors", () => {
 	const ratio = getContrastRatioFromNamedCSSColour("red", "lime");
-	expect(ratio).toBe(2.913);
+	expect(ratio).toBeCloseTo(2.9139375476, 9);
 });
 
-test("should throw an error for invalid colour name", () => {
-	expect(() =>
-		// @ts-expect-error - Testing invalid input
-		getContrastRatioFromNamedCSSColour("invalid", "lime"),
-	).toThrow(
-		`getContrastRatioFromNamedCSSColour expects valid CSS named colours. invalid or lime are not valid CSS named colours. See https://developer.mozilla.org/en-US/docs/Web/CSS/named-color`,
-	);
+test("should return null for an invalid colour name in either position", () => {
+	// @ts-expect-error - Testing invalid input
+	expect(getContrastRatioFromNamedCSSColour("invalid", "lime")).toBeNull();
+	// @ts-expect-error - Testing invalid input
+	expect(getContrastRatioFromNamedCSSColour("lime", "invalid")).toBeNull();
 });

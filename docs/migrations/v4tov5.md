@@ -228,6 +228,9 @@ matching wasn't possible.
 - **Failure is `null`:** an invalid target, a missing or empty palette, or a
   palette with no valid entry returns `null`. To keep the v4 fallback, write
   `findNearestHexColour(colour, palette) ?? colour`.
+- **Nothing throws.** In v4, `findNearestCSSRGBColour` threw for an invalid
+  target or any invalid palette entry. It now returns `null` or skips the
+  entry, so remove `try`/`catch` around it and check for `null` instead.
 - **Entries in the wrong format are skipped.** The specialized functions only
   consider their own format; `findNearestColour` accepts any mix of hex, CSS
   RGB and named strings. `findNearestRGBColour` skips objects that
@@ -245,6 +248,16 @@ matching wasn't possible.
 ```ts
 const brand = ["#0055ff", "#ff3366"] as const;
 const hit = findNearestHexColour(input, brand); // "#0055ff" | "#ff3366" | null
+```
+
+  This also applies to array literals passed inline, so a variable you reuse
+  for other palettes needs a wider annotation:
+
+```ts
+let match = findNearestHexColour(input, ["#fff", "#000"]); // "#fff" | "#000" | null
+match = findNearestHexColour(input, userPalette); // ❌ 'string | null' is not assignable
+
+let match: string | null = findNearestHexColour(input, ["#fff", "#000"]); // ✅
 ```
 
 ## Fixes that change results

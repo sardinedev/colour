@@ -51,9 +51,7 @@ RGB, named and generic predicates threw.
   `=== undefined` with `=== null`.
 - `sortHexColours` keeps silently dropping invalid entries.
 - The `findNearest*` result contract is out of scope here; it is decided in
-  [0009](0009-palette-match-results.md) (#496). The
-  only interim change: `findNearestCSSRGBColour` no longer throws. Like
-  `findNearestHexColour`, it skips invalid entries and returns an invalid target
-  unchanged.
+  [0009](0009-palette-match-results.md) (#496). Under 0009, no `findNearest*`
+  function throws, and an invalid target returns `null`.
 - The three darkness predicates share one threshold helper, so the format
   inconsistency fixed in #536 can't come back.

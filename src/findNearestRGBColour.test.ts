@@ -102,12 +102,10 @@ describe("edge cases", () => {
 		expect(
 			findNearestRGBColour({ R: 255, G: 0, B: 0 }, [near, outOfRange]),
 		).toBe(outOfRange);
-		expect(
-			findNearestRGBColour({ R: 400, G: 0, B: 0 }, [
-				near,
-				{ R: 255, G: 0, B: 0 },
-			]),
-		).toEqual({ R: 255, G: 0, B: 0 });
+		const exact = { R: 255, G: 0, B: 0 };
+		expect(findNearestRGBColour({ R: 400, G: 0, B: 0 }, [near, exact])).toBe(
+			exact,
+		);
 	});
 
 	test("ignores alpha on both sides", () => {

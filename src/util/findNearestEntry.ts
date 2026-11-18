@@ -6,7 +6,8 @@ import type { RGBColour } from "../types";
  * Scans a palette once and returns the entry nearest to `colour` by CIEDE2000.
  *
  * Entries that `toRGB` maps to `null` are skipped. Equal distances keep the first
- * entry. The original entry is returned, never a converted copy. Returns `null`
+ * entry, and the scan stops at an exact match. The original entry is returned,
+ * never a converted copy. Returns `null`
  * when the palette is missing or has no valid entry.
  *
  * @internal Shared by the `findNearest*` functions.
@@ -27,6 +28,8 @@ export function findNearestEntry<T>(
 		if (distance < minDistance) {
 			minDistance = distance;
 			nearestIndex = index;
+			// An exact match can't be beaten: later entries only win when strictly nearer
+			if (distance === 0) break;
 		}
 	}
 	return nearestIndex === -1 ? null : (palette[nearestIndex] as T);

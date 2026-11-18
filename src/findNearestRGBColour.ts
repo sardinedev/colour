@@ -1,6 +1,6 @@
-import { validRGBObject } from "./parseColour";
 import type { RGBColour } from "./types";
 import { findNearestEntry } from "./util/findNearestEntry";
+import { rgbObjectForDistance } from "./util/rgbObject";
 
 /**
  * Finds the RGB colour in a palette that is nearest to the given RGB colour, using CIEDE2000.
@@ -19,7 +19,7 @@ export function findNearestRGBColour<T extends RGBColour>(
 	colour: RGBColour,
 	palette: readonly T[],
 ): T | null {
-	const target = validRGBObject(colour);
+	const target = rgbObjectForDistance(colour);
 	if (target === null) return null;
-	return findNearestEntry(target, palette, validRGBObject);
+	return findNearestEntry(target, palette, rgbObjectForDistance);
 }

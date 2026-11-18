@@ -1,5 +1,6 @@
 import { expect, test } from "vitest";
 import { isCSSRGBDarkColour } from "./isCSSRGBDarkColour";
+import { isHexDarkColour } from "./isHexDarkColour";
 
 test("verify if `rgb(20, 20, 20)` is a dark colour", () => {
 	expect(isCSSRGBDarkColour("rgb(20, 20, 20)")).toBe(true);
@@ -36,4 +37,17 @@ test("isCSSRGBDarkColour: fully transparent dark colour is still considered dark
 
 test("isCSSRGBDarkColour: fully transparent light colour is still considered light (alpha ignored)", () => {
 	expect(isCSSRGBDarkColour("rgba(255, 255, 255, 0)")).toBe(false);
+});
+
+test("mid grey `rgb(128, 128, 128)` is not a dark colour", () => {
+	expect(isCSSRGBDarkColour("rgb(128, 128, 128)")).toBe(false);
+});
+
+test("agrees with isHexDarkColour for every grey level", () => {
+	for (let v = 0; v <= 255; v++) {
+		const hexChannel = v.toString(16).padStart(2, "0");
+		expect(isCSSRGBDarkColour(`rgb(${v}, ${v}, ${v})`), `grey ${v}`).toBe(
+			isHexDarkColour(`#${hexChannel.repeat(3)}`),
+		);
+	}
 });

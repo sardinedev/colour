@@ -78,3 +78,5 @@ const { convertHextoRGB } = await import("@sardine/colour");
 ```
 
 If your application cannot use ESM or asynchronous imports, remain on version 4.x.
+
+See the [v4 to v5 migration guide](docs/migrations/v4tov5.md) for every breaking change in version 5.

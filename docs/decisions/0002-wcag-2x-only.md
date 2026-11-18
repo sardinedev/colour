@@ -28,7 +28,9 @@ on one. Related: #321, which proposed making the argument required.
 - Calls drop the standard argument, for example
   `getContrastRatio(foreground, background)` and `isDarkColour(colour)`.
   Type-level tests reject the old argument.
-- Results can differ from v4's `WCAG2.0` mode only for fractional channels
-  between the two thresholds. Integer 8-bit channels give the same result.
+- v4 accepted `"WCAG2.1"` (threshold `0.03928`) or `"WCAG3.0"` (threshold
+  `0.04045`). v5 always uses `0.04045`. Results differ from v4's `"WCAG2.1"`
+  mode only for fractional channel values between about 10.02 and 10.31. Integer
+  8-bit channels give the same result.
 - Any future alpha-aware contrast (#497) must not reintroduce standard,
   version or algorithm selection.

@@ -9,6 +9,35 @@ function isFiniteNumber(value: unknown): value is number {
 	return typeof value === "number" && Number.isFinite(value);
 }
 
+/**
+ * Validates an RGB object with the same rules as `parseColour`, for use in hot loops.
+ * Returns the object itself when every value is already in range, a clamped copy when
+ * a finite value is out of range, and `null` when it is invalid.
+ *
+ * @internal Used by `findNearestRGBColour`, which must return the original object.
+ */
+export function validRGBObject(value: unknown): RGBColour | null {
+	if (typeof value !== "object" || value === null) return null;
+	const { R, G, B, A } = value as Record<string, unknown>;
+	// Fast path with inline checks: NaN and ±Infinity fail the range comparisons
+	if (
+		typeof R === "number" &&
+		R >= 0 &&
+		R <= 255 &&
+		typeof G === "number" &&
+		G >= 0 &&
+		G <= 255 &&
+		typeof B === "number" &&
+		B >= 0 &&
+		B <= 255 &&
+		(A === undefined || (typeof A === "number" && A >= 0 && A <= 1))
+	) {
+		return value as RGBColour;
+	}
+	// Out of range or invalid: apply the full parseColour rules (clamp or reject)
+	return parseRGBObject(value);
+}
+
 function parseRGBObject(value: object): RGBColour | null {
 	const { R, G, B, A } = value as Record<string, unknown>;
 	if (!isFiniteNumber(R) || !isFiniteNumber(G) || !isFiniteNumber(B)) {

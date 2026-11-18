@@ -1,31 +1,25 @@
-import { ciede2000 } from "./CIEDE2000";
-import { convertRGBtoLab } from "./convertRGBtoLab";
+import { validRGBObject } from "./parseColour";
 import type { RGBColour } from "./types";
+import { findNearestEntry } from "./util/findNearestEntry";
 
 /**
- * Finds the nearest RGB colour in a palette to the given RGB colour.
+ * Finds the RGB colour in a palette that is nearest to the given RGB colour, using CIEDE2000.
+ *
+ * - Returns the matching palette object itself (same identity), never a copy.
+ * - Entries are valid when `R`, `G` and `B` are finite numbers and alpha is missing or a
+ *   finite number, as for `parseColour`. Invalid entries are skipped.
+ * - Out-of-range channels are clamped for the distance only (`R: 300` is measured as `255`).
+ * - Alpha is ignored. When several entries are equally near, the first one wins.
  *
  * @param {RGBColour} colour - The RGB colour to find the nearest match for.
- * @param {RGBColour[]} palette - An array of RGB colours to search for the nearest match in.
- * @returns {RGBColour} The RGB colour in the palette that is closest to the given colour.
- * If the palette has fewer than 2 colours, or if it is undefined or null, the original colour is returned.
+ * @param {readonly RGBColour[]} palette - The RGB colours to search. It is not modified.
+ * @returns {RGBColour | null} The nearest palette entry, or `null` if the colour is invalid or the palette is missing or has no valid entry.
  */
-export function findNearestRGBColour(
+export function findNearestRGBColour<T extends RGBColour>(
 	colour: RGBColour,
-	palette: RGBColour[],
-): RGBColour {
-	if (!palette || palette.length < 2) {
-		return colour;
-	}
-	const colourLab = convertRGBtoLab(colour);
-	let nearest = colour;
-	let minDistance = Number.POSITIVE_INFINITY;
-	for (const paletteColour of palette) {
-		const distance = ciede2000(colourLab, convertRGBtoLab(paletteColour));
-		if (distance < minDistance) {
-			minDistance = distance;
-			nearest = paletteColour;
-		}
-	}
-	return nearest;
+	palette: readonly T[],
+): T | null {
+	const target = validRGBObject(colour);
+	if (target === null) return null;
+	return findNearestEntry(target, palette, validRGBObject);
 }

@@ -1,69 +1,86 @@
-import { expect, test } from "vitest";
+import { describe, expect, expectTypeOf, test } from "vitest";
 import { findNearestCSSRGBColour } from "./findNearestCSSRGBColour";
 
-test("should return the nearest CSS RGB colour seperated by spaces from a palette", () => {
+test("returns the nearest palette entry", () => {
 	const palette = ["rgb(255 255 255)", "rgb(5 5 5)"];
-	const colour = "rgb(0 0 0)";
-	expect(findNearestCSSRGBColour(colour, palette)).toBe("rgb(5 5 5)");
+	expect(findNearestCSSRGBColour("rgb(0 0 0)", palette)).toBe("rgb(5 5 5)");
 });
 
-test("should return the nearest CSS RGB colour seperated by commas from a palette", () => {
-	const palette = ["rgb(255,255,255)", "rgb(5,5,5)"];
-	const colour = "rgb(0,0,0)";
-	expect(findNearestCSSRGBColour(colour, palette)).toBe("rgb(5 5 5)");
+test.each([
+	["commas", ["rgb(255, 255, 255)", "rgb(5, 5, 5)"], "rgb(5, 5, 5)"],
+	[
+		"percentages",
+		["rgb(100%, 100%, 100%)", "rgb(2%, 2%, 2%)"],
+		"rgb(2%, 2%, 2%)",
+	],
+	["mixed units", ["rgb(255, 100%, 255)", "rgb(5%, 5, 5%)"], "rgb(5%, 5, 5%)"],
+	[
+		"alpha",
+		["rgba(100%, 100%, 100%, 0.8)", "rgba(2%, 2%, 2%, 90%)"],
+		"rgba(2%, 2%, 2%, 90%)",
+	],
+	[
+		"slash syntax",
+		["rgb(255 255 255 / 0.8)", "rgb(5 5 5 / 0.9)"],
+		"rgb(5 5 5 / 0.9)",
+	],
+	["uppercase", ["RGB(255, 255, 255)", "RGB(5, 5, 5)"], "RGB(5, 5, 5)"],
+	[
+		"decimal percentages",
+		["rgb(99.9%, 99.9%, 99.9%)", "rgb(1.96%, 1.96%, 1.96%)"],
+		"rgb(1.96%, 1.96%, 1.96%)",
+	],
+])("returns the entry exactly as given (%s)", (_, palette, expected) => {
+	expect(findNearestCSSRGBColour("rgb(0 0 0 / 0.5)", palette)).toBe(expected);
 });
 
-test("should return the nearest CSS RGB colour formats from a palette with mixed formats", () => {
-	const palette = ["rgb(255,255,255)", "rgb(5 5 5)"];
-	const colour = "rgb(0 0 0)";
-	expect(findNearestCSSRGBColour(colour, palette)).toBe("rgb(5 5 5)");
+describe("edge cases", () => {
+	test.each([
+		["missing palette", "rgb(0 0 0)", undefined],
+		["empty palette", "rgb(0 0 0)", []],
+		["all entries invalid", "rgb(0 0 0)", ["bogus", "rgb(1, 2)"]],
+		["invalid target", "nope", ["rgb(0 0 0)", "rgb(255 255 255)"]],
+	])("returns null for %s", (_, colour, palette) => {
+		expect(
+			// @ts-expect-error - checking runtime behaviour for JS consumers
+			findNearestCSSRGBColour(colour, palette),
+		).toBeNull();
+	});
+
+	test("returns the only valid entry", () => {
+		expect(
+			findNearestCSSRGBColour("rgb(255,0,0)", ["rgb(250,0,0)", "bogus"]),
+		).toBe("rgb(250,0,0)");
+		expect(findNearestCSSRGBColour("rgb(255,0,0)", ["rgb(0 0 255)"])).toBe(
+			"rgb(0 0 255)",
+		);
+	});
+
+	test("skips entries in other formats", () => {
+		expect(
+			findNearestCSSRGBColour("rgb(255 0 0)", ["#f00", "red", "rgb(0 0 255)"]),
+		).toBe("rgb(0 0 255)");
+	});
+
+	test("measures clamped values but returns the entry as given", () => {
+		expect(
+			findNearestCSSRGBColour("rgb(255 0 0)", ["rgb(0 0 255)", "rgb(300 0 0)"]),
+		).toBe("rgb(300 0 0)");
+	});
+
+	test("keeps the first of equally near entries", () => {
+		expect(
+			findNearestCSSRGBColour("rgb(0 0 0)", ["rgb(5 5 5)", "rgb(5, 5, 5)"]),
+		).toBe("rgb(5 5 5)");
+	});
 });
 
-test("should return the base colour if palette is an empty array", () => {
-	// @ts-expect-error - TS would complain about this, but it's a valid test for users consuming JS
-	const palette = [];
-	const colour = "rgb(0 0 0)";
-	// @ts-expect-error - TS would complain about this, but it's a valid test for users consuming JS
-	expect(findNearestCSSRGBColour(colour, palette)).toBe("rgb(0 0 0)");
-});
-
-test("should return the base colour if palette is not provided", () => {
-	const colour = "rgb(0 0 0)";
-	// @ts-expect-error - TS would complain about this, but it's a valid test for users consuming JS
-	expect(findNearestCSSRGBColour(colour, undefined)).toBe("rgb(0 0 0)");
-});
-
-test("should find nearest CSS RGB colour with percentage values", () => {
-	const palette = ["rgb(100%, 100%, 100%)", "rgb(2%, 2%, 2%)"];
-	const colour = "rgb(0%, 0%, 0%)";
-	// Percentage channels stay fractional (2% of 255 = 5.1); #496 will return the original entry
-	expect(findNearestCSSRGBColour(colour, palette)).toBe("rgb(5.1 5.1 5.1)");
-});
-
-test("should find nearest CSS RGB colour with mixed percentage and integer values", () => {
-	const palette = ["rgb(255, 100%, 255)", "rgb(5%, 5, 5%)"];
-	const colour = "rgb(0, 0%, 0)";
-	expect(findNearestCSSRGBColour(colour, palette)).toBe("rgb(12.75 5 12.75)");
-});
-
-test("should find nearest CSS RGB colour with RGBA percentage values", () => {
-	const palette = ["rgba(100%, 100%, 100%, 0.8)", "rgba(2%, 2%, 2%, 90%)"];
-	const colour = "rgba(0%, 0%, 0%, 0.5)";
-	expect(findNearestCSSRGBColour(colour, palette)).toBe(
-		"rgb(5.1 5.1 5.1 / 0.9)",
-	);
-});
-
-test("should find nearest CSS RGB colour with modern slash syntax", () => {
-	const palette = ["rgb(255 255 255 / 0.8)", "rgb(5 5 5 / 0.9)"];
-	const colour = "rgb(0 0 0 / 0.5)";
-	expect(findNearestCSSRGBColour(colour, palette)).toBe("rgb(5 5 5 / 0.9)");
-});
-
-test("should find nearest CSS RGB colour with decimal percentage values", () => {
-	const palette = ["rgb(99.9%, 99.9%, 99.9%)", "rgb(1.96%, 1.96%, 1.96%)"];
-	const colour = "rgb(0.39%, 0.39%, 0.39%)";
-	expect(findNearestCSSRGBColour(colour, palette)).toBe(
-		"rgb(4.998 4.998 4.998)",
-	);
+test("accepts readonly palettes, keeps literal types and does not mutate", () => {
+	const palette = Object.freeze(["rgb(255 255 255)", "rgb(0 0 0)"] as const);
+	const result = findNearestCSSRGBColour("rgb(10 10 10)", palette);
+	expectTypeOf(result).toEqualTypeOf<
+		"rgb(255 255 255)" | "rgb(0 0 0)" | null
+	>();
+	expect(result).toBe("rgb(0 0 0)");
+	expect(palette).toEqual(["rgb(255 255 255)", "rgb(0 0 0)"]);
 });

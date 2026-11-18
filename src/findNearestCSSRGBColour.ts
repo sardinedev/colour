@@ -1,33 +1,22 @@
 import { convertCSSRGBtoRGB } from "./convertCSSRGBtoRGB";
-import { convertRGBtoCSSRGB } from "./convertRGBtoCSSRGB";
-import { findNearestRGBColour } from "./findNearestRGBColour";
-import type { RGBColour } from "./types";
+import { findNearestEntry } from "./util/findNearestEntry";
 
 /**
- * Finds the nearest CSS RGB colour in a palette to a given CSS RGB colour.
+ * Finds the CSS RGB colour in a palette that is nearest to the given CSS RGB colour, using CIEDE2000.
  *
- * @param {string} colour - The CSS RGB colour to find the nearest match for. Alpha channel is ignored.
- * @param {string[]} palette - An array of CSS RGB colours to search for the nearest match.
- * @returns {string} The CSS RGB colour in the palette that is closest to the given colour.
- * Invalid palette entries are skipped, and an invalid target colour is returned unchanged.
- * If the palette has fewer than 2 colours, or if it is undefined or null, the original colour is returned.
- * The CSS RGB colour string is in the format `rgb(R G B)`.
+ * - Returns the palette entry exactly as given (`"rgb(250, 0, 0)"` keeps its commas and spacing).
+ * - Entries that are not valid CSS RGB colours are skipped.
+ * - Alpha is ignored. When several entries are equally near, the first one wins.
+ *
+ * @param {string} colour - The CSS RGB colour to find the nearest match for, e.g. `rgb(255 0 0)`.
+ * @param {readonly string[]} palette - The CSS RGB colours to search. It is not modified.
+ * @returns {string | null} The nearest palette entry, or `null` if the colour is invalid or the palette is missing or has no valid entry.
  */
-export function findNearestCSSRGBColour(
+export function findNearestCSSRGBColour<T extends string>(
 	colour: string,
-	palette: string[],
-): string {
-	if (!palette || palette.length < 2) {
-		return colour;
-	}
-	const baseRGBColour = convertCSSRGBtoRGB(colour);
-	if (!baseRGBColour) return colour;
-	const paletteRGBColours = palette
-		.map((cssColour) => convertCSSRGBtoRGB(cssColour))
-		.filter((rgb): rgb is RGBColour => rgb !== null);
-	const nearestRGBColour = findNearestRGBColour(
-		baseRGBColour,
-		paletteRGBColours,
-	);
-	return convertRGBtoCSSRGB(nearestRGBColour);
+	palette: readonly T[],
+): T | null {
+	const target = convertCSSRGBtoRGB(colour);
+	if (target === null) return null;
+	return findNearestEntry(target, palette, convertCSSRGBtoRGB);
 }

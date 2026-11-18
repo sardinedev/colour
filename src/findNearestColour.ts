@@ -1,73 +1,29 @@
-import { isCSSRGBColour, isHexColour, isNamedCSSColour } from "./assertions";
-import { convertCSSRGBtoRGB } from "./convertCSSRGBtoRGB";
-import { convertHextoRGB } from "./convertHextoRGB";
-import { convertNamedCSSColourtoRGB } from "./convertNamedCSSColourtoRGB";
-import { convertRGBtoCSSRGB } from "./convertRGBtoCSSRGB";
-import { convertRGBtoHex } from "./convertRGBtoHex";
-import { convertRGBtoNamedCSSColour } from "./convertRGBtoNamedCSSColour";
-import { findNearestRGBColour } from "./findNearestRGBColour";
-import type { NamedCSSColour, RGBColour } from "./types";
+import { parseColour } from "./parseColour";
+import type { RGBColour } from "./types";
+import { findNearestEntry } from "./util/findNearestEntry";
+
+function parseColourString(colour: unknown): RGBColour | null {
+	return typeof colour === "string" ? parseColour(colour) : null;
+}
 
 /**
- * Finds the nearest colour in a palette to a given colour.
+ * Finds the colour in a palette that is nearest to a given colour, using CIEDE2000.
+ * The colour and palette entries can be any mix of hexadecimal, CSS RGB and named CSS colour strings.
  *
- * @param {string | NamedCSSColour} colour - The colour to match. It can be a hexadecimal colour, a CSS RGB colour, or a named CSS colour.
- * @param {string[] | NamedCSSColour[]} palette - The palette of colours to search.
- * @returns {string} The nearest colour in the palette to the given colour.
+ * - Returns the palette entry exactly as given, in its own format: a hex target can match a
+ *   named entry and returns the name.
+ * - Entries that are not valid colour strings are skipped.
+ * - Alpha is ignored. When several entries are equally near, the first one wins.
+ *
+ * @param {string} colour - The colour to match, e.g. `#ff0000`, `rgb(255 0 0)` or `red`.
+ * @param {readonly string[]} palette - The colours to search. It is not modified.
+ * @returns {string | null} The nearest palette entry, or `null` if the colour is invalid or the palette is missing or has no valid entry.
  */
-export function findNearestColour(
-	colour: string | NamedCSSColour,
-	palette: string[] | NamedCSSColour[],
-): string | NamedCSSColour | undefined {
-	if (!palette || palette.length < 2) {
-		return colour;
-	}
-
-	let baseColour: RGBColour | null | undefined;
-	let colourType: "hex" | "cssRGB" | "namedCSS" | undefined;
-
-	const paletteRGB: RGBColour[] = [];
-
-	if (isHexColour(colour)) {
-		baseColour = convertHextoRGB(colour);
-		colourType = "hex";
-	} else if (isCSSRGBColour(colour)) {
-		baseColour = convertCSSRGBtoRGB(colour);
-		colourType = "cssRGB";
-	} else if (isNamedCSSColour(colour)) {
-		baseColour = convertNamedCSSColourtoRGB(colour);
-		colourType = "namedCSS";
-	}
-
-	if (!baseColour) {
-		return undefined;
-	}
-
-	for (const paletteColour of palette) {
-		if (isHexColour(paletteColour)) {
-			const rgb = convertHextoRGB(paletteColour);
-			if (rgb) paletteRGB.push(rgb);
-		} else if (isCSSRGBColour(paletteColour)) {
-			const rgb = convertCSSRGBtoRGB(paletteColour);
-			if (rgb) paletteRGB.push(rgb);
-		} else if (isNamedCSSColour(paletteColour)) {
-			const rgb = convertNamedCSSColourtoRGB(paletteColour);
-			if (rgb) paletteRGB.push(rgb);
-		}
-	}
-	if (paletteRGB.length < 2) {
-		return colour;
-	}
-
-	const nearest = findNearestRGBColour(baseColour, paletteRGB);
-
-	if (colourType === "hex") {
-		return convertRGBtoHex(nearest);
-	}
-	if (colourType === "cssRGB") {
-		return convertRGBtoCSSRGB(nearest);
-	}
-	// At this point the colourType should be namedCSS. The result contract is
-	// unchanged here (still undefined on a miss); #496 decides the final one.
-	return convertRGBtoNamedCSSColour(nearest) ?? undefined;
+export function findNearestColour<T extends string>(
+	colour: string,
+	palette: readonly T[],
+): T | null {
+	const target = parseColourString(colour);
+	if (target === null) return null;
+	return findNearestEntry(target, palette, parseColourString);
 }

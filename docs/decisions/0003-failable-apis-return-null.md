@@ -50,7 +50,8 @@ RGB, named and generic predicates threw.
 - Migration: replace `try`/`catch` with `?? fallback` or a `null` check, and
   `=== undefined` with `=== null`.
 - `sortHexColours` keeps silently dropping invalid entries.
-- The `findNearest*` result contract is out of scope and belongs to #496. The
+- The `findNearest*` result contract is out of scope here; it is decided in
+  [0009](0009-palette-match-results.md) (#496). The
   only interim change: `findNearestCSSRGBColour` no longer throws. Like
   `findNearestHexColour`, it skips invalid entries and returns an invalid target
   unchanged.

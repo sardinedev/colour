@@ -1,31 +1,22 @@
 import { convertHextoRGB } from "./convertHextoRGB";
-import { convertRGBtoHex } from "./convertRGBtoHex";
-import { findNearestRGBColour } from "./findNearestRGBColour";
-import type { RGBColour } from "./types";
+import { findNearestEntry } from "./util/findNearestEntry";
 
 /**
- * Finds the nearest hexadecimal colour in a palette to the given hex colour.
+ * Finds the hexadecimal colour in a palette that is nearest to the given hex colour, using CIEDE2000.
+ *
+ * - Returns the palette entry exactly as given (`"#FA0000"` stays `"#FA0000"`).
+ * - Entries that are not valid hexadecimal colours are skipped.
+ * - Alpha is ignored. When several entries are equally near, the first one wins.
  *
  * @param {string} colour - The hexadecimal colour to find the nearest match for.
- * @param {string[]} palette - An array of hexadecimal colours to search for the nearest match in.
- * @returns {string} The hexadecimal colour in the palette that is closest to the given colour.
- * If the palette has fewer than 2 colours, or if it is undefined or null, the original colour is returned.
+ * @param {readonly string[]} palette - The hexadecimal colours to search. It is not modified.
+ * @returns {string | null} The nearest palette entry, or `null` if the colour is invalid or the palette is missing or has no valid entry.
  */
-export function findNearestHexColour(
+export function findNearestHexColour<T extends string>(
 	colour: string,
-	palette: string[],
-): string {
-	if (!palette || palette.length < 2) {
-		return colour;
-	}
-	const baseRGBColour = convertHextoRGB(colour);
-	if (!baseRGBColour) return colour;
-	const paletteRGBColours = palette
-		.map((hexColour) => convertHextoRGB(hexColour))
-		.filter((rgb): rgb is RGBColour => rgb !== null);
-	const nearestRGBColour = findNearestRGBColour(
-		baseRGBColour,
-		paletteRGBColours,
-	);
-	return convertRGBtoHex(nearestRGBColour);
+	palette: readonly T[],
+): T | null {
+	const target = convertHextoRGB(colour);
+	if (target === null) return null;
+	return findNearestEntry(target, palette, convertHextoRGB);
 }

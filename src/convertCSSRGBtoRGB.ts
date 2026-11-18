@@ -1,9 +1,10 @@
 import type { RGBColour } from "./types";
-import { clamp } from "./util/index";
 import { cssRGBARegex } from "./util/regexers";
 
+const PERCENT = 37; // "%"
+
 /**
- * Converts a CSS RGB/Alpha value to its numeric equivalent
+ * Converts a CSS RGB/Alpha value to its numeric equivalent, without clamping.
  * @param value - The value string (e.g., "50%", "127", "0.5")
  * @param isAlpha - Whether this is an alpha channel value
  * @returns The numeric value
@@ -12,31 +13,27 @@ export function convertCssValueToNumber(
 	value: string,
 	isAlpha = false,
 ): number {
-	if (value.endsWith("%")) {
-		const percentage = Number.parseFloat(value.slice(0, -1));
-		if (isAlpha) {
-			// Alpha percentages: 0%-100% maps to 0-1
-			return percentage / 100;
-		}
-		// RGB percentages: 0%-100% maps to 0-255, keeping fractions
-		// Multiply first so exact inputs stay exact (2% gives 5.1, not 5.1000000000000005)
-		return (percentage * 255) / 100;
-	}
-
-	// For non-percentage values, just parse as number
-	return Number.parseFloat(value);
+	// parseFloat stops at the "%", so the sign and digits parse without slicing
+	const number = Number.parseFloat(value);
+	if (value.charCodeAt(value.length - 1) !== PERCENT) return number;
+	// Alpha percentages: 0%-100% maps to 0-1
+	if (isAlpha) return number / 100;
+	// RGB percentages: 0%-100% maps to 0-255, keeping fractions.
+	// Multiply first so exact inputs stay exact (2% gives 5.1, not 5.1000000000000005)
+	return (number * 255) / 100;
 }
 
-export function convertCssRgbChannelValue(value?: string): number | undefined {
-	if (!value) return undefined;
-	return convertCssValueToNumber(value);
+/** Parses a CSS RGB channel value and clamps it to 0–255. */
+export function parseCssRgbChannel(value: string): number {
+	const channel = convertCssValueToNumber(value);
+	// Comparisons instead of Math.min/Math.max: this runs three times per parse
+	return channel < 0 ? 0 : channel > 255 ? 255 : channel;
 }
 
-export function convertCssAlphaChannelValue(
-	value?: string,
-): number | undefined {
-	if (!value) return undefined;
-	return convertCssValueToNumber(value, true);
+/** Parses a CSS alpha value and clamps it to 0–1. */
+export function parseCssAlphaChannel(value: string): number {
+	const alpha = convertCssValueToNumber(value, true);
+	return alpha < 0 ? 0 : alpha > 1 ? 1 : alpha;
 }
 
 /**
@@ -59,15 +56,15 @@ export function convertCssAlphaChannelValue(
  */
 export function convertCSSRGBtoRGB(colour: string): RGBColour | null {
 	if (typeof colour !== "string") return null;
-	const match = colour.match(cssRGBARegex);
-	if (!match) return null;
+	const match = cssRGBARegex.exec(colour);
+	if (match === null) return null;
 
-	const rgb: RGBColour = {
-		R: clamp(convertCssRgbChannelValue(match[1]) as number, 0, 255),
-		G: clamp(convertCssRgbChannelValue(match[2]) as number, 0, 255),
-		B: clamp(convertCssRgbChannelValue(match[3]) as number, 0, 255),
-	};
-	const alpha = convertCssAlphaChannelValue(match[4]);
-	if (alpha !== undefined) rgb.A = clamp(alpha, 0, 1);
-	return rgb;
+	// The regex guarantees groups 1-3 are present; group 4 (alpha) is optional
+	const R = parseCssRgbChannel(match[1] as string);
+	const G = parseCssRgbChannel(match[2] as string);
+	const B = parseCssRgbChannel(match[3] as string);
+	const alpha = match[4];
+	// One literal per shape instead of adding A to an existing object
+	if (alpha === undefined) return { R, G, B };
+	return { R, G, B, A: parseCssAlphaChannel(alpha) };
 }

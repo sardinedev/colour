@@ -1,9 +1,9 @@
 import { expect, test } from "vitest";
 import {
 	convertCSSRGBtoRGB,
-	convertCssAlphaChannelValue,
-	convertCssRgbChannelValue,
 	convertCssValueToNumber,
+	parseCssAlphaChannel,
+	parseCssRgbChannel,
 } from "./convertCSSRGBtoRGB";
 
 test("convert CSS RGB separated by spaces", () => {
@@ -196,22 +196,26 @@ test("convertCssValueToNumber - should parse alpha decimals", () => {
 	expect(convertCssValueToNumber("0", true)).toBe(0);
 });
 
-test("convertCssRgbChannelValue - should handle defined values", () => {
-	expect(convertCssRgbChannelValue("255")).toBe(255);
-	expect(convertCssRgbChannelValue("50%")).toBe(127.5);
+test("convertCssValueToNumber - does not clamp", () => {
+	expect(convertCssValueToNumber("300")).toBe(300);
+	expect(convertCssValueToNumber("-20%")).toBe(-51);
+	expect(convertCssValueToNumber("150%", true)).toBe(1.5);
 });
 
-test("convertCssRgbChannelValue - should handle undefined values", () => {
-	expect(convertCssRgbChannelValue(undefined)).toBe(undefined);
-	expect(convertCssRgbChannelValue("")).toBe(undefined);
+test("parseCssRgbChannel - parses and clamps to 0-255", () => {
+	expect(parseCssRgbChannel("255")).toBe(255);
+	expect(parseCssRgbChannel("50%")).toBe(127.5);
+	expect(parseCssRgbChannel("2%")).toBe(5.1);
+	expect(parseCssRgbChannel("300")).toBe(255);
+	expect(parseCssRgbChannel("-10")).toBe(0);
+	expect(parseCssRgbChannel("150%")).toBe(255);
+	expect(parseCssRgbChannel("+12.5")).toBe(12.5);
 });
 
-test("convertCssAlphaChannelValue - should handle defined values", () => {
-	expect(convertCssAlphaChannelValue("0.5")).toBe(0.5);
-	expect(convertCssAlphaChannelValue("50%")).toBe(0.5);
-});
-
-test("convertCssAlphaChannelValue - should handle undefined values", () => {
-	expect(convertCssAlphaChannelValue(undefined)).toBe(undefined);
-	expect(convertCssAlphaChannelValue("")).toBe(undefined);
+test("parseCssAlphaChannel - parses and clamps to 0-1", () => {
+	expect(parseCssAlphaChannel("0.5")).toBe(0.5);
+	expect(parseCssAlphaChannel("50%")).toBe(0.5);
+	expect(parseCssAlphaChannel("1.5")).toBe(1);
+	expect(parseCssAlphaChannel("-0.5")).toBe(0);
+	expect(parseCssAlphaChannel("250%")).toBe(1);
 });

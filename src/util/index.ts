@@ -113,6 +113,28 @@ export function clamp(value: number, min: number, max: number): number {
 	return Math.min(Math.max(value, min), max);
 }
 
+/**
+ * Serializes an alpha value that came from a byte (`byte / 255`) the way CSS does:
+ * the shortest of 2 or 3 decimals that maps back to the same byte.
+ * For example `128 / 255` becomes `0.5` and `1 / 255` becomes `0.004`.
+ */
+export function serializeAlphaByte(alpha: number): number {
+	const byte = Math.round(alpha * 255);
+	const twoDecimals = Math.round(alpha * 100) / 100;
+	if (Math.round(twoDecimals * 255) === byte) return twoDecimals;
+	return Math.round(alpha * 1000) / 1000;
+}
+
+/**
+ * Decides whether a colour is dark from its WCAG 2.x relative luminance: `true` when
+ * white text would contrast with it more than black text would.
+ */
+export function isDarkLuminance(luminance: number): boolean {
+	const colourLuminance = luminance + 0.05;
+	// White luminance is 1 (1 + 0.05) and black luminance is 0 (0 + 0.05)
+	return 1.05 / colourLuminance > colourLuminance / 0.05;
+}
+
 /** MDN reference for CSS named colours — shared to avoid duplicating the URL string in the bundle */
 export const NAMED_CSS_COLOUR_URL =
 	"https://developer.mozilla.org/en-US/docs/Web/CSS/named-color";

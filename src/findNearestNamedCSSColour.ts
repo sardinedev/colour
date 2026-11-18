@@ -15,9 +15,10 @@ export function findNearestNamedCSSColour(
 		convertNamedCSSColourtoRGB(hexColour),
 	);
 
-	const filteredPaletteRGBColours: RGBColour[] = paletteRGBColours.filter(
-		(paletteRGBColour) => paletteRGBColour !== undefined,
-	) as RGBColour[];
+	const filteredPaletteRGBColours = paletteRGBColours.filter(
+		(paletteRGBColour): paletteRGBColour is RGBColour =>
+			paletteRGBColour !== null,
+	);
 
 	if (!baseRGBColour || filteredPaletteRGBColours.length < 2) {
 		return colour;

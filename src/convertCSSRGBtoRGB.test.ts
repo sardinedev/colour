@@ -11,7 +11,6 @@ test("convert CSS RGB separated by spaces", () => {
 		R: 23,
 		G: 111,
 		B: 99,
-		A: undefined,
 	});
 });
 
@@ -20,23 +19,21 @@ test("convert CSS RGB separated by commas", () => {
 		R: 23,
 		G: 111,
 		B: 99,
-		A: undefined,
 	});
 });
 
-test("convert CSS RGB with percentage values", () => {
+test("convert CSS RGB with percentage values, keeping fractions", () => {
 	expect(convertCSSRGBtoRGB("rgb(50%, 25%, 100%)")).toStrictEqual({
-		R: 128, // 50% of 255 = 127.5, rounded to 128
-		G: 64, // 25% of 255 = 63.75, rounded to 64
-		B: 255, // 100% of 255 = 255
-		A: undefined,
+		R: 127.5, // 50% of 255
+		G: 63.75, // 25% of 255
+		B: 255,
 	});
 });
 
 test("convert CSS RGBA with percentage values and decimal alpha", () => {
 	expect(convertCSSRGBtoRGB("rgba(50%, 25%, 100%, 0.8)")).toStrictEqual({
-		R: 128,
-		G: 64,
+		R: 127.5,
+		G: 63.75,
 		B: 255,
 		A: 0.8,
 	});
@@ -44,8 +41,8 @@ test("convert CSS RGBA with percentage values and decimal alpha", () => {
 
 test("convert CSS RGBA with percentage values and percentage alpha", () => {
 	expect(convertCSSRGBtoRGB("rgba(50%, 25%, 100%, 80%)")).toStrictEqual({
-		R: 128,
-		G: 64,
+		R: 127.5,
+		G: 63.75,
 		B: 255,
 		A: 0.8,
 	});
@@ -54,7 +51,7 @@ test("convert CSS RGBA with percentage values and percentage alpha", () => {
 test("convert CSS RGBA with mixed integer and percentage values", () => {
 	expect(convertCSSRGBtoRGB("rgba(128, 25%, 255, 50%)")).toStrictEqual({
 		R: 128,
-		G: 64,
+		G: 63.75,
 		B: 255,
 		A: 0.5,
 	});
@@ -71,8 +68,8 @@ test("convert CSS RGB with slash separator", () => {
 
 test("convert CSS RGB with percentage and slash separator", () => {
 	expect(convertCSSRGBtoRGB("rgb(50% 25% 100% / 80%)")).toStrictEqual({
-		R: 128,
-		G: 64,
+		R: 127.5,
+		G: 63.75,
 		B: 255,
 		A: 0.8,
 	});
@@ -83,16 +80,31 @@ test("convert CSS RGB with 0% values", () => {
 		R: 0,
 		G: 0,
 		B: 0,
-		A: undefined,
 	});
 });
 
-test("convert CSS RGBA with negative values", () => {
+test("clamps out-of-range channels and alpha like CSS computed values", () => {
 	expect(convertCSSRGBtoRGB("rgba(-10, 300, 128, 1.5)")).toStrictEqual({
-		R: -10,
-		G: 300,
+		R: 0,
+		G: 255,
 		B: 128,
-		A: 1.5, // Values outside normal ranges are preserved as-is
+		A: 1,
+	});
+	expect(convertCSSRGBtoRGB("rgb(150% -20% 50% / -0.5)")).toStrictEqual({
+		R: 255,
+		G: 0,
+		B: 127.5,
+		A: 0,
+	});
+	expect(convertCSSRGBtoRGB("rgba(0, 0, 0, 250%)")?.A).toBe(1);
+});
+
+test("keeps channels at the clamp boundaries unchanged", () => {
+	expect(convertCSSRGBtoRGB("rgba(0, 255, 0%, 100%)")).toStrictEqual({
+		R: 0,
+		G: 255,
+		B: 0,
+		A: 1,
 	});
 });
 
@@ -101,84 +113,59 @@ test("convert CSS RGB with decimal values", () => {
 		R: 127.5,
 		G: 63.75,
 		B: 255,
-		A: undefined,
 	});
 });
 
 test("convert CSS RGB with decimal percentage values", () => {
-	expect(convertCSSRGBtoRGB("rgb(50.5%, 25.25%, 99.9%)")).toStrictEqual({
-		R: 129, // 50.5% of 255 = 128.775, rounded to 129
-		G: 64, // 25.25% of 255 = 64.3875, rounded to 64
-		B: 255, // 99.9% of 255 = 254.745, rounded to 255
-		A: undefined,
-	});
+	const result = convertCSSRGBtoRGB("rgb(50.5%, 25.25%, 99.9%)");
+	expect(result?.R).toBeCloseTo(128.775, 10); // 50.5% of 255
+	expect(result?.G).toBeCloseTo(64.3875, 10); // 25.25% of 255
+	expect(result?.B).toBeCloseTo(254.745, 10); // 99.9% of 255
+	expect(result).not.toHaveProperty("A");
 });
 
-test("should throw error for completely invalid CSS RGB string", () => {
-	expect(() => convertCSSRGBtoRGB("invalid")).toThrow(
-		"convertCSSRGBtoRGB expects a valid CSS RGB string but got invalid",
-	);
+test.each(["invalid", "rgb(", "not-a-color", "rgb(255,)", ""])(
+	"returns null for invalid CSS RGB string %j",
+	(input) => {
+		expect(convertCSSRGBtoRGB(input)).toBeNull();
+	},
+);
+
+test("returns null for non-string input from JavaScript callers", () => {
+	// @ts-expect-error - checking runtime behaviour for JS consumers
+	expect(convertCSSRGBtoRGB(undefined)).toBeNull();
+	// @ts-expect-error - checking runtime behaviour for JS consumers
+	expect(convertCSSRGBtoRGB({ R: 0, G: 0, B: 0 })).toBeNull();
 });
 
-test("should throw error for incomplete CSS RGB string", () => {
-	expect(() => convertCSSRGBtoRGB("rgb(")).toThrow(
-		"convertCSSRGBtoRGB expects a valid CSS RGB string but got rgb(",
-	);
-});
-
-test("should throw error for malformed CSS RGB string", () => {
-	expect(() => convertCSSRGBtoRGB("not-a-color")).toThrow(
-		"convertCSSRGBtoRGB expects a valid CSS RGB string but got not-a-color",
-	);
-});
-
-test("should throw error for CSS RGB string with missing values", () => {
-	expect(() => convertCSSRGBtoRGB("rgb(255,)")).toThrow(
-		"convertCSSRGBtoRGB expects a valid CSS RGB string but got rgb(255,)",
-	);
-});
-
-test("should throw error for empty string", () => {
-	expect(() => convertCSSRGBtoRGB("")).toThrow(
-		"convertCSSRGBtoRGB expects a valid CSS RGB string but got ",
-	);
-});
-
-test("should handle RGB without alpha (undefined alpha channel)", () => {
-	// This specifically tests the undefined branch in convertCssAlphaChannelValue
+test("leaves alpha out when it is omitted, meaning opaque", () => {
 	const result = convertCSSRGBtoRGB("rgb(255, 128, 0)");
-	expect(result).toStrictEqual({
-		R: 255,
-		G: 128,
-		B: 0,
-		A: undefined,
-	});
+	expect(result).toStrictEqual({ R: 255, G: 128, B: 0 });
+	expect(result).not.toHaveProperty("A");
+});
 
-	// Verify A is explicitly undefined, not just missing
-	expect(result.A).toBe(undefined);
-	expect("A" in result).toBe(true);
+test("keeps zero and one alpha", () => {
+	expect(convertCSSRGBtoRGB("rgb(0 0 0 / 0)")?.A).toBe(0);
+	expect(convertCSSRGBtoRGB("rgb(0 0 0 / 0%)")?.A).toBe(0);
+	expect(convertCSSRGBtoRGB("rgb(0 0 0 / 1)")?.A).toBe(1);
+	expect(convertCSSRGBtoRGB("rgb(0 0 0 / 100%)")?.A).toBe(1);
 });
 
 test("should handle edge case with 0% percentage value", () => {
-	// This tests potential edge cases in the percentage conversion logic
-	const result = convertCSSRGBtoRGB("rgba(0%, 50%, 100%, 0%)");
-	expect(result).toStrictEqual({
-		R: 0, // 0% of 255 = 0
-		G: 128, // 50% of 255 = 127.5, rounded to 128
-		B: 255, // 100% of 255 = 255
-		A: 0, // 0% alpha = 0
+	expect(convertCSSRGBtoRGB("rgba(0%, 50%, 100%, 0%)")).toStrictEqual({
+		R: 0,
+		G: 127.5,
+		B: 255,
+		A: 0,
 	});
 });
 
 test("should handle very small decimal percentage values", () => {
-	// This tests potential edge cases in decimal percentage conversion
 	const result = convertCSSRGBtoRGB("rgba(0.1%, 0.01%, 99.99%, 0.01%)");
-	expect(result).toStrictEqual({
-		R: 0, // 0.1% of 255 = 0.255, rounded to 0
-		G: 0, // 0.01% of 255 = 0.0255, rounded to 0
-		B: 255, // 99.99% of 255 = 254.9745, rounded to 255
-		A: 0.0001, // 0.01% alpha = 0.0001
-	});
+	expect(result?.R).toBeCloseTo(0.255, 10); // 0.1% of 255
+	expect(result?.G).toBeCloseTo(0.0255, 10); // 0.01% of 255
+	expect(result?.B).toBeCloseTo(254.9745, 10); // 99.99% of 255
+	expect(result?.A).toBeCloseTo(0.0001, 10); // 0.01% alpha
 });
 
 // Direct tests for exported helper functions
@@ -191,9 +178,9 @@ test("convertCssValueToNumber - should parse regular numbers", () => {
 
 test("convertCssValueToNumber - should parse RGB percentages", () => {
 	expect(convertCssValueToNumber("100%")).toBe(255);
-	expect(convertCssValueToNumber("50%")).toBe(128);
+	expect(convertCssValueToNumber("50%")).toBe(127.5);
 	expect(convertCssValueToNumber("0%")).toBe(0);
-	expect(convertCssValueToNumber("25.5%")).toBe(65);
+	expect(convertCssValueToNumber("25.5%")).toBeCloseTo(65.025, 10);
 });
 
 test("convertCssValueToNumber - should parse alpha percentages", () => {
@@ -211,7 +198,7 @@ test("convertCssValueToNumber - should parse alpha decimals", () => {
 
 test("convertCssRgbChannelValue - should handle defined values", () => {
 	expect(convertCssRgbChannelValue("255")).toBe(255);
-	expect(convertCssRgbChannelValue("50%")).toBe(128);
+	expect(convertCssRgbChannelValue("50%")).toBe(127.5);
 });
 
 test("convertCssRgbChannelValue - should handle undefined values", () => {

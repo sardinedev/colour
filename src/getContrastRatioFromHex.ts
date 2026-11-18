@@ -5,7 +5,7 @@ import { calculateContrastRatio } from "./util/calculateContrastRatio";
  * Calculates the contrast ratio between two colours in hexadecimal format.
  * @param colour1 The first colour in hexadecimal format
  * @param colour2 The second colour in hexadecimal format
- * @returns The contrast ratio between the two colours truncated to 3 decimal places
+ * @returns The unrounded contrast ratio between the two colours, or `null` if either colour is invalid
  */
 export function getContrastRatioFromHex(
 	colour1: string,

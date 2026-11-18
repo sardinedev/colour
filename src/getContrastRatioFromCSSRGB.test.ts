@@ -16,7 +16,7 @@ test("should return the correct contrast ratio for same colors", () => {
 
 test("should return the correct contrast ratio for different colors", () => {
 	const ratio = getContrastRatioFromCSSRGB("rgb(255,0,0)", "rgb(0,255,0)");
-	expect(ratio).toBe(2.913);
+	expect(ratio).toBeCloseTo(2.9139375476, 9);
 });
 
 test("should return the correct contrast ratio within centesimal point", () => {
@@ -24,7 +24,7 @@ test("should return the correct contrast ratio within centesimal point", () => {
 		"rgb(18, 52, 86)",
 		"rgb(18, 52, 87)",
 	);
-	expect(ratio).toBe(1.001);
+	expect(ratio).toBeCloseTo(1.0019662402, 9);
 });
 
 test("should pass the test for the classic rounding issue", () => {
@@ -32,7 +32,7 @@ test("should pass the test for the classic rounding issue", () => {
 		"rgb(119 119 119)",
 		"rgb(255,255,255)",
 	);
-	expect(ratio).toBe(4.478);
+	expect(ratio).toBeCloseTo(4.4780894536, 9);
 });
 
 test("should return the correct contrast ratio for light and dark grey", () => {
@@ -40,7 +40,7 @@ test("should return the correct contrast ratio for light and dark grey", () => {
 		"rgb(170, 170, 170)",
 		"rgb(85, 85, 85)",
 	);
-	expect(ratio).toBe(3.209);
+	expect(ratio).toBeCloseTo(3.2091187762, 9);
 });
 
 test("should return the correct contrast ratio for percentage values (black and white)", () => {
@@ -56,7 +56,7 @@ test("should return the correct contrast ratio for mixed percentage and integer 
 		"rgb(255, 0%, 0)",
 		"rgb(0%, 100%, 0%)",
 	);
-	expect(ratio).toBe(2.913);
+	expect(ratio).toBeCloseTo(2.9139375476, 9);
 });
 
 test("should return the correct contrast ratio with RGBA percentage values", () => {
@@ -72,7 +72,7 @@ test("should return the correct contrast ratio with modern slash syntax", () => 
 		"rgb(119 119 119 / 0.9)",
 		"rgb(255 255 255 / 0.8)",
 	);
-	expect(ratio).toBe(4.478);
+	expect(ratio).toBeCloseTo(4.4780894536, 9);
 });
 
 test("should return the correct contrast ratio with decimal percentage values", () => {
@@ -80,5 +80,10 @@ test("should return the correct contrast ratio with decimal percentage values", 
 		"rgb(66.7% 66.7% 66.7%)",
 		"rgb(33.3%, 33.3%, 33.3%)",
 	);
-	expect(ratio).toBe(3.209);
+	expect(ratio).toBeCloseTo(3.2165551, 7); // 66.7% = 170.085, 33.3% = 84.915, kept fractional
+});
+
+test("should return null for an invalid colour in either position", () => {
+	expect(getContrastRatioFromCSSRGB("nope", "rgb(0, 0, 0)")).toBeNull();
+	expect(getContrastRatioFromCSSRGB("rgb(0, 0, 0)", "nope")).toBeNull();
 });

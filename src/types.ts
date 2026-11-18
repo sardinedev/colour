@@ -58,8 +58,6 @@ export interface HueHelper {
 	h2_d: number;
 }
 
-export type ColourSpace = "sRGB";
-
 /**
  * Named list from https://developer.mozilla.org/en-US/docs/Web/CSS/named-color
  */
@@ -215,3 +213,15 @@ export type NamedCSSColour =
 	| "yellowgreen";
 
 export type NamedCSSColours = Array<[NamedCSSColour, string]>;
+
+/**
+ * Options for `pickHexColourContrast`. All colours are hexadecimal strings.
+ */
+export interface PickHexColourContrastOptions {
+	/** The background the chosen colour will sit on */
+	backgroundColour: string;
+	/** The first candidate colour */
+	optionOneColour: string;
+	/** The second candidate colour, returned when both candidates have equal contrast */
+	optionTwoColour: string;
+}

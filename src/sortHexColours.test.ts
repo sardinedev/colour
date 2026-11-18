@@ -21,7 +21,7 @@ test("getColorInfo: correctly parses 8-digit hex colors with alpha", () => {
 		h: 0,
 		s: 1,
 		v: 1,
-		a: 0.5,
+		a: 128 / 255,
 	});
 });
 

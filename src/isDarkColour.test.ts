@@ -25,11 +25,18 @@ test("should return true for #666666 colour", () => {
 	expect(isDarkColour("#666666")).toBe(true);
 });
 
-test("throws an error if not passing a valid CSS RGB format", () => {
-	const rgb = "rfv(12,23,42)";
-	expect(() => isDarkColour(rgb)).toThrow(
-		"rfv(12,23,42) is not a valid colour format. isDarkColour accepts CSS RGB formats, ie rgb(0,0,0), rgba(255, 255, 255, 0.4), rgb(50%, 25%, 100%), and rgba(50%, 25%, 100%, 80%), hexadecimal and CSS named colours.",
-	);
+test.each(["rfv(12,23,42)", "rgb(12,23)", "#12345", "not-a-colour", ""])(
+	"returns false for invalid colour %j",
+	(colour) => {
+		expect(isDarkColour(colour)).toBe(false);
+	},
+);
+
+test("returns false for non-string input from JavaScript callers", () => {
+	// @ts-expect-error - checking runtime behaviour for JS consumers
+	expect(isDarkColour(null)).toBe(false);
+	// @ts-expect-error - checking runtime behaviour for JS consumers
+	expect(isDarkColour({ R: 0, G: 0, B: 0 })).toBe(false);
 });
 
 test("should return true for CSS RGB with percentage values (dark)", () => {

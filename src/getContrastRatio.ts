@@ -1,57 +1,26 @@
-import { convertCSSRGBtoHex } from "./convertCSSRGBtoHex";
-import { convertNamedCSSColourtoHex } from "./convertNamedCSSColourtoHex";
-import { getContrastRatioFromHex } from "./getContrastRatioFromHex";
+import { getSRGBLuminanceFromRGB } from "./getSRGBLuminanceFromRGB";
+import { parseColour } from "./parseColour";
 import type { NamedCSSColour } from "./types";
-import { NAMED_CSS_COLOUR_URL } from "./util/index";
+import { calculateContrastRatio } from "./util/calculateContrastRatio";
 
 /**
  * Calculates the contrast ratio between two colours.
  * Accepts CSS RGB colours (including percentage values), named CSS colours, or hexadecimal colours.
  * @param colour1 The first colour (e.g., `#ff0000`, `rgb(255,0,0)`, `rgb(100%, 0%, 0%)`, or `red`)
  * @param colour2 The second colour (e.g., `#00ff00`, `rgb(0,255,0)`, `rgb(0%, 100%, 0%)`, or `lime`)
- * @returns The contrast ratio between the two colours truncated to 3 decimal places
+ * @returns The unrounded contrast ratio between the two colours, or `null` if either colour is invalid
  */
 export function getContrastRatio(
 	colour1: string | NamedCSSColour,
 	colour2: string | NamedCSSColour,
-): number {
-	// The colour can be a named CSS colour, a CSS RGB colour or a hexadecimal colour
-	// So we normalize the input to a hexadecimal colour
-	let hexColour1: string;
-	let hexColour2: string;
-	if (colour1.startsWith("#")) {
-		hexColour1 = colour1;
-	} else if (colour1.startsWith("rgb")) {
-		hexColour1 = convertCSSRGBtoHex(colour1);
-	} else {
-		const _hexColour1 = convertNamedCSSColourtoHex(colour1 as NamedCSSColour);
-		if (_hexColour1 === undefined) {
-			throw new Error(
-				`getContrastRatio expects valid CSS named colours. ${colour1} is not a valid CSS named colour. See ${NAMED_CSS_COLOUR_URL}`,
-			);
-		}
-		hexColour1 = _hexColour1;
-	}
-
-	if (colour2.startsWith("#")) {
-		hexColour2 = colour2;
-	} else if (colour2.startsWith("rgb")) {
-		hexColour2 = convertCSSRGBtoHex(colour2);
-	} else {
-		const _hexColour2 = convertNamedCSSColourtoHex(colour2 as NamedCSSColour);
-		if (_hexColour2 === undefined) {
-			throw new Error(
-				`getContrastRatio expects valid CSS named colours. ${colour2} is not a valid CSS named colour. See ${NAMED_CSS_COLOUR_URL}`,
-			);
-		}
-		hexColour2 = _hexColour2;
-	}
-
-	const result = getContrastRatioFromHex(hexColour1, hexColour2);
-	if (result === null) {
-		throw new Error(
-			`getContrastRatio expects valid hexadecimal colours but received ${hexColour1} or ${hexColour2}.`,
-		);
-	}
-	return result;
+): number | null {
+	// parseColour also accepts RGB objects; this API is string-only
+	if (typeof colour1 !== "string" || typeof colour2 !== "string") return null;
+	const rgb1 = parseColour(colour1);
+	const rgb2 = parseColour(colour2);
+	if (!rgb1 || !rgb2) return null;
+	return calculateContrastRatio(
+		getSRGBLuminanceFromRGB(rgb1),
+		getSRGBLuminanceFromRGB(rgb2),
+	);
 }

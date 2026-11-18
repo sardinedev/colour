@@ -1,14 +1,15 @@
 import { convertCSSRGBtoRGB } from "./convertCSSRGBtoRGB";
 import { getSRGBLuminanceFromRGB } from "./getSRGBLuminanceFromRGB";
+import { isDarkLuminance } from "./util/index";
 
+/**
+ * Evaluates if a CSS RGB colour is dark by measuring the contrast ratio against black and white.
+ * Alpha is ignored.
+ * @param {string} colour - A CSS RGB colour, ie: `rgb(12, 34, 45)` or `rgb(50% 25% 100% / 0.5)`
+ * @returns {boolean} `true` if the colour is dark, `false` if it is light or not a valid CSS RGB colour
+ */
 export function isCSSRGBDarkColour(colour: string): boolean {
 	const rgb = convertCSSRGBtoRGB(colour);
-	// Add the 0.05 flare term from the WCAG contrast formula, as isHexDarkColour does
-	const colourLuminance = getSRGBLuminanceFromRGB(rgb) + 0.05;
-	// We know white luminance is 1 so we can pre-calculate the whiteLuminance to 1.05 (1 + 0.05)
-	const whiteContrast = 1.05 / colourLuminance;
-	// We know black luminance is 0 so we can pre-calculate the blackLuminance to 0.05 (0 + 0.05)
-	const blackContrast = colourLuminance / 0.05;
-
-	return whiteContrast > blackContrast;
+	if (!rgb) return false;
+	return isDarkLuminance(getSRGBLuminanceFromRGB(rgb));
 }

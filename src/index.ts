@@ -28,6 +28,14 @@ export { isCSSNamedDarkColour } from "./isCSSNameDarkColour";
 export { isCSSRGBDarkColour } from "./isCSSRGBDarkColour";
 export { isDarkColour } from "./isDarkColour";
 export { isHexDarkColour } from "./isHexDarkColour";
+export { parseColour } from "./parseColour";
 export { pickHexColourContrast } from "./pickHexColourContrast";
 export { RGBdistance } from "./RGBdistance";
 export { sortHexColours } from "./sortHexColours";
+export type {
+	LabColour,
+	NamedCSSColour,
+	PickHexColourContrastOptions,
+	RGBColour,
+	XYZColour,
+} from "./types";

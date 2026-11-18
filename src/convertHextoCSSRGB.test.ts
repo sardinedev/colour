@@ -30,3 +30,17 @@ test("converts a 4 digit hexadecimal (RGB + Alpha) colour string to CSSRGBA form
 	const expectedRGB = "rgba(255,255,255,1)";
 	expect(convertHextoCSSRGB(hex)).toBe(expectedRGB);
 });
+
+test("keeps zero alpha from an 8 digit hexadecimal colour", () => {
+	expect(convertHextoCSSRGB("#00000000")).toBe("rgba(0,0,0,0)");
+	expect(convertHextoCSSRGB("#ff000000")).toBe("rgba(255,0,0,0)");
+});
+
+test("keeps zero alpha from a 4 digit hexadecimal colour", () => {
+	expect(convertHextoCSSRGB("#0000")).toBe("rgba(0,0,0,0)");
+	expect(convertHextoCSSRGB("#f000")).toBe("rgba(255,0,0,0)");
+});
+
+test("returns null for an invalid hexadecimal colour", () => {
+	expect(convertHextoCSSRGB("#ggg")).toBeNull();
+});

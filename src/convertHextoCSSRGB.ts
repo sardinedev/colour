@@ -15,7 +15,7 @@ export function convertHextoCSSRGB(hex: string): string | null {
 	const rgb = convertHextoRGB(hex);
 	if (!rgb) return null;
 
-	if (rgb.A) {
+	if (rgb.A !== undefined) {
 		return `rgba(${rgb.R},${rgb.G},${rgb.B},${rgb.A})`;
 	}
 	return `rgb(${rgb.R},${rgb.G},${rgb.B})`;

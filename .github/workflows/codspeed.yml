@@ -32,5 +32,5 @@ jobs:
       - name: Run benchmarks
         uses: CodSpeedHQ/action@af75f77f17a054769abefaa42fe8dc2975469b5f # v5.6.3
         with:
-          mode: simulation,memory
+          mode: simulation
           run: npm run bench

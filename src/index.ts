@@ -30,6 +30,12 @@ export { isDarkColour } from "./isDarkColour";
 export { isHexDarkColour } from "./isHexDarkColour";
 export { parseColour } from "./parseColour";
 export { pickHexColourContrast } from "./pickHexColourContrast";
+export {
+	type PreparedEntry,
+	type PreparedPalette,
+	type PreparedRGBColour,
+	preparePalette,
+} from "./preparePalette";
 export { RGBdistance } from "./RGBdistance";
 export { sortHexColours } from "./sortHexColours";
 export type {

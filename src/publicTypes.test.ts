@@ -15,8 +15,12 @@ import {
 	type LabColour,
 	type NamedCSSColour,
 	type PickHexColourContrastOptions,
+	type PreparedEntry,
+	type PreparedPalette,
+	type PreparedRGBColour,
 	parseColour,
 	pickHexColourContrast,
+	preparePalette,
 	type RGBColour,
 	type XYZColour,
 } from "./index";
@@ -81,4 +85,16 @@ test("isNamedCSSColour accepts any string and narrows canonical names", () => {
 	}
 	expect(isNamedCSSColour("HotPink")).toBe(false);
 	expect(isNamedCSSColour("toString")).toBe(false);
+});
+
+test("preparePalette and its types are exported from the root", () => {
+	const nearest: PreparedPalette<"#fff" | "#000"> = preparePalette([
+		"#fff",
+		"#000",
+	] as const);
+	expectTypeOf(nearest).returns.toEqualTypeOf<PreparedEntry<
+		"#fff" | "#000"
+	> | null>();
+	expectTypeOf<PreparedEntry<RGBColour>>().toEqualTypeOf<PreparedRGBColour>();
+	expect(nearest("#111")).toBe("#000");
 });

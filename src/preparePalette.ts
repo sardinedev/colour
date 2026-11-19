@@ -5,13 +5,23 @@ import type { LabColour, RGBColour } from "./types";
 import { parseRGBObject } from "./util/rgbObject";
 
 /** An RGB palette entry as returned by a prepared palette: a frozen copy of the caller's values. */
-export type PreparedRGBColour = Readonly<RGBColour>;
+export interface PreparedRGBColour {
+	readonly R: number;
+	readonly G: number;
+	readonly B: number;
+	readonly A?: number | undefined;
+}
 
 /** What a prepared palette returns for an entry type: strings as given, RGB entries as frozen copies. */
 export type PreparedEntry<T> = T extends string ? T : PreparedRGBColour;
 
-/** Looks up the entry nearest to `colour` (any colour `parseColour` accepts), or `null`. */
-export type PreparedPalette<T> = (colour: unknown) => PreparedEntry<T> | null;
+/**
+ * Looks up the palette entry nearest to `colour` (any string or RGB object that
+ * `parseColour` accepts). Returns `null` for an invalid colour or an empty palette.
+ */
+export type PreparedPalette<T> = (
+	colour: string | RGBColour,
+) => PreparedEntry<T> | null;
 
 function snapshotRGB(colour: RGBColour): PreparedRGBColour {
 	const { R, G, B, A } = colour;
@@ -19,23 +29,36 @@ function snapshotRGB(colour: RGBColour): PreparedRGBColour {
 }
 
 /**
- * SPIKE (#499): not exported from the package root. Measurement-gated; see
- * docs/decisions/0010.
+ * Prepares a palette once for repeated nearest-colour lookups, using CIEDE2000.
  *
- * Prepares a palette once for repeated nearest-colour lookups. Each valid entry is
- * parsed and converted to Lab a single time; every lookup then converts only the
- * target and runs the same CIEDE2000 scan as `findNearestColour` /
- * `findNearestRGBColour`, with the same rules:
+ * Use it when you match many colours against the same palette. Each valid entry is
+ * parsed and converted to Lab once, so each lookup only converts the target. On
+ * CodSpeed, preparing costs about as much as one `findNearest*` call, and every
+ * lookup after that is about 1.5–1.7× faster (decision 0010).
  *
- * - Entries are strings `parseColour` accepts or RGB objects it accepts; others are skipped.
+ * Results follow the `findNearest*` rules:
+ *
+ * - Entries can be any mix of strings and RGB objects that `parseColour` accepts.
+ *   Invalid entries are skipped.
  * - Out-of-range values are clamped for the distance only. Alpha is ignored.
  * - The first of equally near entries wins.
  * - Strings are returned exactly as given. RGB entries are returned as frozen copies
- *   taken at preparation time, not the caller's objects.
- * - Returns `null` for an invalid target or when no entry is valid.
+ *   taken at preparation time, not your original objects.
+ * - A lookup returns `null` for an invalid colour, or when the palette has no valid entry.
  *
- * The prepared palette is an independent snapshot: later edits to the source array
- * or its objects have no effect, so prepare again after changing the palette.
+ * The prepared palette is an independent snapshot: later changes to your array or
+ * its objects have no effect, so prepare again after changing the palette. Nothing
+ * is cached globally.
+ *
+ * @example
+ * ```ts
+ * const nearestBrandColour = preparePalette(["#0055ff", "#ff3366", "rebeccapurple"]);
+ * nearestBrandColour("#1060f0"); //=> "#0055ff"
+ * nearestBrandColour("rgb(250 40 90)"); //=> "#ff3366"
+ * ```
+ *
+ * @param {readonly (string | RGBColour)[]} palette - The colours to match against. It is not modified.
+ * @returns {PreparedPalette} A function that returns the nearest entry for a colour, or `null`.
  */
 export function preparePalette<T extends string | RGBColour>(
 	palette: readonly T[],
@@ -47,12 +70,16 @@ export function preparePalette<T extends string | RGBColour>(
 		for (const entry of palette as readonly unknown[]) {
 			if (typeof entry === "string") {
 				const rgb = parseColour(entry);
-				if (rgb === null) continue;
+				if (rgb === null) {
+					continue;
+				}
 				values.push(entry as PreparedEntry<T>);
 				labs.push(convertRGBtoLab(rgb));
 			} else {
 				const rgb = parseRGBObject(entry);
-				if (rgb === null) continue;
+				if (rgb === null) {
+					continue;
+				}
 				values.push(snapshotRGB(entry as RGBColour) as PreparedEntry<T>);
 				labs.push(convertRGBtoLab(rgb));
 			}
@@ -60,10 +87,14 @@ export function preparePalette<T extends string | RGBColour>(
 	}
 
 	const count = labs.length;
-	return (colour: unknown) => {
-		if (count === 0) return null;
+	return (colour: string | RGBColour) => {
+		if (count === 0) {
+			return null;
+		}
 		const target = parseColour(colour);
-		if (target === null) return null;
+		if (target === null) {
+			return null;
+		}
 		const targetLab = convertRGBtoLab(target);
 		let nearestIndex = 0;
 		let minDistance = Number.POSITIVE_INFINITY;
@@ -73,7 +104,9 @@ export function preparePalette<T extends string | RGBColour>(
 				minDistance = distance;
 				nearestIndex = index;
 				// An exact match can't be beaten: later entries only win when strictly nearer
-				if (distance === 0) break;
+				if (distance === 0) {
+					break;
+				}
 			}
 		}
 		return values[nearestIndex] as PreparedEntry<T>;

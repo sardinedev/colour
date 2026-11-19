@@ -141,6 +141,23 @@ parseColour({ R: Number.NaN, G: 0, B: 0 }); //=> null
 parseColour("not-a-colour"); //=> null
 ```
 
+## New: `preparePalette`
+
+If you match many colours against the same palette, `preparePalette(palette)`
+parses the palette once and returns a lookup function
+([0010](../decisions/0010-prepared-palettes.md)). This is new, not a breaking
+change: the `findNearest*` functions work as described below.
+
+```ts
+const nearest = preparePalette(["#0055ff", "#ff3366", "rebeccapurple"]);
+nearest("#1060f0"); //=> "#0055ff"
+```
+
+On CodSpeed, preparing costs about one `findNearest*` call, each lookup is
+about 1.5–1.7× faster, and 10 lookups cost about 37% less than 10
+`findNearestHexColour` calls. Results match `findNearestColour` and
+`findNearestRGBColour`, except that RGB entries come back as frozen copies.
+
 ## Numbers are no longer rounded
 
 Values keep full precision. Rounding happens only when writing a hex or CSS

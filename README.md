@@ -44,6 +44,21 @@ pickHexColourContrast(
 );
 ```
 
+## Matching many colours against one palette
+
+`findNearestColour` and friends parse and convert the whole palette on every call. If you match many colours against the same palette, prepare it once:
+
+```ts
+import { preparePalette } from "@sardine/colour";
+
+const nearestBrandColour = preparePalette(["#0055ff", "#ff3366", "rebeccapurple"]);
+
+nearestBrandColour("#1060f0"); //=> "#0055ff"
+nearestBrandColour("rgb(250 40 90)"); //=> "#ff3366"
+```
+
+Preparing costs about as much as one `findNearest*` call, and every lookup after that is about 1.5–1.7× faster. Results follow the same rules as `findNearestColour`, except that RGB entries come back as frozen copies. The prepared palette is a snapshot, so prepare it again after changing the palette.
+
 ## Invalid input
 
 Functions that can fail return `null` instead of throwing, and predicates such as `isDarkColour` return `false`. To check a value before using it, or to tell an invalid colour apart from a `false` result, use `parseColour`:

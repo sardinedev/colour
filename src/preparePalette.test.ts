@@ -116,6 +116,7 @@ describe("invalid input", () => {
 		{ R: Number.NaN, G: 0, B: 0 },
 		{ R: 0, G: 0 },
 	])("returns null for invalid target %j", (target) => {
+		// @ts-expect-error - checking runtime behaviour for JS consumers
 		expect(preparePalette(["#000", "#fff"])(target)).toBeNull();
 	});
 

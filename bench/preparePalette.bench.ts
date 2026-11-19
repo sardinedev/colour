@@ -1,13 +1,16 @@
 /**
- * Spike #499: prepared palettes vs the one-shot findNearest* functions.
+ * Prepared palettes (#499, decision 0010) vs the one-shot findNearest* functions.
  *
  * - "preparation": cost of preparePalette alone.
  * - "single lookup": one query on an already-prepared palette vs one one-shot call.
  * - "N queries": preparation + N lookups vs N one-shot calls (the break-even question).
  */
 import { describe, test } from "vitest";
-import { findNearestHexColour, findNearestRGBColour } from "../src/index";
-import { preparePalette } from "../src/preparePalette";
+import {
+	findNearestHexColour,
+	findNearestRGBColour,
+	preparePalette,
+} from "../src/index";
 import {
 	HEX_COLOURS,
 	LARGE_HEX_PALETTE,
@@ -86,10 +89,14 @@ describe("prepared palette", () => {
 				return [
 					bench(`prepare + ${count} lookups (${label})`, () => {
 						const nearest = preparePalette(palette);
-						for (const target of targets) nearest(target);
+						for (const target of targets) {
+							nearest(target);
+						}
 					}),
 					bench(`${count} × findNearestHexColour (${label})`, () => {
-						for (const target of targets) findNearestHexColour(target, palette);
+						for (const target of targets) {
+							findNearestHexColour(target, palette);
+						}
 					}),
 				];
 			});
@@ -102,11 +109,14 @@ describe("prepared palette", () => {
 		await bench.compare(
 			bench("prepare + 10 lookups (256 RGB)", () => {
 				const nearest = preparePalette(MEDIUM_RGB_PALETTE);
-				for (const target of targets) nearest(target);
+				for (const target of targets) {
+					nearest(target);
+				}
 			}),
 			bench("10 × findNearestRGBColour (256 RGB)", () => {
-				for (const target of targets)
+				for (const target of targets) {
 					findNearestRGBColour(target, MEDIUM_RGB_PALETTE);
+				}
 			}),
 		);
 	});

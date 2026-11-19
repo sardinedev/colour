@@ -160,6 +160,57 @@ describe("snapshot independence", () => {
 		expect(nearest({ R: 1, G: 1, B: 1 })).toEqual({ R: 0, G: 0, B: 0, A: 0.5 });
 	});
 
+	test("reads each RGB channel once, so getters can't swap in invalid values", () => {
+		let reads = 0;
+		const tricky = {
+			get R() {
+				reads++;
+				return reads === 1 ? 0 : Number.NaN;
+			},
+			G: 0,
+			B: 0,
+		};
+		const nearest = preparePalette([tricky, { R: 255, G: 255, B: 255 }]);
+		const result = nearest({ R: 1, G: 1, B: 1 });
+		expect(reads).toBe(1);
+		expect(result).toEqual({ R: 0, G: 0, B: 0 });
+		expect(Object.isFrozen(result)).toBe(true);
+	});
+
+	test("reads alpha once as well", () => {
+		let reads = 0;
+		const tricky = {
+			R: 0,
+			G: 0,
+			B: 0,
+			get A() {
+				reads++;
+				return reads === 1 ? 0.5 : Number.NaN;
+			},
+		};
+		const result = preparePalette([tricky, { R: 255, G: 255, B: 255 }])({
+			R: 1,
+			G: 1,
+			B: 1,
+		});
+		expect(reads).toBe(1);
+		expect(result).toEqual({ R: 0, G: 0, B: 0, A: 0.5 });
+	});
+
+	test("skips an entry whose single read is invalid", () => {
+		const invalid = {
+			get R() {
+				return Number.NaN;
+			},
+			G: 0,
+			B: 0,
+		};
+		const white = { R: 255, G: 255, B: 255 };
+		expect(preparePalette([invalid, white])({ R: 0, G: 0, B: 0 })).toEqual(
+			white,
+		);
+	});
+
 	test("preparing does not mutate or freeze the caller's palette", () => {
 		const source = { R: 1, G: 2, B: 3 };
 		const palette = [source, "#fff"];

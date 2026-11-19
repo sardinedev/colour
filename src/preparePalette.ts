@@ -1,8 +1,8 @@
-import { ciede2000 } from "./CIEDE2000";
 import { convertRGBtoLab } from "./convertRGBtoLab";
 import { parseColour } from "./parseColour";
 import type { LabColour, RGBColour } from "./types";
-import { parseRGBObject } from "./util/rgbObject";
+import { nearestIndex } from "./util/findNearestEntry";
+import { rgbObjectForDistance } from "./util/rgbObject";
 
 /** An RGB palette entry as returned by a prepared palette: a frozen copy of the caller's values. */
 export interface PreparedRGBColour {
@@ -23,9 +23,17 @@ export type PreparedPalette<T> = (
 	colour: string | RGBColour,
 ) => PreparedEntry<T> | null;
 
-function snapshotRGB(colour: RGBColour): PreparedRGBColour {
-	const { R, G, B, A } = colour;
-	return Object.freeze(A === undefined ? { R, G, B } : { R, G, B, A });
+/**
+ * Copies an RGB entry's channels into a plain object the prepared palette owns.
+ * Each channel is read exactly once, so getters or later edits can't make the
+ * validated values differ from the ones returned.
+ */
+function ownRGBChannels(entry: unknown): Record<string, unknown> | null {
+	if (typeof entry !== "object" || entry === null) {
+		return null;
+	}
+	const { R, G, B, A } = entry as Record<string, unknown>;
+	return A === undefined ? { R, G, B } : { R, G, B, A };
 }
 
 /**
@@ -34,12 +42,14 @@ function snapshotRGB(colour: RGBColour): PreparedRGBColour {
  * Use it when you match many colours against the same palette. Each valid entry is
  * parsed and converted to Lab once, so each lookup only converts the target. On
  * CodSpeed, preparing costs about as much as one `findNearest*` call, and every
- * lookup after that is about 1.5–1.7× faster (decision 0010).
+ * lookup after that is about 1.45–1.7× faster (decision 0010).
  *
- * Results follow the `findNearest*` rules:
+ * Matching works like `findNearestColour`, but also accepts RGB objects:
  *
- * - Entries can be any mix of strings and RGB objects that `parseColour` accepts.
- *   Invalid entries are skipped.
+ * - Entries can be any mix of strings and RGB objects that `parseColour` accepts,
+ *   in any format. Invalid entries are skipped. Unlike `findNearestHexColour` and
+ *   the other format-specific functions, entries in other formats are **not**
+ *   skipped: `preparePalette(["red", "#0000ff"])("#ff0000")` returns `"red"`.
  * - Out-of-range values are clamped for the distance only. Alpha is ignored.
  * - The first of equally near entries wins.
  * - Strings are returned exactly as given. RGB entries are returned as frozen copies
@@ -68,47 +78,36 @@ export function preparePalette<T extends string | RGBColour>(
 
 	if (Array.isArray(palette)) {
 		for (const entry of palette as readonly unknown[]) {
-			if (typeof entry === "string") {
-				const rgb = parseColour(entry);
-				if (rgb === null) {
-					continue;
-				}
-				values.push(entry as PreparedEntry<T>);
-				labs.push(convertRGBtoLab(rgb));
-			} else {
-				const rgb = parseRGBObject(entry);
-				if (rgb === null) {
-					continue;
-				}
-				values.push(snapshotRGB(entry as RGBColour) as PreparedEntry<T>);
-				labs.push(convertRGBtoLab(rgb));
+			// RGB entries are validated and returned as the same owned copy, never the caller's object
+			const owned = typeof entry === "string" ? entry : ownRGBChannels(entry);
+			const rgb = parseColour(owned);
+			if (rgb === null) {
+				continue;
 			}
+			values.push(
+				(typeof owned === "string"
+					? owned
+					: Object.freeze(owned)) as PreparedEntry<T>,
+			);
+			labs.push(convertRGBtoLab(rgb));
 		}
 	}
 
 	const count = labs.length;
+	const labAt = (index: number) => labs[index] as LabColour;
 	return (colour: string | RGBColour) => {
 		if (count === 0) {
 			return null;
 		}
-		const target = parseColour(colour);
+		// Objects skip the copy that parseColour would make, as in findNearestRGBColour
+		const target =
+			typeof colour === "string"
+				? parseColour(colour)
+				: rgbObjectForDistance(colour);
 		if (target === null) {
 			return null;
 		}
-		const targetLab = convertRGBtoLab(target);
-		let nearestIndex = 0;
-		let minDistance = Number.POSITIVE_INFINITY;
-		for (let index = 0; index < count; index++) {
-			const distance = ciede2000(targetLab, labs[index] as LabColour);
-			if (distance < minDistance) {
-				minDistance = distance;
-				nearestIndex = index;
-				// An exact match can't be beaten: later entries only win when strictly nearer
-				if (distance === 0) {
-					break;
-				}
-			}
-		}
-		return values[nearestIndex] as PreparedEntry<T>;
+		const index = nearestIndex(convertRGBtoLab(target), count, labAt);
+		return values[index] as PreparedEntry<T>;
 	};
 }

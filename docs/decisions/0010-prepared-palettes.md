@@ -20,8 +20,8 @@ numbers that count come from CodSpeed on CI.
 
 ## The spike
 
-`src/preparePalette.ts` holds a prototype that is not exported from the
-package root:
+During the spike, `src/preparePalette.ts` held a prototype that was not
+exported from the package root. It is now public; see [Decision](#decision).
 
 - `preparePalette(palette)` parses every valid entry and computes its Lab value
   once. It returns a lookup function, `(colour) => entry | null`.
@@ -114,12 +114,23 @@ same measurement as GitHub Actions notices on every supported Node version.
 
 Strings are shared with the caller's array, so they add nothing.
 
-**Why memory isn't measured by CodSpeed:** its memory mode counts native
-allocations. V8 places JavaScript objects on heap pages it already owns, so
-`preparePalette (1000 hex)` reported **0 B**, and other results jumped between
-the same few page-sized values (27.6 and 34.1 KB). The budget test measures V8
-heap growth directly instead. It keeps the prepared palettes alive across the
-measurement, because otherwise V8 collects them early and reports 0.
+**Why memory isn't measured by CodSpeed:** its memory mode measures
+*allocation volume* during a benchmark, not what stays alive afterwards. The
+preparation benchmarks also throw their prepared palettes away, so they could
+never show retained memory. In practice the mode didn't even see the
+allocations: it tracks native allocations, and V8 places JavaScript objects on
+heap pages it already owns. `preparePalette (1000 hex)` reported **0 B**, and
+other results jumped between the same few page-sized values (27.6 and 34.1 KB).
+
+The budget test measures retained memory directly instead:
+
+- it keeps the prepared palettes alive until after the second reading;
+- it forces garbage collection before each reading, so temporary allocations
+  from parsing are gone;
+- it subtracts the heap size before preparing, so the baseline heap is
+  excluded.
+
+Without the first point, V8 collects the palettes early and the result is 0.
 
 ### Against the criteria
 
@@ -141,7 +152,21 @@ a separate API.
 - `preparePalette(palette)` is exported from the package root, along with the
   `PreparedPalette`, `PreparedEntry` and `PreparedRGBColour` types.
 - The lookup accepts a string or an RGB object (`string | RGBColour`).
-- Behaviour is as described in [The spike](#the-spike), unchanged.
+- Behaviour is as described in [The spike](#the-spike), with three changes
+  made after measuring:
+  - RGB entries are read once into an owned copy, which is validated and
+    returned, so getter-backed channels can't return values that differ from
+    the ones measured.
+  - RGB-object targets skip a copy during lookup.
+  - The scan is shared with `findNearest*` (`nearestIndex`).
+
+  Local checks put lookups within ±2.5% of the measured build and preparation
+  1–4% slower. CodSpeed re-measures on the PR.
+- Matching works like `findNearestColour` (any string format) plus RGB
+  objects. It is not a drop-in replacement for the format-specific functions,
+  which skip entries in other formats; the docs say so.
+- Lookups are 1.45–1.7× faster depending on the palette. The docs quote that
+  range, not just the hex result.
 - It ships in 5.0.0 rather than 5.1 because it is ready and follows the 5.0
   palette contract.
 
@@ -150,9 +175,14 @@ a separate API.
 - Callers that match many colours against one palette can prepare it once.
   The README and the migration guide document when that helps.
 - Ordinary `findNearest*` calls are unchanged and never allocate prepared state.
-- `src/preparePalette.memory.test.ts` stays in the suite as a memory budget:
-  it fails above 200 B per entry and posts the measurement as a GitHub Actions
-  notice on each Node version.
+- `src/preparePalette.memory.test.ts` stays in the main suite as a regression
+  guard. It fails above 300 B per entry, wider than the 200 B decision
+  threshold so V8 layout differences across Node versions don't trip it, and
+  posts each measurement as a GitHub Actions notice.
+- Follow-up for 5.x, not measured yet: store each entry's L, a, b and chroma in
+  one packed `Float64Array` and pass the precomputed chroma to a CIEDE2000
+  variant. That should cut both lookup time and the ~117 B per entry. It needs
+  its own benchmark before it lands.
 - CodSpeed's memory mode was tried for this spike and reverted. It can't see
   the JavaScript heap, so the workflow is back to `simulation` only.
 - `PreparedRGBColour` is a plain interface with `readonly` fields rather than

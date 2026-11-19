@@ -57,7 +57,7 @@ nearestBrandColour("#1060f0"); //=> "#0055ff"
 nearestBrandColour("rgb(250 40 90)"); //=> "#ff3366"
 ```
 
-Preparing costs about as much as one `findNearest*` call, and every lookup after that is about 1.5–1.7× faster. Results follow the same rules as `findNearestColour`, except that RGB entries come back as frozen copies. The prepared palette is a snapshot, so prepare it again after changing the palette.
+Preparing costs about as much as one `findNearest*` call, and every lookup after that is about 1.45–1.7× faster. Matching works like `findNearestColour`, and it also accepts RGB objects, which come back as frozen copies. Palettes can mix formats, so if you switch from a format-specific function such as `findNearestHexColour`, entries in other formats are no longer skipped. The prepared palette is a snapshot, so prepare it again after changing the palette.
 
 ## Invalid input
 

@@ -154,9 +154,14 @@ nearest("#1060f0"); //=> "#0055ff"
 ```
 
 On CodSpeed, preparing costs about one `findNearest*` call, each lookup is
-about 1.5–1.7× faster, and 10 lookups cost about 37% less than 10
-`findNearestHexColour` calls. Results match `findNearestColour` and
-`findNearestRGBColour`, except that RGB entries come back as frozen copies.
+about 1.45–1.7× faster, and 10 lookups cost about 37% less than 10
+`findNearestHexColour` calls.
+
+Matching works like `findNearestColour`, and it also accepts RGB objects, which
+come back as frozen copies. Palettes can mix formats, so it isn't a drop-in
+replacement for a format-specific function: `findNearestHexColour("#ff0000",
+["red", "#0000ff"])` skips `"red"` and returns `"#0000ff"`, but
+`preparePalette(["red", "#0000ff"])("#ff0000")` returns `"red"`.
 
 ## Numbers are no longer rounded
 

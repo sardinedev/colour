@@ -10,6 +10,7 @@
 import { setFlagsFromString } from "node:v8";
 import { runInNewContext } from "node:vm";
 import { expect, test } from "vitest";
+import { convertRGBtoHex } from "./convertRGBtoHex";
 import { preparePalette } from "./preparePalette";
 import type { RGBColour } from "./types";
 
@@ -28,16 +29,16 @@ function createRandom(seed: number) {
 		return state / 4294967296;
 	};
 }
+// Same generator, seed and size as LARGE_RGB_PALETTE in bench/fixtures.ts, so the
+// memory figures describe the palettes CodSpeed benchmarks. src/ tests don't import
+// from bench/, so it's repeated here.
 const random = createRandom(7);
 const RGB_PALETTE: RGBColour[] = Array.from({ length: 1000 }, () => ({
 	R: Math.floor(random() * 256),
 	G: Math.floor(random() * 256),
 	B: Math.floor(random() * 256),
 }));
-const HEX_PALETTE = RGB_PALETTE.map(
-	({ R, G, B }) =>
-		`#${[R, G, B].map((n) => n.toString(16).padStart(2, "0")).join("")}`,
-);
+const HEX_PALETTE = RGB_PALETTE.map((rgb) => convertRGBtoHex(rgb));
 
 function heapUsed(): number {
 	gc();

@@ -1,4 +1,6 @@
 import { describe, expect, expectTypeOf, test } from "vitest";
+import { convertRGBtoCSSRGB } from "./convertRGBtoCSSRGB";
+import { convertRGBtoHex } from "./convertRGBtoHex";
 import { findNearestColour } from "./findNearestColour";
 import { findNearestRGBColour } from "./findNearestRGBColour";
 import { type PreparedRGBColour, preparePalette } from "./preparePalette";
@@ -18,12 +20,9 @@ const randomRGB = (): RGBColour => ({
 	G: channel(),
 	B: channel(),
 });
-const toHex = ({ R, G, B }: RGBColour) =>
-	`#${[R, G, B].map((n) => n.toString(16).padStart(2, "0")).join("")}`;
-
 const TARGETS = Array.from({ length: 200 }, randomRGB);
 const MIXED_PALETTE = [
-	...Array.from({ length: 40 }, () => toHex(randomRGB())),
+	...Array.from({ length: 40 }, () => convertRGBtoHex(randomRGB())),
 	...Array.from({ length: 40 }, () => {
 		const { R, G, B } = randomRGB();
 		return `rgb(${R}, ${G}, ${B})`;
@@ -43,8 +42,8 @@ describe("selection matches the one-shot functions", () => {
 		const nearest = preparePalette(MIXED_PALETTE);
 		for (const target of TARGETS) {
 			for (const colour of [
-				toHex(target),
-				`rgb(${target.R} ${target.G} ${target.B})`,
+				convertRGBtoHex(target),
+				convertRGBtoCSSRGB(target),
 			]) {
 				expect(nearest(colour)).toBe(findNearestColour(colour, MIXED_PALETTE));
 			}
@@ -160,42 +159,31 @@ describe("snapshot independence", () => {
 		expect(nearest({ R: 1, G: 1, B: 1 })).toEqual({ R: 0, G: 0, B: 0, A: 0.5 });
 	});
 
-	test("reads each RGB channel once, so getters can't swap in invalid values", () => {
-		let reads = 0;
-		const tricky = {
-			get R() {
-				reads++;
-				return reads === 1 ? 0 : Number.NaN;
-			},
-			G: 0,
-			B: 0,
-		};
-		const nearest = preparePalette([tricky, { R: 255, G: 255, B: 255 }]);
-		const result = nearest({ R: 1, G: 1, B: 1 });
-		expect(reads).toBe(1);
-		expect(result).toEqual({ R: 0, G: 0, B: 0 });
-		expect(Object.isFrozen(result)).toBe(true);
-	});
-
-	test("reads alpha once as well", () => {
-		let reads = 0;
-		const tricky = {
-			R: 0,
-			G: 0,
-			B: 0,
-			get A() {
-				reads++;
-				return reads === 1 ? 0.5 : Number.NaN;
-			},
-		};
-		const result = preparePalette([tricky, { R: 255, G: 255, B: 255 }])({
-			R: 1,
-			G: 1,
-			B: 1,
-		});
-		expect(reads).toBe(1);
-		expect(result).toEqual({ R: 0, G: 0, B: 0, A: 0.5 });
-	});
+	test.for([
+		["R", 0, { R: 0, G: 0, B: 0 }],
+		["A", 0.5, { R: 0, G: 0, B: 0, A: 0.5 }],
+	] as const)(
+		"reads %s once, so a getter can't swap in an invalid value",
+		([key, firstValue, expected]) => {
+			let reads = 0;
+			const tricky: Record<string, number> = { R: 0, G: 0, B: 0 };
+			Object.defineProperty(tricky, key, {
+				enumerable: true,
+				get() {
+					reads++;
+					return reads === 1 ? firstValue : Number.NaN;
+				},
+			});
+			const nearest = preparePalette([
+				tricky as unknown as RGBColour,
+				{ R: 255, G: 255, B: 255 },
+			]);
+			const result = nearest({ R: 1, G: 1, B: 1 });
+			expect(reads).toBe(1);
+			expect(result).toEqual(expected);
+			expect(Object.isFrozen(result)).toBe(true);
+		},
+	);
 
 	test("skips an entry whose single read is invalid", () => {
 		const invalid = {

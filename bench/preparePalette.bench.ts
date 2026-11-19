@@ -21,7 +21,6 @@ import {
 } from "./fixtures";
 
 const QUERY_COUNTS = [1, 10, 100] as const;
-const queries = (count: number) => HEX_COLOURS.slice(0, count);
 
 const prepared = {
 	small: preparePalette(SMALL_HEX_PALETTE),
@@ -85,7 +84,7 @@ describe("prepared palette", () => {
 	] as const) {
 		test(`repeated queries (${label})`, async ({ bench }) => {
 			const benches = QUERY_COUNTS.flatMap((count) => {
-				const targets = queries(count);
+				const targets = HEX_COLOURS.slice(0, count);
 				return [
 					bench(`prepare + ${count} lookups (${label})`, () => {
 						const nearest = preparePalette(palette);

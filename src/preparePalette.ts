@@ -24,16 +24,19 @@ export type PreparedPalette<T> = (
 ) => PreparedEntry<T> | null;
 
 /**
- * Copies an RGB entry's channels into a plain object the prepared palette owns.
+ * Copies an RGB entry's channels into a frozen object the prepared palette owns.
  * Each channel is read exactly once, so getters or later edits can't make the
- * validated values differ from the ones returned.
+ * validated values differ from the ones returned. The copy isn't validated yet:
+ * callers must check it with `rgbObjectForDistance` before using it.
  */
-function ownRGBChannels(entry: unknown): Record<string, unknown> | null {
+function ownRGBChannels(entry: unknown): PreparedRGBColour | null {
 	if (typeof entry !== "object" || entry === null) {
 		return null;
 	}
 	const { R, G, B, A } = entry as Record<string, unknown>;
-	return A === undefined ? { R, G, B } : { R, G, B, A };
+	return Object.freeze(
+		(A === undefined ? { R, G, B } : { R, G, B, A }) as PreparedRGBColour,
+	);
 }
 
 /**
@@ -78,27 +81,32 @@ export function preparePalette<T extends string | RGBColour>(
 
 	if (Array.isArray(palette)) {
 		for (const entry of palette as readonly unknown[]) {
-			// RGB entries are validated and returned as the same owned copy, never the caller's object
-			const owned = typeof entry === "string" ? entry : ownRGBChannels(entry);
-			const rgb = parseColour(owned);
+			let value: PreparedEntry<T> | null;
+			let rgb: RGBColour | null;
+			if (typeof entry === "string") {
+				value = entry as PreparedEntry<T>;
+				rgb = parseColour(entry);
+			} else {
+				// Validate and return the same owned copy, never the caller's object.
+				// rgbObjectForDistance only copies again when it has to clamp.
+				const owned = ownRGBChannels(entry);
+				value = owned as PreparedEntry<T> | null;
+				rgb = rgbObjectForDistance(owned);
+			}
 			if (rgb === null) {
 				continue;
 			}
-			values.push(
-				(typeof owned === "string"
-					? owned
-					: Object.freeze(owned)) as PreparedEntry<T>,
-			);
+			values.push(value as PreparedEntry<T>);
 			labs.push(convertRGBtoLab(rgb));
 		}
 	}
 
+	if (labs.length === 0) {
+		return () => null;
+	}
 	const count = labs.length;
 	const labAt = (index: number) => labs[index] as LabColour;
 	return (colour: string | RGBColour) => {
-		if (count === 0) {
-			return null;
-		}
 		// Objects skip the copy that parseColour would make, as in findNearestRGBColour
 		const target =
 			typeof colour === "string"

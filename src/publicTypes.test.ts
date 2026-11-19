@@ -88,10 +88,8 @@ test("isNamedCSSColour accepts any string and narrows canonical names", () => {
 });
 
 test("preparePalette and its types are exported from the root", () => {
-	const nearest: PreparedPalette<"#fff" | "#000"> = preparePalette([
-		"#fff",
-		"#000",
-	] as const);
+	const nearest = preparePalette(["#fff", "#000"] as const);
+	expectTypeOf(nearest).toEqualTypeOf<PreparedPalette<"#fff" | "#000">>();
 	expectTypeOf(nearest).returns.toEqualTypeOf<PreparedEntry<
 		"#fff" | "#000"
 	> | null>();

@@ -64,3 +64,8 @@ export const INVALID_COLOURS = [
 	"neve",
 	"Red",
 ];
+
+/** Palettes for the preparePalette benchmarks (#499): small, large, and a scaling point. */
+export const SMALL_HEX_PALETTE = LARGE_HEX_PALETTE.slice(0, 16);
+export const MEDIUM_HEX_PALETTE = LARGE_HEX_PALETTE.slice(0, 256);
+export const MEDIUM_RGB_PALETTE = LARGE_RGB_PALETTE.slice(0, 256);

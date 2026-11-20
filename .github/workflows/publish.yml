@@ -52,6 +52,3 @@ jobs:
           publish-script: npx changeset publish
           commit-message: "[ci] release"
           pr-title: "[ci] release"
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          NPM_CONFIG_PROVENANCE: true

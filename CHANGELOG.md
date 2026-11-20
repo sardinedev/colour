@@ -1,5 +1,25 @@
 # @sardine/colour
 
+## 5.0.0
+
+### Major Changes
+
+- c8cb2a2: Invalid input now returns `null` instead of throwing or returning `undefined`, and the darkness predicates return `false`. Contrast ratios, hex alpha and CSS percentage channels keep full precision, and out-of-range CSS RGB values are clamped. Adds `parseColour` and exports `RGBColour`, `LabColour`, `XYZColour`, `NamedCSSColour` and `PickHexColourContrastOptions` from the package root. See the [v4 to v5 migration guide](https://github.com/sardinedev/colour/blob/main/docs/migrations/v4tov5.md).
+- 2dd1511: The `findNearest*` functions return the matching palette entry exactly as given (RGB objects by identity), or `null` when there is no valid target or candidate. Invalid entries are skipped, palettes can be `readonly`, and the palette's element type is preserved. See the [v4 to v5 migration guide](https://github.com/sardinedev/colour/blob/main/docs/migrations/v4tov5.md).
+- 29af7f9: Drop CommonJS builds and publish ESM only.
+- f1db9f4: Remove WCAG standard selectors from contrast, luminance, darkness, and colour-picking APIs.
+
+### Minor Changes
+
+- ac8e7d6: Add `preparePalette(palette)`, which parses a palette once and returns a lookup function for matching many colours against it. Results follow the `findNearest*` rules; RGB entries come back as frozen copies.
+
+### Patch Changes
+
+- 36a0b1b: Fix `isCSSRGBDarkColour` (and `isDarkColour` with CSS RGB input) using a different darkness threshold from the hex and named-colour helpers. Colours with relative luminance between about 0.179 and 0.229, such as `rgb(128, 128, 128)`, are no longer reported as dark.
+- 3df30d0: Fix `convertHextoCSSRGB` serializing fully transparent hex colours (for example `#00000000`) as opaque `rgb()`; they now keep their zero alpha.
+- a31ee18: Improve nearest-colour palette matching performance across RGB, hex, CSS RGB, and mixed-format palettes by reusing the target Lab conversion.
+- 9bbb0fc: Fix zero-alpha serialization and fractional RGB hex output.
+
 ## 4.0.0
 
 ### Major Changes

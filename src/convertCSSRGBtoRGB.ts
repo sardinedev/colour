@@ -27,13 +27,14 @@ export function convertCssValueToNumber(
 /** Parses a CSS RGB channel value and clamps it to 0–255. */
 export function parseCssRgbChannel(value: string): number {
 	const channel = convertCssValueToNumber(value);
-	// Comparisons instead of Math.min/Math.max: this runs three times per parse
+	// biome-ignore lint/complexity/useMathMinMax: comparisons are faster on this hot path (runs three times per parse)
 	return channel < 0 ? 0 : channel > 255 ? 255 : channel;
 }
 
 /** Parses a CSS alpha value and clamps it to 0–1. */
 export function parseCssAlphaChannel(value: string): number {
 	const alpha = convertCssValueToNumber(value, true);
+	// biome-ignore lint/complexity/useMathMinMax: matches parseCssRgbChannel's clamp on the parse hot path
 	return alpha < 0 ? 0 : alpha > 1 ? 1 : alpha;
 }
 

@@ -6,7 +6,7 @@
 	"linked": [],
 	"access": "restricted",
 	"baseBranch": "main",
-	"format": "biome",
+	"format": "auto",
 	"updateInternalDependencies": "patch",
 	"ignore": []
 }

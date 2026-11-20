@@ -12,17 +12,20 @@ import {
 	getContrastRatioFromNamedCSSColour,
 	getSRGBLuminanceFromHex,
 	isNamedCSSColour,
-	type LabColour,
-	type NamedCSSColour,
-	type PickHexColourContrastOptions,
-	type PreparedEntry,
-	type PreparedPalette,
-	type PreparedRGBColour,
 	parseColour,
 	pickHexColourContrast,
 	preparePalette,
-	type RGBColour,
-	type XYZColour,
+} from "./index";
+
+import type {
+	LabColour,
+	NamedCSSColour,
+	PickHexColourContrastOptions,
+	PreparedEntry,
+	PreparedPalette,
+	PreparedRGBColour,
+	RGBColour,
+	XYZColour,
 } from "./index";
 
 test("public types are importable from the root", () => {

@@ -1,6 +1,7 @@
 import { parseColour } from "./parseColour";
-import type { RGBColour } from "./types";
 import { findNearestEntry } from "./util/findNearestEntry";
+
+import type { RGBColour } from "./types";
 
 function parseColourString(colour: unknown): RGBColour | null {
 	return typeof colour === "string" ? parseColour(colour) : null;

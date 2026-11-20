@@ -1,6 +1,7 @@
-import type { RGBColour } from "./types";
 import { findNearestEntry } from "./util/findNearestEntry";
 import { rgbObjectForDistance } from "./util/rgbObject";
+
+import type { RGBColour } from "./types";
 
 /**
  * Finds the RGB colour in a palette that is nearest to the given RGB colour, using CIEDE2000.

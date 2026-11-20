@@ -1,7 +1,8 @@
 import { getSRGBLuminanceFromRGB } from "./getSRGBLuminanceFromRGB";
 import { parseColour } from "./parseColour";
-import type { NamedCSSColour } from "./types";
 import { isDarkLuminance } from "./util/index";
+
+import type { NamedCSSColour } from "./types";
 
 /**
  * Evaluates if a colour is dark by measuring the contrast ratio against black and white.

@@ -1,5 +1,6 @@
-import type { RGBColour } from "../types";
 import { clamp } from "./index";
+
+import type { RGBColour } from "../types";
 
 function isFiniteNumber(value: unknown): value is number {
 	return typeof value === "number" && Number.isFinite(value);

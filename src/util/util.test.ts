@@ -1,6 +1,7 @@
 import { expect, test } from "vitest";
-import type { HueHelper } from "../types";
 import { bigSquare, deltaHue_d, hue_d, meanHue_d, toRadians } from "./index";
+
+import type { HueHelper } from "../types";
 
 test("converts degrees to radians", () => {
 	expect(toRadians(120)).toBe(2.0943951023931953);

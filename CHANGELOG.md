@@ -69,14 +69,12 @@
   This release introduces the new `sortHexColours()` function that provides intelligent sorting of hex colour arrays with support for multiple colour types and custom ordering logic.
 
   ### New Features
-
   - **Hue-based sorting**: Primary sort by hue (0° to 360°), then by saturation (descending)
   - **Greyscale handling**: Colours with 0% saturation are moved to the end with custom ordering
   - **Transparent support**: Fully transparent colours (alpha = 0) are placed at the very end
   - **Multi-format support**: Accepts both 6-digit (`#RRGGBB`) and 8-digit (`#RRGGBBAA`) hex formats
 
   ### Sorting Behavior
-
   1. **Normal colours**: Sorted by hue first, then by descending saturation
   2. **Greyscale colours**: Custom ordering - grey shades first, then black, then white
   3. **Transparent colours**: Sorted by brightness value (darkest to lightest)
@@ -100,7 +98,6 @@
   ```
 
   ### Supported Hex Formats
-
   - `#RGB` - 3-digit hex (expanded to 6-digit)
   - `#RRGGBB` - 6-digit hex colors
   - `#RGBA` - 4-digit hex with alpha (expanded to 8-digit)
@@ -111,7 +108,6 @@
   This release adds full CSS RGB percentage support across all functions that accept CSS RGB input:
 
   ### New Features
-
   - **RGB percentage values**: `rgb(50%, 25%, 100%)` - percentages (0%-100%) map to RGB values (0-255)
   - **Alpha percentage values**: `rgba(50%, 25%, 100%, 80%)` - alpha percentages (0%-100%) map to alpha values (0-1)
   - **Mixed formats**: `rgba(128, 25%, 255, 50%)` - mix integer and percentage values in the same color
@@ -119,7 +115,6 @@
   - **Decimal percentages**: Support for decimal percentages like `rgb(50.5%, 25.25%, 99.9%)`
 
   ### Enhanced Functions
-
   - `convertCSSRGBtoRGB()` - Core percentage parsing logic
   - `convertCSSRGBtoHex()` - Now supports percentage input values
   - `isCSSRGBDarkColour()` - Works with percentage-based colors
@@ -132,7 +127,6 @@
   ### Supported CSS RGB Formats
 
   All functions now support the complete CSS RGB specification:
-
   - `rgb(255, 128, 0)` - Integer values with commas
   - `rgb(255 128 0)` - Integer values with spaces
   - `rgb(100%, 50%, 0%)` - Percentage values

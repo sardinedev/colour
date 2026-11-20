@@ -1,5 +1,6 @@
 import { ciede2000 } from "./CIEDE2000";
 import { convertRGBtoLab } from "./convertRGBtoLab";
+
 import type { RGBColour } from "./types";
 
 /**

@@ -1,5 +1,6 @@
-import type { RGBColour } from "./types";
 import { hexAnyRegex } from "./util/regexers";
+
+import type { RGBColour } from "./types";
 
 /**
  * Converts an hexadecimal colour into RGB colour object.

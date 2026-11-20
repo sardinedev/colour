@@ -1,5 +1,6 @@
-import type { NamedCSSColour } from "./types";
 import { namedCSSColours } from "./util/namedCSSColours";
+
+import type { NamedCSSColour } from "./types";
 
 /**
  * Converts a hexadecimal colour value to a named CSS colour.

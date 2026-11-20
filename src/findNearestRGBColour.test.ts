@@ -2,6 +2,7 @@ import { describe, expect, expectTypeOf, test, vi } from "vitest";
 import * as convertRGBtoLabModule from "./convertRGBtoLab";
 import { findNearestRGBColour } from "./findNearestRGBColour";
 import { RGBdistance } from "./RGBdistance";
+
 import type { RGBColour } from "./types";
 
 test("should return the nearest colour from a palette", () => {

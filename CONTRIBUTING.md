@@ -43,7 +43,7 @@ Worry not! [Create a new issue](https://github.com/sardinedev/colour/issues/new)
 
 ## I have an idea for a new feature and I'm ready to code
 
-Good stuff! [Create a new issue](https://github.com/sardinedev/colour/issues/new) describing your idea, tell us what your use case is and let us know you are available to implement it. We’ll review it and if it fits our goals, we’ll add it to our backlog and assign it to you. 
+Good stuff! [Create a new issue](https://github.com/sardinedev/colour/issues/new) describing your idea, tell us what your use case is and let us know you are available to implement it. We’ll review it and if it fits our goals, we’ll add it to our backlog and assign it to you.
 
 ## Design decisions
 

@@ -29,21 +29,21 @@ RGB, named and generic predicates threw.
   validation.
 - No `Result` type or error framework.
 
-| Function | v4 on invalid input | v5 |
-| -------- | ------------------- | -- |
-| `convertCSSRGBtoRGB` | throws | `null` |
-| `convertCSSRGBtoHex` | throws | `null` |
-| `convertNamedCSSColourtoHex` | `undefined` | `null` |
-| `convertNamedCSSColourtoRGB` | `undefined` | `null` |
-| `convertHextoNamedCSSColour` | `undefined` | `null` |
-| `convertRGBtoNamedCSSColour` | `undefined` | `null` |
-| `getContrastRatio` | throws (`TypeError` on non-strings) | `null` |
-| `getContrastRatioFromCSSRGB` | throws | `null` |
-| `getContrastRatioFromNamedCSSColour` | throws, despite `number \| null` | `null` |
-| `getSRGBLuminanceFromHex` | `null` (inferred type) | `null`, explicit `number \| null` |
-| `convertHextoRGB`, `convertHextoCSSRGB`, `getContrastRatioFromHex`, `pickHexColourContrast` | `null` | unchanged |
-| `isCSSRGBDarkColour`, `isCSSNamedDarkColour`, `isDarkColour` | throws | `false` |
-| `isHexDarkColour` | `false` | unchanged |
+| Function                                                                                    | v4 on invalid input                 | v5                                |
+| ------------------------------------------------------------------------------------------- | ----------------------------------- | --------------------------------- |
+| `convertCSSRGBtoRGB`                                                                        | throws                              | `null`                            |
+| `convertCSSRGBtoHex`                                                                        | throws                              | `null`                            |
+| `convertNamedCSSColourtoHex`                                                                | `undefined`                         | `null`                            |
+| `convertNamedCSSColourtoRGB`                                                                | `undefined`                         | `null`                            |
+| `convertHextoNamedCSSColour`                                                                | `undefined`                         | `null`                            |
+| `convertRGBtoNamedCSSColour`                                                                | `undefined`                         | `null`                            |
+| `getContrastRatio`                                                                          | throws (`TypeError` on non-strings) | `null`                            |
+| `getContrastRatioFromCSSRGB`                                                                | throws                              | `null`                            |
+| `getContrastRatioFromNamedCSSColour`                                                        | throws, despite `number \| null`    | `null`                            |
+| `getSRGBLuminanceFromHex`                                                                   | `null` (inferred type)              | `null`, explicit `number \| null` |
+| `convertHextoRGB`, `convertHextoCSSRGB`, `getContrastRatioFromHex`, `pickHexColourContrast` | `null`                              | unchanged                         |
+| `isCSSRGBDarkColour`, `isCSSNamedDarkColour`, `isDarkColour`                                | throws                              | `false`                           |
+| `isHexDarkColour`                                                                           | `false`                             | unchanged                         |
 
 ## Consequences
 

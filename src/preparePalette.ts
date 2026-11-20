@@ -1,8 +1,9 @@
 import { convertRGBtoLab } from "./convertRGBtoLab";
 import { parseColour } from "./parseColour";
-import type { LabColour, RGBColour } from "./types";
 import { nearestIndex } from "./util/findNearestEntry";
 import { rgbObjectForDistance } from "./util/rgbObject";
+
+import type { LabColour, RGBColour } from "./types";
 
 /** An RGB palette entry as returned by a prepared palette: a frozen copy of the caller's values. */
 export interface PreparedRGBColour {

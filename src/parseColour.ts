@@ -2,8 +2,9 @@ import { isNamedCSSColour } from "./assertions";
 import { convertCSSRGBtoRGB } from "./convertCSSRGBtoRGB";
 import { convertHextoRGB } from "./convertHextoRGB";
 import { convertNamedCSSColourtoRGB } from "./convertNamedCSSColourtoRGB";
-import type { RGBColour } from "./types";
 import { parseRGBObject } from "./util/rgbObject";
+
+import type { RGBColour } from "./types";
 
 /**
  * Parses any supported colour into a new RGB colour object.

@@ -3,7 +3,9 @@ import { convertRGBtoCSSRGB } from "./convertRGBtoCSSRGB";
 import { convertRGBtoHex } from "./convertRGBtoHex";
 import { findNearestColour } from "./findNearestColour";
 import { findNearestRGBColour } from "./findNearestRGBColour";
-import { type PreparedRGBColour, preparePalette } from "./preparePalette";
+import { preparePalette } from "./preparePalette";
+
+import type { PreparedRGBColour } from "./preparePalette";
 import type { RGBColour } from "./types";
 
 function createRandom(seed: number) {

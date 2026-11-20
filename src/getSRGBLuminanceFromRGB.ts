@@ -1,5 +1,6 @@
-import type { RGBColour } from "./types";
 import { linearRGB } from "./util/index";
+
+import type { RGBColour } from "./types";
 
 /**
  * Returns the relative luminance of a colour in the sRGB space.

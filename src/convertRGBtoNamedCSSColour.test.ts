@@ -1,5 +1,6 @@
 import { expect, test } from "vitest";
 import { convertRGBtoNamedCSSColour } from "./convertRGBtoNamedCSSColour";
+
 import type { RGBColour } from "./types";
 
 test("converts pure white to 'white'", () => {

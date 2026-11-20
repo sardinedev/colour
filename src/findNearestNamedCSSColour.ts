@@ -1,6 +1,7 @@
 import { convertNamedCSSColourtoRGB } from "./convertNamedCSSColourtoRGB";
-import type { NamedCSSColour } from "./types";
 import { findNearestEntry } from "./util/findNearestEntry";
+
+import type { NamedCSSColour } from "./types";
 
 /**
  * Finds the named CSS colour in a palette that is nearest to the given named CSS colour, using CIEDE2000.

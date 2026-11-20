@@ -1,5 +1,6 @@
 import { expect, test } from "vitest";
 import { RGBdistance } from "./RGBdistance";
+
 import type { RGBColour } from "./types";
 
 test("returns 0 for identical colours", () => {

@@ -88,13 +88,11 @@ describe("analysis", () => {
 			}),
 			bench("pickHexColourContrast", () => {
 				for (const hex of HEX_COLOURS) {
-					pickHexColourContrast(
-						{
-							backgroundColour: hex,
-							optionOneColour: "#FFFFFF",
-							optionTwoColour: "#000000",
-						},
-					);
+					pickHexColourContrast({
+						backgroundColour: hex,
+						optionOneColour: "#FFFFFF",
+						optionTwoColour: "#000000",
+					});
 				}
 			}),
 			bench("isDarkColour", () => {

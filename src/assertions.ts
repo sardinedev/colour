@@ -1,6 +1,7 @@
-import type { NamedCSSColour } from "./types";
 import { namedCSSColours } from "./util/namedCSSColours";
 import { cssRGBARegex, hexAnyRegex } from "./util/regexers";
+
+import type { NamedCSSColour } from "./types";
 
 /**
  * Determines whether a string represents a valid CSS RGB or RGBA colour value.

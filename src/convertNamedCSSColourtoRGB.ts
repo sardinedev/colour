@@ -1,5 +1,6 @@
 import { convertHextoRGB } from "./convertHextoRGB";
 import { convertNamedCSSColourtoHex } from "./convertNamedCSSColourtoHex";
+
 import type { NamedCSSColour, RGBColour } from "./types";
 
 /**

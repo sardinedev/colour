@@ -1,5 +1,6 @@
-import type { LabColour, XYZColour } from "./types";
 import { constrainLab } from "./util/index";
+
+import type { LabColour, XYZColour } from "./types";
 
 /**
  * Converts XYZ colour space to Lab

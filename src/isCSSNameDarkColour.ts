@@ -1,5 +1,6 @@
 import { convertNamedCSSColourtoHex } from "./convertNamedCSSColourtoHex";
 import { isHexDarkColour } from "./isHexDarkColour";
+
 import type { NamedCSSColour } from "./types";
 
 /**

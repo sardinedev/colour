@@ -1,5 +1,6 @@
-import type { RGBColour } from "./types";
 import { cssRGBARegex } from "./util/regexers";
+
+import type { RGBColour } from "./types";
 
 const PERCENT = 37; // "%"
 

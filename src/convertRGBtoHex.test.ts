@@ -1,6 +1,7 @@
 import { expect, test } from "vitest";
 import { convertHextoRGB } from "./convertHextoRGB";
 import { convertRGBtoHex } from "./convertRGBtoHex";
+
 import type { RGBColour } from "./types";
 
 test("converts RGB format to hexadecimal colour", () => {

@@ -1,5 +1,6 @@
 import { convertNamedCSSColourtoHex } from "./convertNamedCSSColourtoHex";
 import { getContrastRatioFromHex } from "./getContrastRatioFromHex";
+
 import type { NamedCSSColour } from "./types";
 
 /**

@@ -1,4 +1,3 @@
-import type { LabColour } from "./types";
 import {
 	bigSquare,
 	deltaHue_d,
@@ -6,6 +5,8 @@ import {
 	meanHue_d,
 	toRadians,
 } from "./util/index";
+
+import type { LabColour } from "./types";
 
 /**
  * Measures the colour difference between two colours in the Lab space

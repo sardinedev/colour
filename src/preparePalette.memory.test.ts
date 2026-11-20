@@ -12,6 +12,7 @@ import { runInNewContext } from "node:vm";
 import { expect, test } from "vitest";
 import { convertRGBtoHex } from "./convertRGBtoHex";
 import { preparePalette } from "./preparePalette";
+
 import type { RGBColour } from "./types";
 
 setFlagsFromString("--expose-gc");

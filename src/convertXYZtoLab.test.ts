@@ -1,5 +1,6 @@
 import { expect, test } from "vitest";
 import { convertXYZtoLab } from "./convertXYZtoLab";
+
 import type { LabColour, XYZColour } from "./types";
 
 test("convert XYZ to Lab", () => {

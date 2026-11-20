@@ -1,5 +1,6 @@
 import { expect, test } from "vitest";
 import { convertRGBtoXYZ } from "./convertRGBtoXYZ";
+
 import type { RGBColour, XYZColour } from "./types";
 
 test("convert RGB to XYZ", () => {

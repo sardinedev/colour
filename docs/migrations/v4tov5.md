@@ -47,7 +47,10 @@ removed ([0002](../decisions/0002-wcag-2x-only.md)). The `WCAG` type is gone too
 ```ts
 // v4
 getContrastRatio("red", "#00FF00", "WCAG2.1");
-pickHexColourContrast({ backgroundColour, optionOneColour, optionTwoColour }, "WCAG2.1");
+pickHexColourContrast(
+	{ backgroundColour, optionOneColour, optionTwoColour },
+	"WCAG2.1",
+);
 
 // v5
 getContrastRatio("red", "#00FF00");
@@ -70,17 +73,17 @@ the two give identical results. Only fractional channel values between about
 Functions that can fail return `null` instead of throwing or returning
 `undefined` ([0003](../decisions/0003-failable-apis-return-null.md)).
 
-| Function | v4 | v5 |
-| -------- | -- | -- |
-| `convertCSSRGBtoRGB` | throws | `null` |
-| `convertCSSRGBtoHex` | throws | `null` |
-| `getContrastRatio` | throws | `null` |
-| `getContrastRatioFromCSSRGB` | throws | `null` |
-| `getContrastRatioFromNamedCSSColour` | throws | `null` |
-| `convertNamedCSSColourtoHex` | `undefined` | `null` |
-| `convertNamedCSSColourtoRGB` | `undefined` | `null` |
-| `convertHextoNamedCSSColour` | `undefined` | `null` |
-| `convertRGBtoNamedCSSColour` | `undefined` | `null` |
+| Function                             | v4          | v5     |
+| ------------------------------------ | ----------- | ------ |
+| `convertCSSRGBtoRGB`                 | throws      | `null` |
+| `convertCSSRGBtoHex`                 | throws      | `null` |
+| `getContrastRatio`                   | throws      | `null` |
+| `getContrastRatioFromCSSRGB`         | throws      | `null` |
+| `getContrastRatioFromNamedCSSColour` | throws      | `null` |
+| `convertNamedCSSColourtoHex`         | `undefined` | `null` |
+| `convertNamedCSSColourtoRGB`         | `undefined` | `null` |
+| `convertHextoNamedCSSColour`         | `undefined` | `null` |
+| `convertRGBtoNamedCSSColour`         | `undefined` | `null` |
 
 `convertHextoRGB`, `convertHextoCSSRGB`, `getContrastRatioFromHex`,
 `getSRGBLuminanceFromHex` and `pickHexColourContrast` already returned `null`
@@ -168,12 +171,12 @@ replacement for a format-specific function: `findNearestHexColour("#ff0000",
 Values keep full precision. Rounding happens only when writing a hex or CSS
 string ([0005](../decisions/0005-full-numeric-precision.md)).
 
-| Value | v4 | v5 |
-| ----- | -- | -- |
-| `getContrastRatio("#777", "#fff")` | `4.478` (truncated) | `4.478089453577214` |
-| `convertHextoRGB("#00000080").A` | `0.5` | `0.5019607843137255` (`128 / 255`) |
-| `convertHextoRGB("#00000001").A` | `0` | `0.00392156862745098` (`1 / 255`) |
-| `convertCSSRGBtoRGB("rgb(50% 25% 100%)")` | `{ R: 128, G: 64, B: 255, A: undefined }` | `{ R: 127.5, G: 63.75, B: 255 }` |
+| Value                                     | v4                                        | v5                                 |
+| ----------------------------------------- | ----------------------------------------- | ---------------------------------- |
+| `getContrastRatio("#777", "#fff")`        | `4.478` (truncated)                       | `4.478089453577214`                |
+| `convertHextoRGB("#00000080").A`          | `0.5`                                     | `0.5019607843137255` (`128 / 255`) |
+| `convertHextoRGB("#00000001").A`          | `0`                                       | `0.00392156862745098` (`1 / 255`)  |
+| `convertCSSRGBtoRGB("rgb(50% 25% 100%)")` | `{ R: 128, G: 64, B: 255, A: undefined }` | `{ R: 127.5, G: 63.75, B: 255 }`   |
 
 - **Contrast ratios:** format them when you display them, for example
   `ratio.toFixed(2)`. Threshold checks such as `ratio >= 4.5` work as before.
@@ -235,17 +238,17 @@ as you passed it, or `null` ([0009](../decisions/0009-palette-match-results.md))
 v4 rebuilt the result in the target's format and fell back to the target when
 matching wasn't possible.
 
-| Call | v4 | v5 |
-| ---- | -- | -- |
-| `findNearestHexColour("#f00", ["#FA0000", "#000"])` | `"#fa0000"` | `"#FA0000"` |
+| Call                                                                        | v4               | v5                 |
+| --------------------------------------------------------------------------- | ---------------- | ------------------ |
+| `findNearestHexColour("#f00", ["#FA0000", "#000"])`                         | `"#fa0000"`      | `"#FA0000"`        |
 | `findNearestCSSRGBColour("rgb(255,0,0)", ["rgb(250, 0, 0)", "rgb(0,0,0)"])` | `"rgb(250 0 0)"` | `"rgb(250, 0, 0)"` |
-| `findNearestNamedCSSColour("cyan", ["cyan", "red"])` | `"aqua"` | `"cyan"` |
-| `findNearestColour("#f00", ["red", "blue"])` | `"#ff0000"` | `"red"` |
-| `findNearestColour("red", ["#fa0000", "#00f"])` | `undefined` | `"#fa0000"` |
-| `findNearestHexColour("#f00", ["#00f"])` (one entry) | `"#f00"` | `"#00f"` |
-| `findNearestHexColour("#f00", [])` | `"#f00"` | `null` |
-| `findNearestHexColour("nope", ["#000", "#fff"])` | `"nope"` | `null` |
-| `findNearestRGBColour(target, [onlyEntry])` | `target` | `onlyEntry` |
+| `findNearestNamedCSSColour("cyan", ["cyan", "red"])`                        | `"aqua"`         | `"cyan"`           |
+| `findNearestColour("#f00", ["red", "blue"])`                                | `"#ff0000"`      | `"red"`            |
+| `findNearestColour("red", ["#fa0000", "#00f"])`                             | `undefined`      | `"#fa0000"`        |
+| `findNearestHexColour("#f00", ["#00f"])` (one entry)                        | `"#f00"`         | `"#00f"`           |
+| `findNearestHexColour("#f00", [])`                                          | `"#f00"`         | `null`             |
+| `findNearestHexColour("nope", ["#000", "#fff"])`                            | `"nope"`         | `null`             |
+| `findNearestRGBColour(target, [onlyEntry])`                                 | `target`         | `onlyEntry`        |
 
 - **Failure is `null`:** an invalid target, a missing or empty palette, or a
   palette with no valid entry returns `null`. To keep the v4 fallback, write
@@ -272,8 +275,8 @@ const brand = ["#0055ff", "#ff3366"] as const;
 const hit = findNearestHexColour(input, brand); // "#0055ff" | "#ff3366" | null
 ```
 
-  This also applies to array literals passed inline, so a variable you reuse
-  for other palettes needs a wider annotation:
+This also applies to array literals passed inline, so a variable you reuse
+for other palettes needs a wider annotation:
 
 ```ts
 let match = findNearestHexColour(input, ["#fff", "#000"]); // "#fff" | "#000" | null

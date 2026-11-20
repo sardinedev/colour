@@ -38,6 +38,7 @@ export {
 } from "./preparePalette";
 export { RGBdistance } from "./RGBdistance";
 export { sortHexColours } from "./sortHexColours";
+
 export type {
 	LabColour,
 	NamedCSSColour,

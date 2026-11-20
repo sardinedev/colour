@@ -48,13 +48,13 @@ Timings come from CodSpeed (simulation mode), using
 `src/preparePalette.memory.test.ts`, which runs in the normal CI test job on
 every supported Node version.
 
-| Workload | Palettes |
-| -------- | -------- |
-| Preparation alone | 16, 256 and 1,000 hex; 256 RGB |
-| One lookup, prepared vs one-shot | 16, 256 and 1,000 hex; 256 RGB |
-| Preparation + 1/10/100 lookups vs 1/10/100 one-shot calls | 16 and 256 hex |
-| Preparation + 10 lookups vs 10 one-shot calls | 256 RGB |
-| Retained memory | V8 heap growth per entry, from a budget test in the regular CI suite (see below) |
+| Workload                                                  | Palettes                                                                         |
+| --------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| Preparation alone                                         | 16, 256 and 1,000 hex; 256 RGB                                                   |
+| One lookup, prepared vs one-shot                          | 16, 256 and 1,000 hex; 256 RGB                                                   |
+| Preparation + 1/10/100 lookups vs 1/10/100 one-shot calls | 16 and 256 hex                                                                   |
+| Preparation + 10 lookups vs 10 one-shot calls             | 256 RGB                                                                          |
+| Retained memory                                           | V8 heap growth per entry, from a budget test in the regular CI suite (see below) |
 
 The comparison is against the current one-shot functions after #533, #537 and
 #538, not against v4.
@@ -82,12 +82,12 @@ run, on the same runner.
 
 **Single lookup, already prepared vs one ordinary call:**
 
-| Palette | Prepared | One-shot | Prepared ÷ one-shot |
-| ------- | -------: | -------: | ------------------: |
-| 16 hex | 372 µs | 581 µs | 0.64 (1.56× faster) |
-| 256 hex | 4.7 ms | 8.0 ms | **0.59 (1.70× faster)** |
-| 1,000 hex | 18.2 ms | 30.9 ms | 0.59 (1.70× faster) |
-| 256 RGB | 4.7 ms | 6.8 ms | 0.69 (1.45× faster) |
+| Palette   | Prepared | One-shot |     Prepared ÷ one-shot |
+| --------- | -------: | -------: | ----------------------: |
+| 16 hex    |   372 µs |   581 µs |     0.64 (1.56× faster) |
+| 256 hex   |   4.7 ms |   8.0 ms | **0.59 (1.70× faster)** |
+| 1,000 hex |  18.2 ms |  30.9 ms |     0.59 (1.70× faster) |
+| 256 RGB   |   4.7 ms |   6.8 ms |     0.69 (1.45× faster) |
 
 **Preparation alone:** 283 µs (16 hex), 3.3 ms (256 hex), 12.8 ms (1,000 hex),
 3.3 ms (256 RGB). That's about the cost of one ordinary call, which makes sense:
@@ -95,11 +95,11 @@ preparing does the per-entry conversion work that every one-shot call repeats.
 
 **Preparation + N lookups vs N ordinary calls:**
 
-| Palette | 1 query | 10 queries | 100 queries |
-| ------- | ------: | ---------: | ----------: |
-| 16 hex | 589 vs 584 µs (+1%) | 3.3 vs 5.2 ms (−37%) | 31.5 vs 51.8 ms (−39%) |
-| 256 hex | 8.0 vs 8.0 ms (0%) | 50.6 vs 80.6 ms (−37%) | 460 vs 780 ms (−41%) |
-| 256 RGB | — | 50.7 vs 69.1 ms (−27%) | — |
+| Palette |             1 query |             10 queries |            100 queries |
+| ------- | ------------------: | ---------------------: | ---------------------: |
+| 16 hex  | 589 vs 584 µs (+1%) |   3.3 vs 5.2 ms (−37%) | 31.5 vs 51.8 ms (−39%) |
+| 256 hex |  8.0 vs 8.0 ms (0%) | 50.6 vs 80.6 ms (−37%) |   460 vs 780 ms (−41%) |
+| 256 RGB |                   — | 50.7 vs 69.1 ms (−27%) |                      — |
 
 Break-even, from `preparation ÷ (one-shot − prepared lookup)`: **about 1 query**
 at 256 hex, about 1.4 at 16 hex, about 1.6 at 256 RGB.
@@ -107,15 +107,15 @@ at 256 hex, about 1.4 at 16 hex, about 1.6 at 256 RGB.
 **Retained memory**, measured on Node 26.13.1 during development. CI records the
 same measurement as GitHub Actions notices on every supported Node version.
 
-| Palette | Per entry | Per 1,000 entries |
-| ------- | --------: | ----------------: |
-| hex strings | ~117–119 B | ~114 KiB |
-| RGB objects | ~165 B (Lab value + frozen copy) | ~161 KiB |
+| Palette     |                        Per entry | Per 1,000 entries |
+| ----------- | -------------------------------: | ----------------: |
+| hex strings |                       ~117–119 B |          ~114 KiB |
+| RGB objects | ~165 B (Lab value + frozen copy) |          ~161 KiB |
 
 Strings are shared with the caller's array, so they add nothing.
 
 **Why memory isn't measured by CodSpeed:** its memory mode measures
-*allocation volume* during a benchmark, not what stays alive afterwards. The
+_allocation volume_ during a benchmark, not what stays alive afterwards. The
 preparation benchmarks also throw their prepared palettes away, so they could
 never show retained memory. In practice the mode didn't even see the
 allocations: it tracks native allocations, and V8 places JavaScript objects on

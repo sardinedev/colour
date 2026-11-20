@@ -1,5 +1,6 @@
 import { convertRGBtoXYZ } from "./convertRGBtoXYZ";
 import { convertXYZtoLab } from "./convertXYZtoLab";
+
 import type { LabColour, RGBColour } from "./types";
 
 /**

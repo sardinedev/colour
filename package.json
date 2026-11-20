@@ -18,7 +18,7 @@
 		"test": "npx vitest run --coverage",
 		"bench": "npx vitest bench --run",
 		"types:check": "npx tsc --noEmit",
-		"lint": "npx biome ci src",
+		"lint": "npx biome check",
 		"size": "size-limit"
 	},
 	"repository": {
@@ -68,5 +68,13 @@
 		"unplugin-dts": "1.1.2",
 		"vite": "8.3.8",
 		"vitest": "5.1.0"
+	},
+	"overrides": {
+		"@volar/typescript": {
+			"typescript": "$typescript"
+		},
+		"@volar/language-service": {
+			"typescript": "$typescript"
+		}
 	}
 }

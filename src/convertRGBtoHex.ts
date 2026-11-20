@@ -1,5 +1,6 @@
-import type { RGBColour } from "./types";
 import { clamp } from "./util/index";
+
+import type { RGBColour } from "./types";
 
 /**
  * Converts a colour in the RGB format to Hexadecimal.

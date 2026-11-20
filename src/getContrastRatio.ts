@@ -1,7 +1,8 @@
 import { getSRGBLuminanceFromRGB } from "./getSRGBLuminanceFromRGB";
 import { parseColour } from "./parseColour";
-import type { NamedCSSColour } from "./types";
 import { calculateContrastRatio } from "./util/calculateContrastRatio";
+
+import type { NamedCSSColour } from "./types";
 
 /**
  * Calculates the contrast ratio between two colours.

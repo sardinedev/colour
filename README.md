@@ -35,13 +35,11 @@ import { convertRGBtoHex, pickHexColourContrast } from "@sardine/colour";
 
 convertRGBtoHex({ R: 255, G: 204, B: 0 });
 
-pickHexColourContrast(
-	{
-		backgroundColour: "#DD337F",
-		optionOneColour: "#FFFFFF",
-		optionTwoColour: "#000000",
-	},
-);
+pickHexColourContrast({
+	backgroundColour: "#DD337F",
+	optionOneColour: "#FFFFFF",
+	optionTwoColour: "#000000",
+});
 ```
 
 ## Matching many colours against one palette
@@ -51,7 +49,11 @@ pickHexColourContrast(
 ```ts
 import { preparePalette } from "@sardine/colour";
 
-const nearestBrandColour = preparePalette(["#0055ff", "#ff3366", "rebeccapurple"]);
+const nearestBrandColour = preparePalette([
+	"#0055ff",
+	"#ff3366",
+	"rebeccapurple",
+]);
 
 nearestBrandColour("#1060f0"); //=> "#0055ff"
 nearestBrandColour("rgb(250 40 90)"); //=> "#ff3366"

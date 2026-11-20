@@ -1,5 +1,6 @@
-import type { RGBColour, XYZColour } from "./types";
 import { linearRGB } from "./util/index";
+
+import type { RGBColour, XYZColour } from "./types";
 
 /**
  * Converts sRGB colour space to XYZ.

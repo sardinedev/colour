@@ -17,7 +17,6 @@ import {
 	isHexColour,
 	isNamedCSSColour,
 } from "../src/index";
-import type { NamedCSSColour } from "../src/types";
 import {
 	CSS_RGB_COLOURS,
 	HEX_COLOURS,
@@ -25,6 +24,8 @@ import {
 	NAMED_COLOURS,
 	RGB_COLOURS,
 } from "./fixtures";
+
+import type { NamedCSSColour } from "../src/types";
 
 const XYZ_COLOURS = RGB_COLOURS.map((c) => convertRGBtoXYZ(c));
 const NAMED_HEX_COLOURS = [

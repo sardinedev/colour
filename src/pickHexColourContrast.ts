@@ -1,4 +1,5 @@
 import { getSRGBLuminanceFromHex } from "./getSRGBLuminanceFromHex";
+
 import type { PickHexColourContrastOptions } from "./types";
 
 const relativeContrast = (firstColour: number, secondColour: number) => {

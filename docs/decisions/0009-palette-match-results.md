@@ -11,29 +11,29 @@ The five `findNearest*` functions all rank candidates by CIEDE2000, but they
 disagree on what they return and when. Probed against `main` at `c8cb2a2`:
 
 **The result is often not a member of the palette.** Results are rebuilt from
-RGB and re-serialized in the *target's* format:
+RGB and re-serialized in the _target's_ format:
 
-| Call | Returns | In the palette? |
-| ---- | ------- | --------------- |
-| `findNearestHexColour("#f00", ["#FA0000", "#000"])` | `"#fa0000"` | no (case) |
-| `findNearestHexColour("#f00", ["#f00", "#000"])` | `"#ff0000"` | no (shorthand) |
-| `findNearestCSSRGBColour("rgb(255,0,0)", ["rgb(250, 0, 0)", …])` | `"rgb(250 0 0)"` | no (syntax) |
-| `findNearestNamedCSSColour("cyan", ["cyan", "red"])` | `"aqua"` | no (alias) |
-| `findNearestNamedCSSColour("grey", ["grey", "red"])` | `"gray"` | no (alias) |
-| `findNearestColour("#f00", ["red", "blue"])` | `"#ff0000"` | no (target format) |
-| `findNearestColour("rgb(0 0 0)", ["#00000080", "#ffffff"])` | `"rgb(0 0 0 / 0.5019607843137255)"` | no |
-| `findNearestColour("red", ["#fa0000", "#00f"])` | `undefined` | — (nearest has no name) |
+| Call                                                             | Returns                             | In the palette?         |
+| ---------------------------------------------------------------- | ----------------------------------- | ----------------------- |
+| `findNearestHexColour("#f00", ["#FA0000", "#000"])`              | `"#fa0000"`                         | no (case)               |
+| `findNearestHexColour("#f00", ["#f00", "#000"])`                 | `"#ff0000"`                         | no (shorthand)          |
+| `findNearestCSSRGBColour("rgb(255,0,0)", ["rgb(250, 0, 0)", …])` | `"rgb(250 0 0)"`                    | no (syntax)             |
+| `findNearestNamedCSSColour("cyan", ["cyan", "red"])`             | `"aqua"`                            | no (alias)              |
+| `findNearestNamedCSSColour("grey", ["grey", "red"])`             | `"gray"`                            | no (alias)              |
+| `findNearestColour("#f00", ["red", "blue"])`                     | `"#ff0000"`                         | no (target format)      |
+| `findNearestColour("rgb(0 0 0)", ["#00000080", "#ffffff"])`      | `"rgb(0 0 0 / 0.5019607843137255)"` | no                      |
+| `findNearestColour("red", ["#fa0000", "#00f"])`                  | `undefined`                         | — (nearest has no name) |
 
 **Edge cases differ by function**, and the fallback hides failure by returning
 the target:
 
-| Case | Hex | CSS RGB | Named | Generic | RGB |
-| ---- | --- | ------- | ----- | ------- | --- |
-| Missing or empty palette | target | target | target | target | target |
-| One valid entry | target | target | target | target | target |
-| Invalid target | target | target | target | `undefined` | target (NaN distances) |
-| All entries invalid | target, normalized (`#ff0000`) | target, normalized | target | target | target |
-| One valid among invalid | **target**, normalized | **target**, normalized (`rgb(255 0 0)`) | target | target | — |
+| Case                     | Hex                            | CSS RGB                                 | Named  | Generic     | RGB                    |
+| ------------------------ | ------------------------------ | --------------------------------------- | ------ | ----------- | ---------------------- |
+| Missing or empty palette | target                         | target                                  | target | target      | target                 |
+| One valid entry          | target                         | target                                  | target | target      | target                 |
+| Invalid target           | target                         | target                                  | target | `undefined` | target (NaN distances) |
+| All entries invalid      | target, normalized (`#ff0000`) | target, normalized                      | target | target      | target                 |
+| One valid among invalid  | **target**, normalized         | **target**, normalized (`rgb(255 0 0)`) | target | target      | —                      |
 
 What already works and should stay:
 
@@ -87,25 +87,25 @@ intermediate arrays and no output serialization.
 
 ### Before / after
 
-| Function | Return type before | Return type after |
-| -------- | ------------------ | ----------------- |
-| `findNearestColour` | `string \| NamedCSSColour \| undefined` | `T \| null` |
-| `findNearestHexColour` | `string` | `T \| null` |
-| `findNearestCSSRGBColour` | `string` | `T \| null` |
-| `findNearestNamedCSSColour` | `NamedCSSColour` | `T \| null` (`T extends NamedCSSColour`) |
-| `findNearestRGBColour` | `RGBColour` | `T \| null` (`T extends RGBColour`) |
+| Function                    | Return type before                      | Return type after                        |
+| --------------------------- | --------------------------------------- | ---------------------------------------- |
+| `findNearestColour`         | `string \| NamedCSSColour \| undefined` | `T \| null`                              |
+| `findNearestHexColour`      | `string`                                | `T \| null`                              |
+| `findNearestCSSRGBColour`   | `string`                                | `T \| null`                              |
+| `findNearestNamedCSSColour` | `NamedCSSColour`                        | `T \| null` (`T extends NamedCSSColour`) |
+| `findNearestRGBColour`      | `RGBColour`                             | `T \| null` (`T extends RGBColour`)      |
 
-| Call | v5.0 before this change | After |
-| ---- | ----------------------- | ----- |
-| `findNearestHexColour("#f00", ["#FA0000", "#000"])` | `"#fa0000"` | `"#FA0000"` |
-| `findNearestHexColour("#f00", ["#00f"])` | `"#f00"` | `"#00f"` |
-| `findNearestHexColour("#f00", [])` | `"#f00"` | `null` |
-| `findNearestHexColour("nope", ["#000", "#fff"])` | `"nope"` | `null` |
-| `findNearestHexColour("#f00", ["#fa0000", "bogus"])` | `"#ff0000"` | `"#fa0000"` |
-| `findNearestNamedCSSColour("cyan", ["cyan", "red"])` | `"aqua"` | `"cyan"` |
-| `findNearestColour("#f00", ["red", "blue"])` | `"#ff0000"` | `"red"` |
-| `findNearestColour("red", ["#fa0000", "#00f"])` | `undefined` | `"#fa0000"` |
-| `findNearestRGBColour(t, [onlyEntry])` | `t` | `onlyEntry` |
+| Call                                                 | v5.0 before this change | After       |
+| ---------------------------------------------------- | ----------------------- | ----------- |
+| `findNearestHexColour("#f00", ["#FA0000", "#000"])`  | `"#fa0000"`             | `"#FA0000"` |
+| `findNearestHexColour("#f00", ["#00f"])`             | `"#f00"`                | `"#00f"`    |
+| `findNearestHexColour("#f00", [])`                   | `"#f00"`                | `null`      |
+| `findNearestHexColour("nope", ["#000", "#fff"])`     | `"nope"`                | `null`      |
+| `findNearestHexColour("#f00", ["#fa0000", "bogus"])` | `"#ff0000"`             | `"#fa0000"` |
+| `findNearestNamedCSSColour("cyan", ["cyan", "red"])` | `"aqua"`                | `"cyan"`    |
+| `findNearestColour("#f00", ["red", "blue"])`         | `"#ff0000"`             | `"red"`     |
+| `findNearestColour("red", ["#fa0000", "#00f"])`      | `undefined`             | `"#fa0000"` |
+| `findNearestRGBColour(t, [onlyEntry])`               | `t`                     | `onlyEntry` |
 
 ## Consequences
 

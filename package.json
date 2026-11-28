@@ -52,7 +52,7 @@
 		}
 	],
 	"devDependencies": {
-		"@biomejs/biome": "2.6.8",
+		"@biomejs/biome": "2.6.9",
 		"@changesets/cli": "3.0.3",
 		"@codspeed/vitest-plugin": "6.1.1",
 		"@microsoft/api-extractor": "7.60.1",
